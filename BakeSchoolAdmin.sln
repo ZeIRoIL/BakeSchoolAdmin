@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_Gui", "BakeSchoolAdmin_Gui\BakeSchoolAdmin_Gui.csproj", "{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A} = {2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A} = {3D7ABEA8-E540-417A-AC73-5B46B69A617A}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_Commands", "BakeSchoolAdmin_Commands\BakeSchoolAdmin_Commands.csproj", "{3D7ABEA8-E540-417A-AC73-5B46B69A617A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_Models", "BakeSchoolAdmin_Models\BakeSchoolAdmin_Models.csproj", "{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A} = {3D7ABEA8-E540-417A-AC73-5B46B69A617A}
+		{860C66ED-5206-4BD6-B194-1181A63268C2} = {860C66ED-5206-4BD6-B194-1181A63268C2}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_DataConnection", "BakeSchoolAdmin_DataConnection\BakeSchoolAdmin_DataConnection.csproj", "{860C66ED-5206-4BD6-B194-1181A63268C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D7ABEA8-E540-417A-AC73-5B46B69A617A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860C66ED-5206-4BD6-B194-1181A63268C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860C66ED-5206-4BD6-B194-1181A63268C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860C66ED-5206-4BD6-B194-1181A63268C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860C66ED-5206-4BD6-B194-1181A63268C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {210CE9BF-9742-4DF7-90ED-3159CE326964}
+	EndGlobalSection
+EndGlobal
