@@ -1,0 +1,21 @@
+﻿<Window x:Class="BakeSchoolAdmin_Gui.Windows.CategoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Windows" 
+        xmlns:views="clr-namespace:BakeSchoolAdmin_Gui.View" 
+        xmlns:viewmodels="clr-namespace:BakeSchoolAdmin_Gui.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:CategoryMainViewModel}"
+        mc:Ignorable="d"
+        Title="CategoryWindow" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <ContentControl Content="{Binding CurrentViewLeft}"/>
+        </Grid>
+    </Grid>
+</Window>

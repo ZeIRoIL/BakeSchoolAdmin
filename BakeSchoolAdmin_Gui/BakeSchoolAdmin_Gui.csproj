@@ -115,6 +115,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.6.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.15.0\lib\net472\MongoDB.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=8.1.97.5141, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.8.1.97\lib\net47\Prism.dll</HintPath>
     </Reference>
@@ -198,14 +201,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryEditViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryListViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryMainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\CategoryView.xaml.cs">
+    <Compile Include="Views\Category\CategoryEdit.xaml.cs">
+      <DependentUpon>CategoryEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\CategoryView.xaml.cs">
       <DependentUpon>CategoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainRecipesView.xaml.cs">
       <DependentUpon>MainRecipesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CategoryWindow.xaml.cs">
+      <DependentUpon>CategoryWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -219,11 +230,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\CategoryView.xaml">
+    <Page Include="Views\Category\CategoryEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Category\CategoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainRecipesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,6 +281,10 @@
     <ProjectReference Include="..\BakeSchoolAdmin_Commands\BakeSchoolAdmin_Commands.csproj">
       <Project>{3D7ABEA8-E540-417A-AC73-5B46B69A617A}</Project>
       <Name>BakeSchoolAdmin_Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BakeSchoolAdmin_DatabaseConnection\BakeSchoolAdmin_DatabaseConnection.csproj">
+      <Project>{81110071-F754-4400-8C63-A23CCDA5C200}</Project>
+      <Name>BakeSchoolAdmin_DatabaseConnection</Name>
     </ProjectReference>
     <ProjectReference Include="..\BakeSchoolAdmin_Models\BakeSchoolAdmin_Models.csproj">
       <Project>{2d7bcd85-c7d4-4f9f-a767-5db6e29efd4a}</Project>

@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_Gui", "BakeSchoolAdmin_Gui\BakeSchoolAdmin_Gui.csproj", "{3A37C9EF-D3C0-410C-917D-B746FCAB0CE6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{81110071-F754-4400-8C63-A23CCDA5C200} = {81110071-F754-4400-8C63-A23CCDA5C200}
 		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A} = {2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}
 		{3D7ABEA8-E540-417A-AC73-5B46B69A617A} = {3D7ABEA8-E540-417A-AC73-5B46B69A617A}
 	EndProjectSection
@@ -14,10 +15,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_Models", "BakeSchoolAdmin_Models\BakeSchoolAdmin_Models.csproj", "{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3D7ABEA8-E540-417A-AC73-5B46B69A617A} = {3D7ABEA8-E540-417A-AC73-5B46B69A617A}
-		{860C66ED-5206-4BD6-B194-1181A63268C2} = {860C66ED-5206-4BD6-B194-1181A63268C2}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_DataConnection", "BakeSchoolAdmin_DataConnection\BakeSchoolAdmin_DataConnection.csproj", "{860C66ED-5206-4BD6-B194-1181A63268C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeSchoolAdmin_DatabaseConnection", "BakeSchoolAdmin_DatabaseConnection\BakeSchoolAdmin_DatabaseConnection.csproj", "{81110071-F754-4400-8C63-A23CCDA5C200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{860C66ED-5206-4BD6-B194-1181A63268C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{860C66ED-5206-4BD6-B194-1181A63268C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{860C66ED-5206-4BD6-B194-1181A63268C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{860C66ED-5206-4BD6-B194-1181A63268C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81110071-F754-4400-8C63-A23CCDA5C200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81110071-F754-4400-8C63-A23CCDA5C200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81110071-F754-4400-8C63-A23CCDA5C200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81110071-F754-4400-8C63-A23CCDA5C200}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

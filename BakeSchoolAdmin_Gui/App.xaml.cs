@@ -11,6 +11,8 @@
     /// </summary>
     public partial class App : Application
     {
+
+
         /// <summary>
         /// Raises Startup Event <see cref="System.Windows.Application.Startup"/> event
         /// </summary>
@@ -19,6 +21,9 @@
         {
             // get references to the current process
             Process currentProcess = Process.GetCurrentProcess();
+
+            // connection with the MongoDb
+            
 
             // Check if any other Process with same name is running
             if (Process.GetProcessesByName(currentProcess.ProcessName).Length > 1)

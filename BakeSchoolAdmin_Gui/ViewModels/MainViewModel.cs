@@ -1,5 +1,6 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
 using BakeSchoolAdmin_Gui.View;
+using BakeSchoolAdmin_Gui.Windows;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -55,12 +56,11 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <param name="parameter"></param>
         private void CategoryViewExecute(object parameter)
         {
-            //Create a categoryView and categoryViewModel
-            CategoryView cw = new CategoryView();
-            CategoryViewModel cwm = new CategoryViewModel(EventAggregator);
-
-            cw.DataContext = cwm;
-            
+            // Create a new Window with the data from CategoryMainViewModel
+            CategoryWindow window = new CategoryWindow();
+            CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
+            window.DataContext = categoryMainView;
+            window.Show();
         }
         #endregion
 
