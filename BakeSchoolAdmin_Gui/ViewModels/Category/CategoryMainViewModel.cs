@@ -1,4 +1,5 @@
-﻿using BakeSchoolAdmin_Gui.View;
+﻿using BakeSchoolAdmin_Gui.Events;
+using BakeSchoolAdmin_Gui.View;
 using BakeSchoolAdmin_Gui.Views.Category;
 using BakeSchoolAdmin_Models;
 using BakeSchoolAdmin_Models.Modals.Category;
@@ -22,13 +23,24 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             cw.DataContext = cwm;
             this.CurrentViewLeft = cw;
 
-            CategoryEdit edit = new CategoryEdit();
-            CategoryEditViewModel categoryEditViewModel = new CategoryEditViewModel(EventAggregator);
-            edit.DataContext = categoryEditViewModel;
-            this.CurrentViewRight = edit;
+            
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
         }
 
+        #region ======================================== Events =======================================================
+        /// <summary>
+        /// Event handler to notice changes in the current categroy data
+        /// </summary>
+        /// <param name="category">Reference to the sent student data</param>
+        public void ChangetheCurrentViewRight(UserControl userControl)
+        {
+            this.currentViewRight = userControl;
+            this.OnPropertyChanged(nameof(this.currentViewRight));
+        }
 
+        #endregion
         #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
         /// View that is currently bound to the left ContentControl
@@ -39,6 +51,8 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// View that is currently bound to the right ContentControl
         /// </summary>
         private UserControl currentViewRight;
+
+        
         #endregion
         #region ======================================== Properties, Indexer ============================================
         /// <summary>

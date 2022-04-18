@@ -204,7 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Events\AddCategoryDataEvent.cs" />
+    <Compile Include="Events\ChangeCurrentRightDataEvent.cs" />
     <Compile Include="Events\SelectedCategoryDataEvent.cs" />
+    <Compile Include="ViewModels\Category\CategoryAddViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryEditViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryMainViewModel.cs" />
@@ -212,6 +215,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Category\CategoryEdit.xaml.cs">
       <DependentUpon>CategoryEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Category\CategorySave.xaml.cs">
+      <DependentUpon>CategorySave.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Category\CategoryView.xaml.cs">
       <DependentUpon>CategoryView.xaml</DependentUpon>
@@ -235,6 +241,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Category\CategoryEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Category\CategorySave.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

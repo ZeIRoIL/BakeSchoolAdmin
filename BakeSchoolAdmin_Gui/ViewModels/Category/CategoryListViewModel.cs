@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace BakeSchoolAdmin_Gui.ViewModels
@@ -38,19 +39,20 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         {
             // Gets the category to the list
             LoadCategories();
-            Firstname = "Alex";
 
             // action command, if the button is clicked then set the value of the button into the parameter
-            this.CategoryEditCommand = new ActionCommand(
+            this.CategoryViewCommand = new ActionCommand(
                 (value) => {
-                this.CategroyEditViewCommandExecute(value);
+                this.CategroyViewCommandExecute(value);
                 },
-                this.CategoryEditViewCommandCanExecute);
-        }
-        #endregion
+                this.CategoryViewCommandCanExecute);
 
-        #region ======================================== Events =======================================================
-    
+            // action command if the change button is clicked and the usercontrol (AddCategory)will open.
+            this.CategoryAddCommand = new ActionCommand(this.CategroyEditViewCommandExecute, this.CategoryEditViewCommandCanExecute);
+
+            //subscribe new event for the new data save
+            this.EventAggregator.GetEvent<AddCategoryDataEvent>().Subscribe(this.AddCategory, ThreadOption.UIThread);
+        }
         #endregion
 
         #region ======================================== Properties/Indexer ================================= 
@@ -74,14 +76,30 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <summary>
         /// Gets the Category  id (Only Test)
         /// </summary>
-        public ICommand CategoryEditCommand { get; private set; }
+        public ICommand CategoryViewCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the Category  id (Only Test)
+        /// </summary>
+        public ICommand CategoryAddCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets the list with all categories
         /// </summary>
         public ObservableCollection<Category> Categories { get; set; }
-        public string Firstname { get; set; }
+        #endregion
 
+        #region ======================================== Events =======================================================
+        /// <summary>
+        /// Event handler to notice changes in the current categroy data
+        /// </summary>
+        /// <param name="category">Reference to the sent student data</param>
+        public void AddCategory(Category category)
+        {
+            this.Categories.Add(category);
+
+            this.OnPropertyChanged(nameof(this.Categories));
+        }
         #endregion
 
         #region ======================================== Private Helper ================================= 
@@ -130,6 +148,40 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <param name="parameter">Data used by the command</param>
         private void CategroyEditViewCommandExecute(object parameter)
         {
+            UserControl userControl = new UserControl();
+            CategorySave categorySave = new CategorySave();
+            CategoryAddViewModel categoryAddViewModel = new CategoryAddViewModel(EventAggregator);
+            categorySave.DataContext = categoryAddViewModel;
+            userControl = categorySave;
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(userControl);
+        }
+
+
+        /// <summary>
+        /// Determines if the edti the category view loading command can be executed.
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool CategoryViewCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed when the user clicks the Category button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void CategroyViewCommandExecute(object parameter)
+        {
+            UserControl editControl = new UserControl();
+            CategoryEdit edit = new CategoryEdit();
+            CategoryEditViewModel categoryEditViewModel = new CategoryEditViewModel(EventAggregator);
+            edit.DataContext = categoryEditViewModel;
+            editControl = edit;
+
+            // Change the current view Right, if the event is fired.
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(editControl);
+
             foreach (Category category in this.Categories)
             {
                 if (category.Id == (int)parameter)

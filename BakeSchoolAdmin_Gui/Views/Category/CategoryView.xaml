@@ -36,13 +36,13 @@
                             <StackPanel >
                                 <Button  Content="{Binding Details.Text}" CommandParameter="{Binding Id}"
    
-                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CategoryEditCommand}" />
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CategoryViewCommand}" />
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
         </Grid>
-        <Button Grid.Row="3" Content="Ändern" />
+        <Button Grid.Row="3" Content="Create" Command="{Binding CategoryAddCommand}"/>
     </Grid>
 </UserControl>
