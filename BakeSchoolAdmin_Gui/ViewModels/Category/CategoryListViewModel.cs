@@ -154,6 +154,8 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             categorySave.DataContext = categoryAddViewModel;
             userControl = categorySave;
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(userControl);
+            // Send the last id from the Categories
+            this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(Categories.Count +1 );
         }
 
 

@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="BakeSchoolAdmin_Gui.Views.Recipes.RecipesMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Recipes" xmlns:recipes="clr-namespace:BakeSchoolAdmin_Gui.ViewModels.Recipes" d:DataContext="{d:DesignInstance Type=recipes:RecipeMainListViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="339*"/>
+            <RowDefinition Height="35*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Grid.Row="0"/>
+
+
+
+        <Grid Grid.Row="2"  Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" >
+                <ItemsControl ItemsSource="{Binding Recipes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel >
+                                <Button  Content="{Binding Name}" CommandParameter="{Binding Number}"
+   
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.RecipeViewCommand}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+        <Button Grid.Row="3" Content="Create" Command="{Binding CategoryAddCommand}"/>
+    </Grid>
+</UserControl>

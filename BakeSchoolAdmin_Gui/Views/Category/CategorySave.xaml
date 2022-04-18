@@ -8,33 +8,37 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="87*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="112*"/>
+            <RowDefinition Height="37*"/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="1" Text="Name" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="1" Text="{Binding Name}" HorizontalAlignment="Center" Width="127" />
 
-        <TextBox Grid.Row="2" Text="Text" />
-        <Slider Grid.Row="3" VerticalAlignment="Center" Margin="83,10,102,10"/>
+        <TextBox Grid.Row="2" Text="{Binding Text}" Margin="0,0,0,0.5" />
+        <Label Grid.Row="3" Background="Aqua" Content="{Binding Amount}"/>
+        <Slider Grid.Row="4" VerticalAlignment="Top" 
+                Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52" Margin="41,20.5,79,0"
+                />
 
-        <Grid Grid.Row="4" Margin="28,0,36,0">
+        <Grid Grid.Row="5" Margin="28,0.5,36,0.5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" />
+            <Label Grid.Column="0"  Content="Min."/>
             <TextBox Grid.Column="1" />
-            <TextBox Grid.Column="2" />
+            <Label Grid.Column="2" Content="Max." />
             <TextBox Grid.Column="3" />
         </Grid>
-        <Image Grid.Row="5"/>
-        <Button Grid.Row="6" Content="Save" Command="{Binding CategoryAddNewCommand}"/>
+        <Image Grid.Row="6" Grid.RowSpan="2" Margin="0,0.5,0,0"/>
+        <Button Grid.Row="7" Content="Save" Command="{Binding CategoryAddNewCommand}"/>
     </Grid>
 </UserControl>

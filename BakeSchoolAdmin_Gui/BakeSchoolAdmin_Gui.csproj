@@ -206,12 +206,17 @@
     </ApplicationDefinition>
     <Compile Include="Events\AddCategoryDataEvent.cs" />
     <Compile Include="Events\ChangeCurrentRightDataEvent.cs" />
+    <Compile Include="Events\GetLastCategorieIdDataEvent.cs" />
     <Compile Include="Events\SelectedCategoryDataEvent.cs" />
+    <Compile Include="Events\SelectedRecipeDataEvent.cs" />
     <Compile Include="ViewModels\Category\CategoryAddViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryEditViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryMainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\RecipeMainDetailViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\RecipeMainListViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\RecipeMainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Category\CategoryEdit.xaml.cs">
       <DependentUpon>CategoryEdit.xaml</DependentUpon>
@@ -225,8 +230,17 @@
     <Compile Include="Views\MainRecipesView.xaml.cs">
       <DependentUpon>MainRecipesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Recipes\RecipeMainDetailView.xaml.cs">
+      <DependentUpon>RecipeMainDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Recipes\RecipesMainView.xaml.cs">
+      <DependentUpon>RecipesMainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CategoryWindow.xaml.cs">
       <DependentUpon>CategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RecipesWindow.xaml.cs">
+      <DependentUpon>RecipesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -256,7 +270,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Recipes\RecipeMainDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Recipes\RecipesMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RecipesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

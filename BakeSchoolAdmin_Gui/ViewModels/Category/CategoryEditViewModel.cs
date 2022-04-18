@@ -11,6 +11,12 @@ namespace BakeSchoolAdmin_Gui.ViewModels
 {
     class CategoryEditViewModel : ViewModelBase
     {
+        #region ======================================== Fields, Constants, Delegates, Events ============================================ 
+        /// <summary>
+        /// the amount for the slider of difficult
+        /// </summary>
+        private int amount;
+        #endregion
         #region ======================================== Con-/Destructor, Dispose, Clone ================================= 
         public CategoryEditViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -28,6 +34,24 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// Gets or sets the Text of the selected category
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Gets or sets the amount of the slider
+        /// </summary>
+        public int Amount
+        {
+            get
+            {
+                return this.amount;
+            }
+            set
+            {
+                if (this.amount != value)
+                {
+                    this.amount = value;
+                    this.OnPropertyChanged(nameof(this.amount));
+                }
+            }
+        }
 
 
         #endregion
@@ -41,9 +65,11 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         {
             this.Text = category.Details.Text;
             this.Name = category.Details.Name;
+            this.amount = category.Details.Level;
 
             this.OnPropertyChanged(nameof(this.Text));
             this.OnPropertyChanged(nameof(this.Name));
+            this.OnPropertyChanged(nameof(this.amount));
         }
         #endregion
     }

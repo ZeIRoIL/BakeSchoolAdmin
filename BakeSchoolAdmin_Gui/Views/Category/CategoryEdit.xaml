@@ -13,15 +13,18 @@
             <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="1" Content="{Binding Name }" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
         <TextBox Grid.Row="2" Text="{Binding Text}"  />
-        <Slider Grid.Row="3" VerticalAlignment="Center" Margin="83,10,102,10"/>
-
-        <Grid Grid.Row="4" Margin="28,0,36,0">
+        <Label Content="{Binding Amount}" Grid.Row="3"/>
+        <Slider Grid.Row="4" VerticalAlignment="Top" 
+                Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52"
+                />
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
