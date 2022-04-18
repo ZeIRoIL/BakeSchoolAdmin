@@ -1,7 +1,8 @@
 ﻿using BakeSchoolAdmin_Gui.View;
+using BakeSchoolAdmin_Gui.Views.Category;
 using BakeSchoolAdmin_Models;
 using BakeSchoolAdmin_Models.Modals.Category;
-using Prism.Events;
+using Microsoft.Practices.Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,9 +22,13 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             cw.DataContext = cwm;
             this.CurrentViewLeft = cw;
 
-     
-
+            CategoryEdit edit = new CategoryEdit();
+            CategoryEditViewModel categoryEditViewModel = new CategoryEditViewModel(EventAggregator);
+            edit.DataContext = categoryEditViewModel;
+            this.CurrentViewRight = edit;
         }
+
+
         #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
         /// View that is currently bound to the left ContentControl

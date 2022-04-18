@@ -1,7 +1,7 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
+using Microsoft.Practices.Prism.Events;
 using BakeSchoolAdmin_Gui.View;
 using BakeSchoolAdmin_Gui.Windows;
-using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +44,6 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <summary>
         /// Determines if the loading category view command can be execute
         /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
         private bool CategoryViewCanExecute(object parameter)
         {
             return true;
@@ -53,7 +51,6 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <summary>
         /// Gets execute when the user clicks the category button
         /// </summary>
-        /// <param name="parameter"></param>
         private void CategoryViewExecute(object parameter)
         {
             // Create a new Window with the data from CategoryMainViewModel

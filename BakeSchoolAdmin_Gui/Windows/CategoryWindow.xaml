@@ -10,12 +10,16 @@
         mc:Ignorable="d"
         Title="CategoryWindow" Height="450" Width="800">
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <ContentControl Content="{Binding CurrentViewLeft}"/>
-        </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Bereiche" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="46" Width="124"/>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewLeft}"/>
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding CurrentViewRight}"/>
     </Grid>
 </Window>

@@ -13,6 +13,11 @@ namespace BakeSchoolAdmin_Models
     public class Category : NotifyPropertyChanged
     {
         #region --------------------------------------------------------------------------Constructor---------------------------------------------------
+        public Category()
+        {
+
+        }
+            
         public Category(int id, CategoryDetails details)
         {
             this.Id = id;

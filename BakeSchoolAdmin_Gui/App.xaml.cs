@@ -1,13 +1,15 @@
-﻿namespace BakeSchoolAdmin_Gui
-{
+﻿using Microsoft.Practices.Prism.Events;
+using BakeSchoolAdmin_Gui.ViewModels;
+using System.Diagnostics;
+using System.Windows;
 
-    using BakeSchoolAdmin_Gui.ViewModels;
-    using Prism.Events;
-    using System.Diagnostics;
-    using System.Windows;
+namespace BakeSchoolAdmin_Gui
+    
+{
+    
 
     /// <summary>
-    /// Interaktionslogik für "App.xaml"
+    /// Logik für "App.xaml"
     /// </summary>
     public partial class App : Application
     {

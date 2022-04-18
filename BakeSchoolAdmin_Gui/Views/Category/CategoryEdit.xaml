@@ -3,37 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Category"
+             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Category" xmlns:viewmodels="clr-namespace:BakeSchoolAdmin_Gui.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CategoryEditViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-            </Grid.RowDefinitions>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Content="RezeptName" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+        <Label Grid.Row="1" Content="{Binding Name }" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
-            <TextBox Grid.Row="1" Margin="28,0,36,0" />
-            <Slider Grid.Row="2" VerticalAlignment="Center" Margin="83,10,102,10"/>
+        <TextBox Grid.Row="2" Text="{Binding Text}"  />
+        <Slider Grid.Row="3" VerticalAlignment="Center" Margin="83,10,102,10"/>
 
-            <Grid Grid.Row="3" Margin="28,0,36,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" />
-                <TextBox Grid.Column="1" />
-                <TextBox Grid.Column="2" />
-                <TextBox Grid.Column="3" />
-            </Grid>
-            <Image Grid.Row="4"/>
+        <Grid Grid.Row="4" Margin="28,0,36,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" />
+            <TextBox Grid.Column="1" />
+            <TextBox Grid.Column="2" />
+            <TextBox Grid.Column="3" />
         </Grid>
+        <Image Grid.Row="5"/>
     </Grid>
 </UserControl>
