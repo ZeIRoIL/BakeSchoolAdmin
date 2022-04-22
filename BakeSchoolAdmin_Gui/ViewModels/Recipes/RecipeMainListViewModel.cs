@@ -1,6 +1,8 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
 using BakeSchoolAdmin_Gui.Events;
+using BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit;
 using BakeSchoolAdmin_Gui.Views.Recipes;
+using BakeSchoolAdmin_Gui.Windows;
 using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
 using System;
@@ -32,6 +34,8 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.RecipeViewCommand = new ActionCommand(this.RecipeViewCommandExecute, this.RecipeViewCommandCanExecute);
+            // action command if the change button is clicked and the usercontrol (AddCategory)will open.
+            this.RecipesAddCommand = new ActionCommand(this.RecipeAddCommandExecute, this.RecipeAddCommandCanExecute);
         }
         #region ======================================== Properties/Indexer ================================= 
 
@@ -56,8 +60,8 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// </summary>
         public ICommand RecipeViewCommand { get; private set; }
 
+        public ICommand RecipesAddCommand { get; private set; }
 
-     
 
         /// <summary>
         /// Gets or sets the list with all categories
@@ -90,12 +94,33 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         #endregion
         #region ======================================== Commands ================================= 
 
-
         /// <summary>
         /// Determines if the edti the category view loading command can be executed.
         /// </summary>
         /// <param name="parameter">Data used by the Command</param>
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool RecipeAddCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+        /// <summary>
+        /// Gets executed when the user clicks the Category button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void RecipeAddCommandExecute(object parameter)
+        {
+            RecipesAddWindow recipeAddWindow = new RecipesAddWindow();
+            recipeAddWindow.Show();
+            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator);
+            recipeAddWindow.DataContext = recipesAddMainViewModel;
+
+        }
+
+         /// <summary>
+            /// Determines if the edti the category view loading command can be executed.
+            /// </summary>
+            /// <param name="parameter">Data used by the Command</param>
+            /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
         private bool RecipeViewCommandCanExecute(object parameter)
         {
             return true;

@@ -37,6 +37,6 @@
                 </ItemsControl>
             </StackPanel>
         </Grid>
-        <Button Grid.Row="3" Content="Create" Command="{Binding CategoryAddCommand}"/>
+        <Button Grid.Row="3" Content="Create" Command="{Binding RecipesAddCommand}"/>
     </Grid>
 </UserControl>
