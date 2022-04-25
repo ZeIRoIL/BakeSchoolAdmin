@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Recipes"
+             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Recipes" xmlns:edit="clr-namespace:BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit" d:DataContext="{d:DesignInstance Type=edit:RecipeEditAddDescriptionViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -12,24 +12,68 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2.5*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="32*"/>
+            <RowDefinition Height="193*"/>
+            <RowDefinition Height="161*"/>
+            <RowDefinition Height="32*"/>
         </Grid.RowDefinitions>
         <!--label text-->
         <Label Content="Steps:" Grid.Column="0" Grid.Row="0" FontSize="10px"/>
         <Label Content="Hints(if existed):" Grid.Column="1" Grid.Row="0" FontSize="10px"/>
         <!--Step amounts-->
-        <Grid Grid.Row="1" Grid.Column="0" Background="Aqua">
-            <!--there should contain the steps amount-->
+        <Grid Grid.Row="1" Grid.Column="0" Background="Black">
+            <ItemsControl
+                      ItemsSource="{Binding Path=Descriptions}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button  Content="{Binding Path=Step}"
+                             Width="20"
+                             Height="20"
+                             Margin="5"
+                             CommandParameter="{Binding Step}"
+                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, 
+                             Path=DataContext.ShowDescription}"
+                            />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
+                <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green"/>
+                <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red"/>
+            </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1" Background="Aqua">
-            <!--there should contain the hints amount-->
+        <Grid Grid.Row="1" Grid.Column="1" Background="Black">
+            <ItemsControl
+                      ItemsSource="{Binding Path=Hints}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button  Content="{Binding Path= Step}"
+                             Width="20"
+                             Height="20"
+                             Margin="5"
+                          
+                            />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
+                <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green"/>
+                <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red"/>
+            </StackPanel>
         </Grid>
         <!--textbox for the steps-->
-        <TextBox  Grid.Row="2" Grid.Column="0" />
+        <TextBox  Grid.Row="2" Grid.Column="0" Text="{Binding Text}"  />
         <TextBox  Grid.Row="2" Grid.Column="1" />
         <!--image for the steps-->
         <Image  Grid.Column="0" Grid.Row="3" />
