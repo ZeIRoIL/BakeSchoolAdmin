@@ -26,6 +26,11 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
+            // action command if the change button is clicked and the usercontrol (AddCheck)will open.
+            this.OpenCheck = new ActionCommand(this.ShowCheckViewCommandExecute, this.ShowCheckViewCommandCanExecute);
+            // action command if the change button is clicked and the usercontrol (AddCategory)will open.
+            this.OpenIngredient = new ActionCommand(this.ShowIngredientsViewCommandExecute, this.ShowIngriedentsCommandCanExecute);
+
         }
 
         #region ======================================== Events =======================================================
@@ -51,7 +56,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// <summary>
         /// execute  the Command show the recipes form the recipes
         /// </summary>
-        public ICommand OpenRecipe { get; private set; }
+        public ICommand OpenIngredient { get; private set; }
 
         /// <summary>
         /// execute  the Command show the check form the recipes
@@ -78,10 +83,56 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// <param name="parameter">Data used by the command</param>
         private void ShowDescriptionViewCommandExecute(object parameter)
         {
-            RecipeEditAddDescription recipeEditAddDescription = new RecipeEditAddDescription();
+           RecipeEditAddDescription recipeEditAddDescription = new RecipeEditAddDescription();
             RecipeEditAddDescriptionViewModel recipeEditAddDescriptionViewModel = new RecipeEditAddDescriptionViewModel(EventAggregator);
             recipeEditAddDescription.DataContext = recipeEditAddDescriptionViewModel;
             this.currentViewMain = recipeEditAddDescription;
+            OnPropertyChanged(nameof(this.CurrentViewMain));
+        }
+
+        /// <summary>
+        /// Determines if the view is correct and we can be executed
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool ShowCheckViewCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed when the user clicks the Description button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void ShowCheckViewCommandExecute(object parameter)
+        {
+            RecipeEditCheckRecipe recipeEditCheck = new RecipeEditCheckRecipe();
+            RecipeEditCheckRecipeViewModel recipeEditCheckModel = new RecipeEditCheckRecipeViewModel(EventAggregator);
+            recipeEditCheck.DataContext = recipeEditCheckModel;
+            this.currentViewMain = recipeEditCheck;
+            OnPropertyChanged(nameof(this.CurrentViewMain));
+        }
+
+        /// <summary>
+        /// Determines if the view is correct and we can be executed
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool ShowIngriedentsCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed when the user clicks the Description button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void ShowIngredientsViewCommandExecute(object parameter)
+        {
+           RecipeEditAddIngredient recipeEditIngred = new RecipeEditAddIngredient();
+            RecipeEditAddIngredientViewModel recipeEditIngredCheckModel = new RecipeEditAddIngredientViewModel(EventAggregator);
+            recipeEditIngred.DataContext = recipeEditIngredCheckModel;
+            this.currentViewMain = recipeEditIngred;
             OnPropertyChanged(nameof(this.CurrentViewMain));
         }
 

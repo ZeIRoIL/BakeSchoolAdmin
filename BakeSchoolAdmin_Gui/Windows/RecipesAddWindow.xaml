@@ -33,7 +33,7 @@
         <Label Content="Rezepte" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontSize="30" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Height="46" Width="124"/>
      
         <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button Content="Rezepte" Margin="5 0 5 0" Command="{Binding OpenRecipe}"/>
+            <Button Content="Rezepte" Margin="5 0 5 0" Command="{Binding OpenIngredient}"/>
             <Button Content="Beschreibung" Margin="5 0 5 0"  Command="{Binding OpenDescription}" />
             <Button Content="Check" Margin="5 0 5 0"  Command="{Binding OpenCheck}" />
         </StackPanel>

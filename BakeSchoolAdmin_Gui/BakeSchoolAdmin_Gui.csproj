@@ -217,6 +217,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Recipes\Edit\RecipeEditAddDescriptionViewModel.cs" />
     <Compile Include="ViewModels\Recipes\Edit\RecipeEditAddIngredientViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\Edit\RecipeEditCheckRecipeViewModel.cs" />
     <Compile Include="ViewModels\Recipes\Edit\RecipesAddMainViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainDetailViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainListViewModel.cs" />
