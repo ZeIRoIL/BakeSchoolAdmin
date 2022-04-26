@@ -20,8 +20,13 @@
         <!--Name of recipe-->
         <Label Content="{Binding Name}" Grid.Row="0" Grid.ColumnSpan="2"  />
         <!--Zutaten View-->
-        <DataGrid Grid.Column="0" Grid.Row="1">
-
+        <DataGrid Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" 
+                  ItemsSource="{Binding Path= Ingredients }" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Data}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
+            </DataGrid.Columns>
         </DataGrid>
         <!--Descriptions View-->
         <Grid Grid.Row="1" Grid.Column="1">
@@ -34,7 +39,28 @@
             <!--Step Label-->
             <Label Content="Schritte:" Grid.Row="0"/>
             <!--StepBox-->
-            <TextBox Grid.Row="1"></TextBox>
+            <Grid Grid.Row="1" Grid.Column="1" Background="Black">
+                <ItemsControl
+                      ItemsSource="{Binding Path= Descriptions}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button  Content="{Binding Path=Step}"
+                             Width="20"
+                             Height="20"
+                             Margin="5"
+                             CommandParameter="{Binding Step}"
+                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, 
+                             Path=DataContext.ShowDescription}"
+                            />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
             <!--Descriptiontext-->
             <TextBox Grid.Row="3" Text="Das ist eine Beschreibung"/>
         </Grid>

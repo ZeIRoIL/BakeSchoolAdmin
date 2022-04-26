@@ -27,10 +27,14 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// Create the selected Recipe form the current button click
         /// </summary>
         public Recipe selectedRecipe;
+    
         #endregion
-        public RecipeMainListViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public RecipeMainListViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes ) : base(eventAggregator)
         {
-            LoadRecipes();
+            // load the recipes 
+            LoadRecipes(recipes);
+
+           
 
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.RecipeViewCommand = new ActionCommand(this.RecipeViewCommandExecute, this.RecipeViewCommandCanExecute);
@@ -74,22 +78,17 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// Event handler to notice changes in the current categroy data
         /// </summary>
         /// <param name="category">Reference to the sent student data</param>
-        public void AddCategory()
+        public void ChangeRecipeCurrentMainView(UserControl user)
         {
-            
+           
         }
         #endregion
 
         #region ======================================== Private Helper ================================= 
-        private void LoadRecipes()
+        private void LoadRecipes(ObservableCollection<Recipe> recipes )
         {
-            //// init collection and add data
-            this.Recipes = new ObservableCollection<Recipe>();
-
-            Recipe recipe = new Recipe();
-            recipe.Name = "NameRezept";
-            recipe.Number = 1;
-            this.Recipes.Add(recipe);
+           
+            this.Recipes = recipes;
         }
         #endregion
         #region ======================================== Commands ================================= 
@@ -109,11 +108,12 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// <param name="parameter">Data used by the command</param>
         private void RecipeAddCommandExecute(object parameter)
         {
-            RecipesAddWindow recipeAddWindow = new RecipesAddWindow();
-            recipeAddWindow.Show();
-            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator);
-            recipeAddWindow.DataContext = recipesAddMainViewModel;
 
+            MainAddRecipes mainAddRecipes = new MainAddRecipes();
+            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator);
+            mainAddRecipes.DataContext = recipesAddMainViewModel;
+
+            this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Publish(mainAddRecipes);
         }
 
          /// <summary>

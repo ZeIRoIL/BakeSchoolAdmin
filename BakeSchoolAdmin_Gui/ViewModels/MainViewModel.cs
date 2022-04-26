@@ -10,13 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using BakeSchoolAdmin_Gui.ViewModels.Recipes;
+using System.Windows;
 
 namespace BakeSchoolAdmin_Gui.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         #region ======================================== Fields ================================= 
+        CategoryWindow categoryWindow;
 
+        RecipesWindow recipesWindow;
         #endregion
 
         #region ======================================== Con-/Destructor, Dispose, Clone ================================= 
@@ -32,8 +35,6 @@ namespace BakeSchoolAdmin_Gui.ViewModels
 
             //// Hookup command to be associated
             this.RecipesViewCommand = new ActionCommand(this.RecipesViewExecute, this.RecipesViewCanExecute);
-
-
         }
         #endregion
 
@@ -55,18 +56,23 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// </summary>
         private bool CategoryViewCanExecute(object parameter)
         {
-            return true;
+            if (this.categoryWindow == null)
+            {
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// Gets execute when the user clicks the category button
         /// </summary>
         private void CategoryViewExecute(object parameter)
         {
-            // Create a new Window with the data from CategoryMainViewModel
-            CategoryWindow window = new CategoryWindow();
-            CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
-            window.DataContext = categoryMainView;
-            window.Show();
+                // Create a new Window with the data from CategoryMainViewModel
+                CategoryWindow window = new CategoryWindow();
+                this.categoryWindow = window;
+                CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
+                window.DataContext = categoryMainView;
+                window.Show();          
         }
 
         /// <summary>
@@ -74,18 +80,23 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// </summary>
         private bool RecipesViewCanExecute(object parameter)
         {
-            return true;
+           if(this.recipesWindow == null)
+            {
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// Gets execute when the user clicks the recipes button
         /// </summary>
         private void RecipesViewExecute(object parameter)
         {
-            // Create a new Window with the data from CategoryMainViewModel
-            RecipesWindow window = new RecipesWindow();
-            RecipeMainViewModel recipesMainView = new RecipeMainViewModel(EventAggregator);
-            window.DataContext = recipesMainView;
-            window.Show();
+                // Create a new Window with the data from MainRecipesViewModel
+                RecipesWindow window = new RecipesWindow();
+                this.recipesWindow = window;
+                MainRecipesViewModel recipesMainView = new MainRecipesViewModel(EventAggregator);
+                window.DataContext = recipesMainView;
+                window.Show();
         }
         #endregion
 

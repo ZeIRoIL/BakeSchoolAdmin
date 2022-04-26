@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BakeSchoolAdmin_Gui.Windows
+namespace BakeSchoolAdmin_Gui.Views.Recipes
 {
     /// <summary>
-    /// Interaktionslogik für RecipesAddWindow.xaml
+    /// Interaktionslogik für MainAddRecipes.xaml
     /// </summary>
-    public partial class RecipesAddWindow : Window
+    public partial class MainAddRecipes : UserControl
     {
-        public RecipesAddWindow()
+        public MainAddRecipes()
         {
             InitializeComponent();
         }

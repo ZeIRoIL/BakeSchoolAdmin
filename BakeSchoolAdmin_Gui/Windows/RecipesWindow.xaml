@@ -7,23 +7,6 @@
         mc:Ignorable="d"
         Title="RecipesWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="9*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <Label Content="Rezepte" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Height="46" Width="124"/>
-        <ContentControl Grid.Row="2" Content="{Binding CurrentViewLeft}"/>
-        <ContentControl Grid.Column="1" Grid.RowSpan="3" Content="{Binding CurrentViewRight}" Margin="0,38,0,0.5"/>
+        <ContentControl  Content="{Binding CurrentMainView}"/>
     </Grid>
 </Window>

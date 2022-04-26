@@ -1,6 +1,7 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
 using BakeSchoolAdmin_Gui.Events;
 using BakeSchoolAdmin_Gui.Views.Recipes;
+using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,47 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
     class RecipesAddMainViewModel : ViewModelBase
     {
+        #region ======================================== Fields, Constants, Delegates, Events =============================
+        /// <summary>
+        /// View that is currently bound to the left ContentControl
+        /// </summary>
+        private UserControl currentViewMain;
+        /// <summary>
+        /// gets and sets for the currentDes
+        /// </summary>
+        private Description currentDes;
+        /// <summary>
+        /// gets and sets for the current Recipe
+        /// </summary>
+        private Recipe currentRec;
+        /// <summary>
+        /// gets and sets for the current ingredient
+        /// </summary>
+        private Ingredient currentingredient;
+        #endregion
+
+        #region ======================================== Properties, Indexer ============================================
+        /// <summary>
+        /// Gets or sets the view that is currently bound to the left ContentControl
+        /// </summary>
+        public UserControl CurrentViewMain
+        {
+            get
+            {
+                return this.currentViewMain;
+            }
+            set
+            {
+                if (this.currentViewMain != value)
+                {
+                    this.currentViewMain = value;
+                    //// takes the property as a string -> OnPropertyChanged(nameof())
+                    this.OnPropertyChanged(nameof(this.CurrentViewMain));
+                }
+            }
+        }
+
+        #endregion
         public RecipesAddMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             RecipeEditAddIngredient view = new RecipeEditAddIngredient();
@@ -21,9 +63,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
             view.DataContext = model;
             this.currentViewMain = view;
 
-            // subscribe to event
-            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangetheCurrentMainView, ThreadOption.UIThread);
-
+           
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
             // action command if the change button is clicked and the usercontrol (AddCheck)will open.
@@ -35,15 +75,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 
         #region ======================================== Events =======================================================
 
-        /// <summary>
-        /// Event handler to notice changes in the current categroy data
-        /// </summary>
-        /// <param name="category">Reference to the sent student data</param>
-        public void ChangetheCurrentMainView(UserControl userControl)
-        {
-            this.currentViewMain = userControl;
-            this.OnPropertyChanged(nameof(this.currentViewMain));
-        }
+        
         #endregion
 
         #region ======================================== Command ====================================================
@@ -84,7 +116,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         private void ShowDescriptionViewCommandExecute(object parameter)
         {
            RecipeEditAddDescription recipeEditAddDescription = new RecipeEditAddDescription();
-            RecipeEditAddDescriptionViewModel recipeEditAddDescriptionViewModel = new RecipeEditAddDescriptionViewModel(EventAggregator);
+            RecipeEditAddDescriptionViewModel recipeEditAddDescriptionViewModel = new RecipeEditAddDescriptionViewModel(EventAggregator,currentDes);
             recipeEditAddDescription.DataContext = recipeEditAddDescriptionViewModel;
             this.currentViewMain = recipeEditAddDescription;
             OnPropertyChanged(nameof(this.CurrentViewMain));
@@ -137,33 +169,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         }
 
         #endregion
-        #region ======================================== Fields, Constants, Delegates, Events =============================
-        /// <summary>
-        /// View that is currently bound to the left ContentControl
-        /// </summary>
-        private UserControl currentViewMain;
-
-        #endregion
-        #region ======================================== Properties, Indexer ============================================
-        /// <summary>
-        /// Gets or sets the view that is currently bound to the left ContentControl
-        /// </summary>
-        public UserControl CurrentViewMain
-        {
-            get
-            {
-                return this.currentViewMain;
-            }
-            set
-            {
-                if (this.currentViewMain != value)
-                {
-                    this.currentViewMain = value;
-                    //// takes the property as a string -> OnPropertyChanged(nameof())
-                    this.OnPropertyChanged(nameof(this.CurrentViewMain));
-                }
-            }
-        }
-        #endregion
+        
+        
     }
 }

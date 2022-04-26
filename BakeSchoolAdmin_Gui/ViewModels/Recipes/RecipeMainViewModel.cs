@@ -1,8 +1,10 @@
 ﻿using BakeSchoolAdmin_Gui.Events;
 using BakeSchoolAdmin_Gui.Views.Recipes;
+using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +12,39 @@ using System.Windows.Controls;
 
 namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 {
+    /// <summary>
+    /// the view for the list and details user control
+    /// </summary>
     class RecipeMainViewModel : ViewModelBase
     {
-        public RecipeMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        #region ======================================== Fields, Constants, Delegates, Events =============================
+        /// <summary>
+        /// the current recipe which are  selected 
+        /// </summary>
+        private Recipe recipe;
+        /// <summary>
+        /// View that is currently bound to the left ContentControl
+        /// </summary>
+        private UserControl currentViewLeft;
+        /// <summary>
+        /// View that is currently bound to the right ContentControl
+        /// </summary>
+        private UserControl currentViewRight;
+
+        #endregion
+        public RecipeMainViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes ) : base(eventAggregator)
         {
+
             RecipesMainView view = new RecipesMainView();
-            RecipeMainListViewModel model = new RecipeMainListViewModel(EventAggregator);
+            RecipeMainListViewModel model = new RecipeMainListViewModel(EventAggregator,recipes);
             view.DataContext = model;
             this.currentViewLeft = view;
+
+            
+
+
+            /// subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
 
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
@@ -34,21 +61,13 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
             this.OnPropertyChanged(nameof(this.currentViewRight));
         }
 
+        public void ChangeCurrentMainView(UserControl main)
+        {
+       
+        }
         #endregion
 
-        #region ======================================== Fields, Constants, Delegates, Events =============================
-        /// <summary>
-        /// View that is currently bound to the left ContentControl
-        /// </summary>
-        private UserControl currentViewLeft;
-
-        /// <summary>
-        /// View that is currently bound to the right ContentControl
-        /// </summary>
-        private UserControl currentViewRight;
-
-
-        #endregion
+      
         #region ======================================== Properties, Indexer ============================================
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl

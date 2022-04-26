@@ -13,11 +13,16 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
     class RecipeEditAddDescriptionViewModel : ViewModelBase
     {
-        public RecipeEditAddDescriptionViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public RecipeEditAddDescriptionViewModel(IEventAggregator eventAggregator,Description recipeDes) : base(eventAggregator)
         {
+            this.recipesDes = recipeDes;
             LoadDescription();
 
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
+
+            this.AddDescription = new ActionCommand(this.AddDescriptionCommandExecute, this.AddDescriptionCommandCanExecute);
+            
+            this.SaveDescription = new ActionCommand(this.SaveDescriptionCommandExecute, this.SaveDescriptionCommandCanExecute);
 
         }
         #region ======================================== Fields, Constants, Delegates, Events ============================================ 
@@ -25,7 +30,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// <summary>
         /// recipe which contain all the description of the recipe.
         /// </summary>
-        private Recipe recipes { get;  set; }
+        private Description recipesDes { get;  set; }
         /// <summary>
         /// If the description has a hint than it would be there.
         /// </summary>
@@ -54,6 +59,14 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// execute the command and add the recent ingredient in the ObservableCollection 
         /// </summary>
         public ICommand ShowDescription { get; private set; }
+        /// <summary>
+        /// execute the command and add the recent ingredient in the ObservableCollection 
+        /// </summary>
+        public ICommand AddDescription { get; private set; }
+        /// <summary>
+        /// execute the command and save the recent data into description
+        /// </summary>
+        public ICommand SaveDescription { get; private set; }
         #endregion
         #region ======================================== Properties, Indexer =====================================================
         public string Text
@@ -115,7 +128,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         }
 
         /// <summary>
-        /// Gets executed when the user clicks the Save button
+        /// Gets executed and show user the text of the step
         /// </summary>
         /// <param name="parameter">Data used by the command</param>
         private void ShowDescriptionCommandExecute(object parameter)
@@ -125,11 +138,66 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
                 int step = (int)parameter;
                 if(Descriptions.Any(d => d.Step == step))
                 {
+                    this.step = step;
                    this.text = Descriptions[step -1 ].Text;
                     this.OnPropertyChanged(nameof(this.text));
                 }
             }
         }
+
+        /// <summary>
+        /// Determines if the data is correct then the description step can be created
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool AddDescriptionCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed and add a new Step for the description
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void AddDescriptionCommandExecute(object parameter)
+        {
+            Description descriptions = new Description();
+            int count = Descriptions.Count() + 1;
+            if (count == 0 )
+            {
+
+            }
+            else
+            { 
+                
+                descriptions.Step = count;
+
+                Descriptions.Add(descriptions);
+
+                this.OnPropertyChanged(nameof(this.Descriptions));
+            }
+        }
+
+        /// <summary>
+        /// Determines if the data is correct then the description can be saved
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool SaveDescriptionCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed when the user clicks the Save button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void SaveDescriptionCommandExecute(object parameter)
+        {
+            int saveStep = this.step;
+            Descriptions[saveStep - 1].Text = this.Text;
+        }
+
 
         #endregion
 
@@ -138,25 +206,9 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// load the current description data into the descritption field
         /// </summary>
         void LoadDescription()
-        {
-            this.Descriptions = new ObservableCollection<Description>();
-
-            Description description = new Description();
-            description.Step = 1;
-            description.Text = "Das ist der erste Versuch";
-
-            Description description1 = new Description();
-            description1.Step = 2;
-            description1.Text = "Das ist der zweite Versuch";
-
-            Description description2 = new Description();
-            description2.Step = 3;
-            description2.Text = "Das ist der dritte Versuch";
-
-            Descriptions.Add(description);
-            Descriptions.Add(description1);
-            Descriptions.Add(description2);
-
+        { 
+            //foreach (var item in this.recipesDes)
+            //    Descriptions.Add(item);
         }
         
         #endregion

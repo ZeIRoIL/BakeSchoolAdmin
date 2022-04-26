@@ -3,6 +3,7 @@ using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,20 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// create name field
         /// </summary>
         private string name;
+        /// <summary>
+        /// get and set the collection ingredients
+        /// </summary>
+        public ObservableCollection<Ingredient> Ingredients { get; set; }
+        /// <summary>
+        /// get and set the descriptions from the recipe
+        /// </summary>
+        public ObservableCollection<Description> Descriptions;
         #endregion
         public RecipeMainDetailViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             // subscribe to event
             this.EventAggregator.GetEvent<SelectedRecipeDataEvent>().Subscribe(this.SelectedRecipe, ThreadOption.UIThread);
+
         }
         #region ======================================== Properties, Indexer =====================================================
         public string Name
@@ -47,7 +57,30 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         public void SelectedRecipe(Recipe recipe)
         {
             this.Name = recipe.Name;
+
+            // set the ingredients into the view
+            ObservableCollection<Ingredient> ingredientsNew = new ObservableCollection<Ingredient>();
+            foreach (var item in recipe.Ingredients)
+            {
+                ingredientsNew.Add(item);
+            }
+            this.Ingredients = ingredientsNew;
+            OnPropertyChanged(nameof(this.Ingredients));
+
+            // set the Descritpion into the view
+            ObservableCollection<Description> descriptionNew = new ObservableCollection<Description>();
+            foreach (Description item in recipe.Descriptions)
+            {
+                descriptionNew.Add(item);
+            }
+
+            this.Descriptions = descriptionNew;
+            OnPropertyChanged(nameof(this.Descriptions));
+
         }
+        #endregion
+        #region ======================================== Private Helper ================================= 
+        
         #endregion
     }
 }

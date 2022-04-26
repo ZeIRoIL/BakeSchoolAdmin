@@ -44,7 +44,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
-                <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green"/>
+                <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green" Command="{Binding AddDescription}"/>
                 <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red"/>
             </StackPanel>
         </Grid>
@@ -78,6 +78,7 @@
         <!--image for the steps-->
         <Image  Grid.Column="0" Grid.Row="3" />
         <!--save button-->
-        <Button Content="Save" Grid.ColumnSpan="2" Grid.Row="4" Width="400px"/>
+        <Button Content="Save" Grid.ColumnSpan="2" Grid.Row="4" Width="400px"
+                Command="{Binding SaveDescription}"/>
     </Grid>
 </UserControl>
