@@ -1,4 +1,6 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
+using BakeSchoolAdmin_DatabaseConnection.Models;
+using BakeSchoolAdmin_DatabaseConnection.Services;
 using BakeSchoolAdmin_Gui.Events;
 using BakeSchoolAdmin_Gui.Views.Category;
 using BakeSchoolAdmin_Models;
@@ -105,28 +107,39 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         #region ======================================== Private Helper ================================= 
         private void LoadCategories()
         {
-            //// init collection and add data
-            this.Categories = new ObservableCollection<Category>();
-
-            CategoryDetails details = new CategoryDetails();
-            details.Name = "TestCate1";
-            details.Image = "das ist ein Test";
-            details.Text = "Das ist ein Text test";
-            details.Level = 2;
-            Category category = new Category(100, details);
-
-            CategoryDetails details1 = new CategoryDetails();
-            details1.Name = "TestCate2";
-            details1.Image = "das ist ein Test";
-            details1.Text = "Das ist ein Text Test 2";
-            details1.Level = 2;
-
-            Category category1 = new Category(200, details1);
+            DatabaseSettings database = new DatabaseSettings
+            {
+                DatabaseConnection = "mongodb://localhost:27017",
+                DatabaseName= "LearnBakeDb",
+                CategoryCollectionName = "CategoryCollection"
+            };
+            CategoryService categoryService = new CategoryService(database);
+            List<CategoryData> categoryDatas = new List<CategoryData>();
+            categoryDatas =  categoryService.GetCategoryData();
 
 
+            ////// init collection and add data
+            //this.Categories = new ObservableCollection<Category>();
 
-            this.Categories.Add(category);
-            this.Categories.Add(category1);
+            //CategoryDetails details = new CategoryDetails();
+            //details.Name = "TestCate1";
+            //details.Image = "das ist ein Test";
+            //details.Text = "Das ist ein Text test";
+            //details.Level = 2;
+            //Category category = new Category(100, details);
+
+            //CategoryDetails details1 = new CategoryDetails();
+            //details1.Name = "TestCate2";
+            //details1.Image = "das ist ein Test";
+            //details1.Text = "Das ist ein Text Test 2";
+            //details1.Level = 2;
+
+            //Category category1 = new Category(200, details1);
+
+
+
+            //this.Categories.Add(category);
+            //this.Categories.Add(category1);
         }
         #endregion
 

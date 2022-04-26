@@ -10,18 +10,10 @@ namespace BakeSchoolAdmin_DatabaseConnection.Connections
 {
     public class ConnectionSettings
     {
+        private string connection;
         public ConnectionSettings()
         {
-            //CategoryDetails details = new CategoryDetails();
-            //details.Name = "TestCategory";
-            //details.Text = "Das ist ein Test Text!";
-            //details.Image = "dassolleinBildsein";
-            //details.Level = 2;
-            //int[] arrayLevel = { 1, 2 };
-            //details.DifficultyLevelRange = arrayLevel;
-
-       
-     
+            
         }
     }
 }
