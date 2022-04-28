@@ -43,14 +43,13 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             LoadCategories();
 
             // action command, if the button is clicked then set the value of the button into the parameter
-            this.CategoryViewCommand = new ActionCommand(
-                (value) => {
-                this.CategroyViewCommandExecute(value);
-                },
-                this.CategoryViewCommandCanExecute);
-
+            this.CategoryViewCommand = new ActionCommand(this.CategroyViewCommandExecute,this.CategoryViewCommandCanExecute);
+     
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.CategoryAddCommand = new ActionCommand(this.CategroyEditViewCommandExecute, this.CategoryEditViewCommandCanExecute);
+
+            // action command if the delete button is clicked.
+            this.CategoryDeleteViewCommand = new ActionCommand(this.CategroyDeleteViewCommandExecute, this.CategoryDeleteViewCommandCanExecute);
 
             //subscribe new event for the new data save
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Subscribe(this.AddCategory, ThreadOption.UIThread);
@@ -86,6 +85,11 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         public ICommand CategoryAddCommand { get; private set; }
 
         /// <summary>
+        /// it is the delete button for the selected category
+        /// </summary>
+        public ICommand CategoryDeleteViewCommand { get; private set; }
+
+        /// <summary>
         /// Gets or sets the list with all categories
         /// </summary>
         public ObservableCollection<Category> Categories { get; set; }
@@ -98,24 +102,38 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <param name="category">Reference to the sent student data</param>
         public void AddCategory(Category category)
         {
-            this.Categories.Add(category);
+            CategoryService categoryService = new CategoryService();
+            if (categoryService.init())
+            {
+                categoryService.WriteData(category);
 
-            this.OnPropertyChanged(nameof(this.Categories));
+            }
+            LoadCategories();
+            this.OnPropertyChanged(nameof(Categories));
         }
         #endregion
 
         #region ======================================== Private Helper ================================= 
+        /// <summary>
+        /// Initialize the database connection and is loaded in the CatergoryData
+        /// </summary>
         private void LoadCategories()
         {
-            DatabaseSettings database = new DatabaseSettings
+            
+            CategoryService categoryService = new CategoryService();
+            if (categoryService.init())
             {
-                DatabaseConnection = "mongodb://localhost:27017",
-                DatabaseName= "LearnBakeDb",
-                CategoryCollectionName = "CategoryCollection"
-            };
-            CategoryService categoryService = new CategoryService(database);
-            List<CategoryData> categoryDatas = new List<CategoryData>();
-            categoryDatas =  categoryService.GetCategoryData();
+                IList<Category> categorydata = new List<Category>();
+
+                categorydata = categoryService.ReadData();
+                this.Categories = categoryService.GetCategoryObserv(categorydata);
+            }
+            
+
+            
+
+
+            
 
 
             ////// init collection and add data
@@ -141,6 +159,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             //this.Categories.Add(category);
             //this.Categories.Add(category1);
         }
+       
         #endregion
 
         #region ======================================== Commands ================================= 
@@ -169,6 +188,25 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(userControl);
             // Send the last id from the Categories
             this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(Categories.Count +1 );
+        }
+
+        /// <summary>
+        /// Determines if the delete the category view loading command can be executed.
+        /// </summary>
+        /// <param name="parameter">Data used by the Command</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        private bool CategoryDeleteViewCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed when the user clicks the delete button
+        /// </summary>
+        /// <param name="parameter">Data used by the command</param>
+        private void CategroyDeleteViewCommandExecute(object parameter)
+        {
+            throw new Exception("");
         }
 
 
@@ -204,7 +242,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
                     int i = category.Id;
                     
                     this.selectedCategory = category;
-                    
+
                     this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Publish(this.selectedCategory);
                 }
             }

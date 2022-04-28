@@ -355,9 +355,9 @@
       <Project>{3D7ABEA8-E540-417A-AC73-5B46B69A617A}</Project>
       <Name>BakeSchoolAdmin_Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BakeSchoolAdmin_DatabaseConnection\BakeSchoolAdmin_DatabaseConnection.csproj">
+    <ProjectReference Include="..\BakeSchoolAdmin_DatabaseConnection\BakeSchoolAdmin_Services.csproj">
       <Project>{81110071-F754-4400-8C63-A23CCDA5C200}</Project>
-      <Name>BakeSchoolAdmin_DatabaseConnection</Name>
+      <Name>BakeSchoolAdmin_Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\BakeSchoolAdmin_Models\BakeSchoolAdmin_Models.csproj">
       <Project>{2d7bcd85-c7d4-4f9f-a767-5db6e29efd4a}</Project>

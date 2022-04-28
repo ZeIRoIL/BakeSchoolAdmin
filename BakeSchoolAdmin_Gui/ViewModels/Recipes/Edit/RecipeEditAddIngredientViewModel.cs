@@ -91,7 +91,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
             }
         }
         /// <summary>
-        /// The recipe which will tranfers into the endview if the user clicked on the button "Save"
+        /// The recipe which will tranfer into the endview if the user clicked on the button "Save"
         /// </summary>
         public Recipe Recipe { get; private set; }
         /// <summary>
