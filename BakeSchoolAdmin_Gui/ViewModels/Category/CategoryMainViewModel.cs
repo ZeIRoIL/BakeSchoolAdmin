@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace BakeSchoolAdmin_Gui.ViewModels
 {
@@ -94,6 +95,35 @@ namespace BakeSchoolAdmin_Gui.ViewModels
                     //// takes the property as a string -> OnPropertyChanged(nameof())
                     this.OnPropertyChanged(nameof(this.CurrentViewRight));
                 }
+            }
+        }
+
+
+        bool changeColor;
+        public Brush BoxColor
+        {
+            get
+            {
+                if (ChangeColor)
+                {
+                    return new SolidColorBrush(Colors.Green);
+                }
+                else
+                {
+                    return new SolidColorBrush(Colors.Red);
+                }
+            }
+        }
+        public bool ChangeColor
+        {
+            get
+            {
+                return changeColor;
+            }
+            set
+            {
+                changeColor = value;
+                this.OnPropertyChanged(nameof(this.BoxColor));
             }
         }
 

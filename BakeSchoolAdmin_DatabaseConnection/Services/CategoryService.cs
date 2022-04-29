@@ -77,7 +77,13 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
             
             return categories;
         }
+        public bool DeleteData(int id)
+        {
+            var deleteFilter = Builders<CategoryData>.Filter.Eq("categoryId", id);
 
+            categoriesdata.DeleteOne(deleteFilter);
+            return true;
+        }
         public bool WriteData(Category data)
         {
             int[] levelRange = data.Details.difficultyLevelRange;

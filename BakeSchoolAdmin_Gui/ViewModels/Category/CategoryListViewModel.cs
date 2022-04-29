@@ -109,6 +109,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
 
             }
             LoadCategories();
+            
             this.OnPropertyChanged(nameof(Categories));
         }
         #endregion
@@ -206,7 +207,13 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// <param name="parameter">Data used by the command</param>
         private void CategroyDeleteViewCommandExecute(object parameter)
         {
-            throw new Exception("");
+            CategoryService categoryService = new CategoryService();
+            if (categoryService.init())
+            {
+                categoryService.DeleteData((int)parameter);
+                LoadCategories();
+                this.OnPropertyChanged(nameof(Categories));
+            }
         }
 
 

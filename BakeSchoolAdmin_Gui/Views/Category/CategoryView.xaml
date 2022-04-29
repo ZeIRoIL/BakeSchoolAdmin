@@ -39,8 +39,7 @@
    
                                          Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CategoryDeleteViewCommand}" />
                                     <Button  Content="{Binding Details.Name}" CommandParameter="{Binding Id}" Width="500"
-   
-                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CategoryViewCommand}" />
+                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.CategoryViewCommand}" HorizontalAlignment="Left" FontWeight="Bold" />
                                 </StackPanel>
                                 
                             </StackPanel>

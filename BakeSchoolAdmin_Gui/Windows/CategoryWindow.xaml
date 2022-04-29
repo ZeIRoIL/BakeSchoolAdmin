@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Unsaved" Grid.Column="1" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"   Height="46" Width="auto" Background="PaleVioletRed"/>
+            <Label Content="Unsaved" Grid.Column="1" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"   Height="46" Width="auto" Background="{Binding BoxColor}"/>
         </Grid>
         <Label Content="Bereiche" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="46" Width="124"/>
         <ContentControl Grid.Row="2" Content="{Binding CurrentViewLeft}"/>
