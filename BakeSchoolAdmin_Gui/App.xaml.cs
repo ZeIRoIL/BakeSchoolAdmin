@@ -2,6 +2,7 @@
 using BakeSchoolAdmin_Gui.ViewModels;
 using System.Diagnostics;
 using System.Windows;
+using BakeSchoolAdmin_Gui.Views;
 
 namespace BakeSchoolAdmin_Gui
     
@@ -41,6 +42,7 @@ namespace BakeSchoolAdmin_Gui
 
             // init View and ViewModel
             MainWindow mainWindow = new MainWindow();
+            
             MainViewModel mainViewModel = new MainViewModel(eventAggregator);
 
             // connect the mainWindow to the mainViewModel

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BakeSchoolAdmin_Gui.View
+namespace BakeSchoolAdmin_Gui.Views
 {
     /// <summary>
-    /// Interaktionslogik für MainRecipesView.xaml
+    /// Interaktionslogik für MainView.xaml
     /// </summary>
-    public partial class MainRecipesView : UserControl
+    public partial class MainView : UserControl
     {
-        public MainRecipesView()
+        public MainView()
         {
             InitializeComponent();
         }

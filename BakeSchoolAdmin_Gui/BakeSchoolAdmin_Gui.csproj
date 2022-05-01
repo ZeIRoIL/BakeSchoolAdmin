@@ -186,6 +186,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -223,7 +224,7 @@
     <Compile Include="ViewModels\Recipes\MainRecipesViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainDetailViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainListViewModel.cs" />
-    <Compile Include="ViewModels\Recipes\RecipeMainViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\RecipeHomeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Category\CategoryEdit.xaml.cs">
       <DependentUpon>CategoryEdit.xaml</DependentUpon>
@@ -234,8 +235,17 @@
     <Compile Include="Views\Category\CategoryView.xaml.cs">
       <DependentUpon>CategoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainRecipesView.xaml.cs">
-      <DependentUpon>MainRecipesView.xaml</DependentUpon>
+    <Compile Include="Views\MainCategoryView.xaml.cs">
+      <DependentUpon>MainCategoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainRecipeView.xaml.cs">
+      <DependentUpon>MainRecipeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Recipes\RecipeHomeView.xaml.cs">
+      <DependentUpon>RecipeHomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Recipes\MainAddRecipes.xaml.cs">
       <DependentUpon>MainAddRecipes.xaml</DependentUpon>
@@ -254,12 +264,6 @@
     </Compile>
     <Compile Include="Views\Recipes\RecipesMainView.xaml.cs">
       <DependentUpon>RecipesMainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\CategoryWindow.xaml.cs">
-      <DependentUpon>CategoryWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\RecipesWindow.xaml.cs">
-      <DependentUpon>RecipesWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -285,7 +289,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainRecipesView.xaml">
+    <Page Include="Views\MainCategoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Recipes\RecipeHomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -310,14 +326,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Recipes\RecipesMainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\CategoryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\RecipesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -351,6 +359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ressource\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BakeSchoolAdmin_Commands\BakeSchoolAdmin_Commands.csproj">

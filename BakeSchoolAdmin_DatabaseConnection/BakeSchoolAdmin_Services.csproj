@@ -169,7 +169,9 @@
     <Compile Include="Interfaces\IDatabaseSettings.cs" />
     <Compile Include="Mapper\CategoryMapperProfil.cs" />
     <Compile Include="Mapper\MappingProfil.cs" />
+    <Compile Include="Mapper\RecipeMapperProfil.cs" />
     <Compile Include="Models\CategoryData.cs" />
+    <Compile Include="Models\RecipeData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -186,6 +188,7 @@
     <Compile Include="ServiceRecipe.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\DatabaseSettings.cs" />
+    <Compile Include="Services\RecipeService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

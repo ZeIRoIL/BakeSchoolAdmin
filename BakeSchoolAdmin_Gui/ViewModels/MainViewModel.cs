@@ -1,7 +1,6 @@
 ﻿using BakeSchoolAdmin_Commands.Commands;
 using Microsoft.Practices.Prism.Events;
 using BakeSchoolAdmin_Gui.View;
-using BakeSchoolAdmin_Gui.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +10,22 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using BakeSchoolAdmin_Gui.ViewModels.Recipes;
 using System.Windows;
+using BakeSchoolAdmin_Gui.Views;
 
 namespace BakeSchoolAdmin_Gui.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         #region ======================================== Fields ================================= 
-        CategoryWindow categoryWindow;
+        UserControl categoryWindow;
 
-        RecipesWindow recipesWindow;
+        UserControl recipesWindow;
+
+        /// <summary>
+        /// View that is currently bound to the main ContentControl
+        /// </summary>
+        private UserControl currentMainView;
+
         #endregion
 
         #region ======================================== Con-/Destructor, Dispose, Clone ================================= 
@@ -30,8 +36,16 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// via <see cref="Microsoft.Practices.Prism.Events"/> </param>
         public MainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
+
+            // show the main site with the buttons
+            MainView mainView = new MainView();
+            this.CurrentMainView = mainView;
+
             //// Hookup command to be associated
             this.CategoryViewCommand = new ActionCommand(this.CategoryViewExecute, this.CategoryViewCanExecute);
+
+            //// Hookup command to be associated
+            this.MainViewCommand = new ActionCommand(this.MainViewExecute, this.MainViewCanExecute);
 
             //// Hookup command to be associated
             this.RecipesViewCommand = new ActionCommand(this.RecipesViewExecute, this.RecipesViewCanExecute);
@@ -39,6 +53,33 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         #endregion
 
         #region ======================================== Properties, Indexer ================================= 
+
+        /// <summary>
+        /// Gets or sets the view that is currently bound to the main ContentControl
+        /// </summary>
+        public UserControl CurrentMainView
+        {
+            get
+            {
+                return this.currentMainView;
+            }
+
+            set
+            {
+                if (this.currentMainView != value)
+                {
+                    this.currentMainView = value;
+                    //// takes the property as a string -> OnPropertyChanged(nameof())
+                    this.OnPropertyChanged(nameof(this.CurrentMainView));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the MainviewCommand
+        /// </summary>
+        public ICommand MainViewCommand { get; private set; }
+
         /// <summary>
         /// Gets the CategoryView
         /// </summary>
@@ -51,16 +92,29 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         #endregion
 
         #region ======================================== Commands ================================= 
+
+        /// <summary>
+        /// Determines if the loading main view command can be execute
+        /// </summary>
+        private bool MainViewCanExecute(object parameter)
+        {
+            return true;
+        }
+        /// <summary>
+        /// Gets execute when the user clicks the main button
+        /// </summary>
+        private void MainViewExecute(object parameter)
+        {
+            MainView main = new MainView();
+            this.CurrentMainView = main;
+        }
+
         /// <summary>
         /// Determines if the loading category view command can be execute
         /// </summary>
         private bool CategoryViewCanExecute(object parameter)
         {
-            if (this.categoryWindow == null)
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
         /// <summary>
         /// Gets execute when the user clicks the category button
@@ -68,11 +122,12 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         private void CategoryViewExecute(object parameter)
         {
                 // Create a new Window with the data from CategoryMainViewModel
-                CategoryWindow window = new CategoryWindow();
-                this.categoryWindow = window;
+                MainCategoryView mainCategoryView = new MainCategoryView();
+                this.categoryWindow = mainCategoryView;
                 CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
-                window.DataContext = categoryMainView;
-                window.Show();          
+                mainCategoryView.DataContext = categoryMainView;
+                this.CurrentMainView = mainCategoryView;
+       
         }
 
         /// <summary>
@@ -80,11 +135,8 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         /// </summary>
         private bool RecipesViewCanExecute(object parameter)
         {
-           if(this.recipesWindow == null)
-            {
-                return true;
-            }
-            return false;
+          
+            return true;
         }
         /// <summary>
         /// Gets execute when the user clicks the recipes button
@@ -92,11 +144,11 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         private void RecipesViewExecute(object parameter)
         {
                 // Create a new Window with the data from MainRecipesViewModel
-                RecipesWindow window = new RecipesWindow();
-                this.recipesWindow = window;
+                MainRecipeView mainRecipesView = new MainRecipeView();
+                this.recipesWindow = mainRecipesView;
                 MainRecipesViewModel recipesMainView = new MainRecipesViewModel(EventAggregator);
-                window.DataContext = recipesMainView;
-                window.Show();
+                mainRecipesView.DataContext = recipesMainView;
+                this.CurrentMainView = mainRecipesView;
         }
         #endregion
 

@@ -15,7 +15,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
     /// <summary>
     /// the view for the list and details user control
     /// </summary>
-    class RecipeMainViewModel : ViewModelBase
+    class RecipeHomeViewModel : ViewModelBase
     {
         #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
@@ -32,7 +32,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         private UserControl currentViewRight;
 
         #endregion
-        public RecipeMainViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes ) : base(eventAggregator)
+        public RecipeHomeViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes ) : base(eventAggregator)
         {
 
             RecipesMainView view = new RecipesMainView();

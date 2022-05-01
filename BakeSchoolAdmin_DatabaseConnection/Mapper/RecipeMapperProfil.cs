@@ -9,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace BakeSchoolAdmin_DatabaseConnection.Mapper
 {
-    public class CategoryMapperProfil : Profile
+    public class RecipeMapperProfil : Profile
     {
-        public CategoryMapperProfil()
+        public RecipeMapperProfil()
         {
-            CreateMap<Category, CategoryData>();
-          
 
-            CreateMap<CategoryData, Category>();
 
+            
         }
     }
 }

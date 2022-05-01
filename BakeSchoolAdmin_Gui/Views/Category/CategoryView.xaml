@@ -18,12 +18,6 @@
             <RowDefinition Height="35*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Grid.Row="0">
-            <Button Content="Startseite" />
-        </StackPanel>
-
-
-
         <Grid Grid.Row="2"  Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

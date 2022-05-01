@@ -9,6 +9,10 @@ namespace BakeSchoolAdmin_Models
 {
     public class Recipe
     {
+        public Recipe()
+        {
+
+        }
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId ObjectId { get; set; }

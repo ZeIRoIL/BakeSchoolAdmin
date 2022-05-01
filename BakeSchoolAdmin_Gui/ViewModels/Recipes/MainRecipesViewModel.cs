@@ -1,5 +1,6 @@
-﻿using BakeSchoolAdmin_Gui.Events;
-using BakeSchoolAdmin_Gui.View;
+﻿using BakeSchoolAdmin_DatabaseConnection.Services;
+using BakeSchoolAdmin_Gui.Events;
+using BakeSchoolAdmin_Gui.Views;
 using BakeSchoolAdmin_Gui.Views.Recipes;
 using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
@@ -17,41 +18,59 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 /// </summary>
     class MainRecipesViewModel : ViewModelBase
     {
+        #region ======================================== Fields, Constants, Delegates, Events =============================
+        /// <summary>
+        /// View that is currently bound to the main ContentControl
+        /// </summary>
+        private UserControl currentMainRecipeView;
+        /// <summary>
+        /// Observable Collection for the recipes
+        /// </summary>
+        private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
+        #endregion
         #region ======================================== Properties, Indexer ============================================
+
+        /// <summary>
+        /// the current recipe which are  selected 
+        /// </summary>
+        private Recipe recipe;
+
         /// <summary>
         /// Gets or sets the view that is currently bound to the main ContentControl
         /// </summary>
-        public UserControl CurrentMainView
+        public UserControl CurrentMainRecipeView
         {
             get
             {
-                return this.currentMainView;
+                return this.currentMainRecipeView;
             }
 
             set
             {
-                if (this.currentMainView != value)
+                if (this.currentMainRecipeView != value)
                 {
-                    this.currentMainView = value;
+                    this.currentMainRecipeView = value;
                     //// takes the property as a string -> OnPropertyChanged(nameof())
-                    this.OnPropertyChanged(nameof(this.CurrentMainView));
+                    this.OnPropertyChanged(nameof(this.CurrentMainRecipeView));
                 }
             }
         }
-        /// <summary>
-        /// Gets and sets recipe
-        /// </summary>
-        private Recipe recipe { get; set; }
-        private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
-        #endregion
+
+
+          #endregion
         public MainRecipesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             InitRecipe();
-       
-            MainRecipesView view = new MainRecipesView();
-            RecipeMainViewModel recipeMainViewModel = new RecipeMainViewModel(EventAggregator, recipes);
-            view.DataContext = recipeMainViewModel;
-            this.currentMainView = view;
+
+            /// subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
+
+            // open the view with all recipes and home View from recipes!
+            RecipeHomeViewModel recipeMainViewModel = new RecipeHomeViewModel(EventAggregator, recipes);
+            RecipeHomeView recipeHomeView = new RecipeHomeView();
+
+            recipeHomeView.DataContext = recipeMainViewModel;
+            this.CurrentMainRecipeView = recipeHomeView;
             
             /// subscribe to event
             this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
@@ -64,17 +83,17 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         /// <param name="category">Reference to the sent student data</param>
         public void ChangeRecipeCurrentMainView(UserControl user)
         {
-            this.currentMainView = user;
-            this.OnPropertyChanged(nameof(currentMainView));
+            this.CurrentMainRecipeView = user;
+            this.OnPropertyChanged(nameof(CurrentMainRecipeView));
         }
-        #endregion
-        #region ======================================== Fields, Constants, Delegates, Events =============================
-        /// <summary>
-        /// View that is currently bound to the main ContentControl
-        /// </summary>
-        private UserControl currentMainView;
+
+        public void ChangeCurrentMainView(UserControl main)
+        {
+
+        }
 
         #endregion
+       
         #region ======================================== Private Helper ================================= 
         /// <summary>
         /// load the current description data into the descritption field
@@ -95,7 +114,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
             description2.Step = 3;
             description2.Text = "Das ist der dritte Versuch";
 
-            List <Description> descriptions = new List<Description>();
+            List<Description> descriptions = new List<Description>();
             descriptions.Add(description1);
             descriptions.Add(description2);
 
@@ -139,7 +158,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 
 
             List<Ingredient> ingredients1 = new List<Ingredient>();
-            Ingredient ingredient11= new Ingredient();
+            Ingredient ingredient11 = new Ingredient();
             ingredient.Data = "Käse";
             Ingredient ingredient12 = new Ingredient();
             ingredient1.Data = "Erdbeere";
@@ -154,6 +173,16 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 
             this.recipes.Add(recipe);
             this.recipes.Add(recipe1);
+
+#warning need the implementation
+            //RecipeService recipeService = new RecipeService();
+            //if (recipeService.init())
+            //{
+            //    IList<Recipe> recipedata = new List<Recipe>();
+
+            //    recipedata = recipeService.ReadData();
+            //    this.recipes = recipeService.GetCategoryObserv(recipedata);
+            //}
         }
         #endregion
       

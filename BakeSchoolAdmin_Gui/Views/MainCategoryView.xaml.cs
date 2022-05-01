@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BakeSchoolAdmin_Gui.Windows
+namespace BakeSchoolAdmin_Gui.Views
 {
     /// <summary>
-    /// Interaktionslogik für CategoryWindow.xaml
+    /// Interaktionslogik für MainCategoryView.xaml
     /// </summary>
-    public partial class CategoryWindow : Window
+    public partial class MainCategoryView : UserControl
     {
-        public CategoryWindow()
+        public MainCategoryView()
         {
             InitializeComponent();
         }

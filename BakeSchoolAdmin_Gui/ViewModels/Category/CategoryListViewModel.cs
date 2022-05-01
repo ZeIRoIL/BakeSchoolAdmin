@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -106,11 +107,12 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             if (categoryService.init())
             {
                 categoryService.WriteData(category);
-
             }
             LoadCategories();
             
-            this.OnPropertyChanged(nameof(Categories));
+            MessageBox.Show("Added new Category!");
+ 
+             this.OnPropertyChanged(nameof(Categories));
         }
         #endregion
 
@@ -129,14 +131,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
                 categorydata = categoryService.ReadData();
                 this.Categories = categoryService.GetCategoryObserv(categorydata);
             }
-            
-
-            
-
-
-            
-
-
+           
             ////// init collection and add data
             //this.Categories = new ObservableCollection<Category>();
 

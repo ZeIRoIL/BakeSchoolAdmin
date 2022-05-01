@@ -16,6 +16,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         public RecipeEditAddDescriptionViewModel(IEventAggregator eventAggregator,Description recipeDes) : base(eventAggregator)
         {
             this.recipesDes = recipeDes;
+            this.Descriptions = new ObservableCollection<Description>();
             LoadDescription();
 
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
@@ -68,7 +69,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         /// </summary>
         public ICommand SaveDescription { get; private set; }
         #endregion
-        #region ======================================== Properties, Indexer =====================================================
+        #region------------------------------------------------------------------------------------ Properties, Indexer-------------------------------------------------------------------------------------------------
         public string Text
         {
             get
@@ -117,6 +118,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         #endregion
 
         #region ======================================== Command ====================================================
+
         /// <summary>
         /// Determines if the data is correct then the ingredient is created
         /// </summary>
@@ -162,6 +164,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
         private void AddDescriptionCommandExecute(object parameter)
         {
             Description descriptions = new Description();
+            
             int count = Descriptions.Count() + 1;
             if (count == 0 )
             {

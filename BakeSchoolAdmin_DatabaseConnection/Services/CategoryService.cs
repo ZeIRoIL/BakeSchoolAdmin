@@ -23,7 +23,7 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
         public  IMongoCollection<CategoryData> categoriesdata { get; set; }
        
         private readonly string DatabaseConnection = "mongodb://localhost:27017";
-        private readonly string DatabaseName = "LearnBakeDb";
+        private readonly string DatabaseName = "test";
         private readonly string CategoryCollectionName = "CategoryCollection";
 
         private MongoClient client;
@@ -77,6 +77,7 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
             
             return categories;
         }
+
         public bool DeleteData(int id)
         {
             var deleteFilter = Builders<CategoryData>.Filter.Eq("categoryId", id);
@@ -84,6 +85,7 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
             categoriesdata.DeleteOne(deleteFilter);
             return true;
         }
+
         public bool WriteData(Category data)
         {
             int[] levelRange = data.Details.difficultyLevelRange;
@@ -93,11 +95,6 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
             string text = data.Details.Text;
             int level = data.Details.Level;
 
-            //BsonArray bArray = new BsonArray();
-            //foreach (var term in level)
-            //{
-            //    bArray.Add(term.ToBson());
-            //}l
             try
             {
                 var document = new BsonDocument
@@ -141,8 +138,6 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
             //loop through all the records and add to observable collection object
             foreach (var item in categoriesList)
                 categories.Add(item);
-
-
 
             return categories;
         }

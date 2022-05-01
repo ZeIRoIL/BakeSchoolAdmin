@@ -7,23 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32*"/>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="32*"/>
-            <RowDefinition Height="24*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="25*"/>
-            <RowDefinition Height="60*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="BakeSchool Admin" Grid.Row="1" Grid.Column="1" FontSize="30" HorizontalAlignment="Center" Margin="52,0" Width="258" />
-
-        <Button Content="Bereich Seite" Grid.Column="1" Grid.Row="3" Command="{Binding CategoryViewCommand}"/>
-        <Button Content="Rezepte" Grid.Column="1" Grid.Row="5"  Command="{Binding RecipesViewCommand}"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" >
+            <Button Content="Home" Height="25" Width="50" Margin="10 10 10 0" Command="{Binding MainViewCommand}"/>
+        </StackPanel>
+        <ContentControl Grid.Row="1"  Content="{Binding CurrentMainView}"/>
     </Grid>
 </Window>

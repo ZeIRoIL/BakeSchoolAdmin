@@ -2,7 +2,6 @@
 using BakeSchoolAdmin_Gui.Events;
 using BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit;
 using BakeSchoolAdmin_Gui.Views.Recipes;
-using BakeSchoolAdmin_Gui.Windows;
 using BakeSchoolAdmin_Models;
 using Microsoft.Practices.Prism.Events;
 using System;
