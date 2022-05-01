@@ -22,7 +22,7 @@ namespace BakeSchoolAdmin_DatabaseConnection.Services
 
         private readonly string DatabaseConnection = "mongodb://localhost:27017";
         private readonly string DatabaseName = "test";
-        private readonly string RecipeCollectionName = "RecipeCollection";
+        private readonly string RecipeCollectionName = "RecipesCollection";
 
         private MongoClient client;
         public bool init()

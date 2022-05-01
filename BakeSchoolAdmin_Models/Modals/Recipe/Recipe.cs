@@ -21,7 +21,7 @@ namespace BakeSchoolAdmin_Models
         [BsonElement("number")]
         public int Number { get; set; }
         [BsonElement("ingredients")]
-        public  List<Ingredient> Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
         [BsonElement("description")]
         public List<Description> Descriptions { get; set; }
     }
