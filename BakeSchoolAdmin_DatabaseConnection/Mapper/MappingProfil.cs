@@ -1,14 +1,16 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_DatabaseConnection.Mapper
+﻿namespace BakeSchoolAdmin_DatabaseConnection.Mapper
 {
-    public class MappingProfil
+    using AutoMapper;
+
+    /// <summary>
+    /// Defines the <see cref="MappingProfil" />.
+    /// </summary>
+    public static class MappingProfil
     {
+        /// <summary>
+        /// The InitializeAutoMapper.
+        /// </summary>
+        /// <returns>The <see cref="MapperConfiguration"/>.</returns>
         public static MapperConfiguration InitializeAutoMapper()
         {
             MapperConfiguration configuration = new MapperConfiguration(cfg =>

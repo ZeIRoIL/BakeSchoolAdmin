@@ -1,37 +1,29 @@
-﻿using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
+﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
-    class RecipeEditCheckRecipeViewModel : ViewModelBase
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
+
+    /// <summary>
+    /// Defines the <see cref="RecipeEditCheckRecipeViewModel" />.
+    /// </summary>
+    internal class RecipeEditCheckRecipeViewModel : ViewModelBase
     {
-        
-        public RecipeEditCheckRecipeViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
-        {
-
-        }
-        #region ======================================== Fields, Constants, Delegates, Events ============================================ 
-
+        /// <summary>
+        /// Defines the recipe.
+        /// </summary>
         private Recipe recipe;
+
+        /// <summary>
+        /// Defines the description.
+        /// </summary>
         private Description description;
 
-        #endregion
-        #region ======================================== Properties, Indexer =====================================================
-
-
-        #endregion
-        #region ======================================== Command ====================================================
-
-        #endregion
-
-        #region ======================================== Private Helper =================================
-
-        #endregion
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecipeEditCheckRecipeViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        public RecipeEditCheckRecipeViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+        }
     }
 }

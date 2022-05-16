@@ -1,76 +1,70 @@
-﻿using BakeSchoolAdmin_Gui.Events;
-using BakeSchoolAdmin_Gui.Views.Recipes;
-using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-
-namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
+﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Views.Recipes;
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
+    using System.Windows.Controls;
+
     /// <summary>
-    /// the view for the list and details user control
+    /// the view for the list and details user control.
     /// </summary>
-    class RecipeHomeViewModel : ViewModelBase
+    internal class RecipeHomeViewModel : ViewModelBase
     {
-        #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
-        /// the current recipe which are  selected 
+        /// the current recipe which are  selected..
         /// </summary>
         private Recipe recipe;
+
         /// <summary>
-        /// View that is currently bound to the left ContentControl
+        /// View that is currently bound to the left ContentControl..
         /// </summary>
         private UserControl currentViewLeft;
+
         /// <summary>
-        /// View that is currently bound to the right ContentControl
+        /// View that is currently bound to the right ContentControl..
         /// </summary>
         private UserControl currentViewRight;
 
-        #endregion
-        public RecipeHomeViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes ) : base(eventAggregator)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecipeHomeViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        /// <param name="recipes">The recipes<see cref="ObservableCollection{Recipe}"/>.</param>
+        public RecipeHomeViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes) : base(eventAggregator)
         {
-
             RecipesMainView view = new RecipesMainView();
-            RecipeMainListViewModel model = new RecipeMainListViewModel(EventAggregator,recipes);
+            RecipeMainListViewModel model = new RecipeMainListViewModel(EventAggregator, recipes);
             view.DataContext = model;
             this.currentViewLeft = view;
 
-            
-
-
-            /// subscribe to event
+            // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
 
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
         }
 
-        #region ======================================== Events =======================================================
         /// <summary>
-        /// Event handler to notice changes in the current categroy data
+        /// Event handler to notice changes in the current category data.
         /// </summary>
-        /// <param name="category">Reference to the sent student data</param>
+        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
         public void ChangetheCurrentViewRight(UserControl userControl)
         {
             this.currentViewRight = userControl;
             this.OnPropertyChanged(nameof(this.currentViewRight));
         }
 
-        public void ChangeCurrentMainView(UserControl main)
-        {
-       
-        }
-        #endregion
-
-      
-        #region ======================================== Properties, Indexer ============================================
         /// <summary>
-        /// Gets or sets the view that is currently bound to the left ContentControl
+        /// The ChangeCurrentMainView.
+        /// </summary>
+        /// <param name="main">The main<see cref="UserControl"/>.</param>
+        public void ChangeCurrentMainView(UserControl main) => throw new Exception("change current MainView");
+        
+        /// <summary>
+        /// Gets or sets the view that is currently bound to the left ContentControl..
         /// </summary>
         public UserControl CurrentViewLeft
         {
@@ -91,7 +85,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
         }
 
         /// <summary>
-        /// Gets or sets the view that is currently bound to the right ContentControl
+        /// Gets or sets the view that is currently bound to the right ContentControl..
         /// </summary>
         public UserControl CurrentViewRight
         {
@@ -110,7 +104,5 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
                 }
             }
         }
-
-        #endregion
     }
 }

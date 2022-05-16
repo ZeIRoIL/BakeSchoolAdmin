@@ -39,7 +39,7 @@
             <!--Step Label-->
             <Label Content="Schritte:" Grid.Row="0"/>
             <!--StepBox-->
-            <Grid Grid.Row="1" Grid.Column="1" Background="Black">
+            <Grid Grid.Row="1" Grid.Column="0" Background="Black">
                 <ItemsControl
                       ItemsSource="{Binding Path= Descriptions}">
                     <ItemsControl.ItemsPanel>
@@ -60,9 +60,13 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
+                    <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green" Command="{Binding AddDescription}"/>
+                    <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red"/>
+                </StackPanel>
             </Grid>
             <!--Descriptiontext-->
-            <TextBox Grid.Row="3" Text="Das ist eine Beschreibung"/>
+            <TextBox Grid.Row="3" Text="{Binding Text}"/>
         </Grid>
 
         <!--Hint View-->
@@ -76,9 +80,34 @@
             <!--Step Label-->
             <Label Content="Schritte:" Grid.Row="0"/>
             <!--StepBox-->
-            <TextBox Grid.Row="1"></TextBox>
+            <Grid Grid.Row="1" Grid.Column="1" Background="Black">
+                <ItemsControl
+                      ItemsSource="{Binding Path=Hints}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button  Content="{Binding Step}"
+                             Width="20"
+                             Height="20"
+                             Margin="5"
+                             CommandParameter="{Binding Step}"
+                             Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, 
+                             Path=DataContext.ShowHint}"
+                            />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  >
+                    <Button  Content="+" Width="30" Margin="0,0,0,0" Background="Green"/>
+                    <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red"/>
+                </StackPanel>
+            </Grid>
             <!--Descriptiontext-->
-            <TextBox Grid.Row="3" Text="Das ist eine Beschreibung"/>
+            <TextBox Grid.Row="3" Text="{Binding TextHint}"/>
         </Grid>
         <!--Button to edit-->
         <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Edit" Margin="84,17,120,10"/>

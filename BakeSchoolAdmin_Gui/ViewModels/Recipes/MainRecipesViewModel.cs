@@ -1,42 +1,58 @@
-﻿using BakeSchoolAdmin_DatabaseConnection.Services;
-using BakeSchoolAdmin_Gui.Events;
-using BakeSchoolAdmin_Gui.Views;
-using BakeSchoolAdmin_Gui.Views.Recipes;
-using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
+{
+    using System.Collections.ObjectModel;
+    using System.Windows.Controls;
+    using System.Collections.Generic;
+    using BakeSchoolAdmin_DatabaseConnection.Services;
+    using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Views;
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
 
-namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
-{/// <summary>
-/// the main window for the recipes.
-/// </summary>
-    class MainRecipesViewModel : ViewModelBase
+    /// <summary>
+    /// the main window for the recipes.
+    /// </summary>
+    internal class MainRecipesViewModel : ViewModelBase
     {
-        #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
-        /// View that is currently bound to the main ContentControl
+        /// Initializes a new instance of the <see cref="MainRecipesViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        public MainRecipesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+            this.InitRecipe();
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
+
+            // open the view with all recipes and home View from recipes!
+            RecipeHomeViewModel recipeMainViewModel = new RecipeHomeViewModel(EventAggregator, recipes);
+            RecipeHomeView recipeHomeView = new RecipeHomeView();
+
+            recipeHomeView.DataContext = recipeMainViewModel;
+            this.CurrentMainRecipeView = recipeHomeView;
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
+        }
+
+        /// <summary>
+        /// View that is currently bound to the main ContentControl..
         /// </summary>
         private UserControl currentMainRecipeView;
-        /// <summary>
-        /// Observable Collection for the recipes
-        /// </summary>
-        private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
-        #endregion
-        #region ======================================== Properties, Indexer ============================================
 
         /// <summary>
-        /// the current recipe which are  selected 
+        /// Observable Collection for the recipes..
+        /// </summary>
+        private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
+
+        /// <summary>
+        /// the current recipe which are  selected..
         /// </summary>
         private Recipe recipe;
 
         /// <summary>
-        /// Gets or sets the view that is currently bound to the main ContentControl
+        /// Gets or sets the view that is currently bound to the main ContentControl..
         /// </summary>
         public UserControl CurrentMainRecipeView
         {
@@ -56,50 +72,30 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
             }
         }
 
-
-          #endregion
-        public MainRecipesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
-        {
-            InitRecipe();
-
-            /// subscribe to event
-            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
-
-            // open the view with all recipes and home View from recipes!
-            RecipeHomeViewModel recipeMainViewModel = new RecipeHomeViewModel(EventAggregator, recipes);
-            RecipeHomeView recipeHomeView = new RecipeHomeView();
-
-            recipeHomeView.DataContext = recipeMainViewModel;
-            this.CurrentMainRecipeView = recipeHomeView;
-            
-            /// subscribe to event
-            this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
-
-        }
-        #region ======================================== Events =======================================================
         /// <summary>
-        /// Event handler to notice changes in the current categroy data
+        /// Event handler to notice changes in the current category data.
         /// </summary>
-        /// <param name="category">Reference to the sent student data</param>
+        /// <param name="user">The user<see cref="UserControl"/>.</param>
         public void ChangeRecipeCurrentMainView(UserControl user)
         {
             this.CurrentMainRecipeView = user;
-            this.OnPropertyChanged(nameof(CurrentMainRecipeView));
+            this.OnPropertyChanged(nameof(this.CurrentMainRecipeView));
         }
 
+        /// <summary>
+        /// The ChangeCurrentMainView.
+        /// </summary>
+        /// <param name="main">The main<see cref="UserControl"/>.</param>
         public void ChangeCurrentMainView(UserControl main)
         {
-
         }
 
-        #endregion
-       
-        #region ======================================== Private Helper ================================= 
         /// <summary>
-        /// load the current description data into the descritption field
+        /// load the current description data into the description field.
         /// </summary>
-        void InitRecipe()
+        internal void InitRecipe()
         {
+            
             //Recipe recipe = new Recipe();
 
             //Description description = new Description();
@@ -184,8 +180,5 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
                 this.recipes = recipeService.GetCategoryObserv(recipedata);
             }
         }
-        #endregion
-      
-
     }
 }

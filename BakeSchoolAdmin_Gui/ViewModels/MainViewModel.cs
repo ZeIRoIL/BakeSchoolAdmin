@@ -1,42 +1,38 @@
-﻿using BakeSchoolAdmin_Commands.Commands;
-using Microsoft.Practices.Prism.Events;
-using BakeSchoolAdmin_Gui.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using BakeSchoolAdmin_Gui.ViewModels.Recipes;
-using System.Windows;
-using BakeSchoolAdmin_Gui.Views;
-
-namespace BakeSchoolAdmin_Gui.ViewModels
+﻿namespace BakeSchoolAdmin_Gui.ViewModels
 {
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_Gui.ViewModels.Recipes;
+    using BakeSchoolAdmin_Gui.Views;
+    using Microsoft.Practices.Prism.Events;
+  
+    /// <summary>
+    /// Defines the <see cref="MainViewModel" />.
+    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        #region ======================================== Fields ================================= 
-        UserControl categoryWindow;
-
-        UserControl recipesWindow;
+        /// <summary>
+        /// Defines the categoryWindow.
+        /// </summary>
+        private UserControl categoryWindow;
 
         /// <summary>
-        /// View that is currently bound to the main ContentControl
+        /// Defines the recipesWindow.
+        /// </summary>
+        private UserControl recipesWindow;
+
+        /// <summary>
+        /// View that is currently bound to the main ContentControl..
         /// </summary>
         private UserControl currentMainView;
 
-        #endregion
-
-        #region ======================================== Con-/Destructor, Dispose, Clone ================================= 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
-        /// <param name="eventAggregator"> Event aggregator to communicate with other views
-        /// via <see cref="Microsoft.Practices.Prism.Events"/> </param>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
         public MainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-
             // show the main site with the buttons
             MainView mainView = new MainView();
             this.CurrentMainView = mainView;
@@ -50,12 +46,9 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             //// Hookup command to be associated
             this.RecipesViewCommand = new ActionCommand(this.RecipesViewExecute, this.RecipesViewCanExecute);
         }
-        #endregion
-
-        #region ======================================== Properties, Indexer ================================= 
 
         /// <summary>
-        /// Gets or sets the view that is currently bound to the main ContentControl
+        /// Gets or sets the view that is currently bound to the main ContentControl..
         /// </summary>
         public UserControl CurrentMainView
         {
@@ -76,33 +69,34 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         }
 
         /// <summary>
-        /// Gets the MainviewCommand
+        /// Gets the MainViewCommand.
         /// </summary>
         public ICommand MainViewCommand { get; private set; }
 
         /// <summary>
-        /// Gets the CategoryView
+        /// Gets the CategoryViewCommand.
         /// </summary>
         public ICommand CategoryViewCommand { get; private set; }
 
         /// <summary>
-        /// Gets the RecipesView
+        /// Gets the RecipesViewCommand.
         /// </summary>
         public ICommand RecipesViewCommand { get; private set; }
-        #endregion
-
-        #region ======================================== Commands ================================= 
 
         /// <summary>
-        /// Determines if the loading main view command can be execute
+        /// Determines if the loading main view command can be execute.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool MainViewCanExecute(object parameter)
         {
             return true;
         }
+
         /// <summary>
-        /// Gets execute when the user clicks the main button
+        /// Gets execute when the user clicks the main button.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
         private void MainViewExecute(object parameter)
         {
             MainView main = new MainView();
@@ -110,48 +104,51 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         }
 
         /// <summary>
-        /// Determines if the loading category view command can be execute
+        /// Determines if the loading category view command can be execute.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool CategoryViewCanExecute(object parameter)
         {
             return true;
         }
+
         /// <summary>
-        /// Gets execute when the user clicks the category button
+        /// Gets execute when the user clicks the category button.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
         private void CategoryViewExecute(object parameter)
         {
-                // Create a new Window with the data from CategoryMainViewModel
-                MainCategoryView mainCategoryView = new MainCategoryView();
-                this.categoryWindow = mainCategoryView;
-                CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
-                mainCategoryView.DataContext = categoryMainView;
-                this.CurrentMainView = mainCategoryView;
-       
+            // Create a new Window with the data from CategoryMainViewModel
+            MainCategoryView mainCategoryView = new MainCategoryView();
+            this.categoryWindow = mainCategoryView;
+            CategoryMainViewModel categoryMainView = new CategoryMainViewModel(EventAggregator);
+            mainCategoryView.DataContext = categoryMainView;
+            this.CurrentMainView = mainCategoryView;
         }
 
         /// <summary>
-        /// Determines if the loading recipes view command can be execute
+        /// Determines if the loading recipes view command can be execute.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool RecipesViewCanExecute(object parameter)
         {
-          
             return true;
         }
+
         /// <summary>
-        /// Gets execute when the user clicks the recipes button
+        /// Gets execute when the user clicks the recipes button.
         /// </summary>
+        /// <param name="parameter">The parameter<see cref="object"/>.</param>
         private void RecipesViewExecute(object parameter)
         {
-                // Create a new Window with the data from MainRecipesViewModel
-                MainRecipeView mainRecipesView = new MainRecipeView();
-                this.recipesWindow = mainRecipesView;
-                MainRecipesViewModel recipesMainView = new MainRecipesViewModel(EventAggregator);
-                mainRecipesView.DataContext = recipesMainView;
-                this.CurrentMainView = mainRecipesView;
+            // Create a new Window with the data from MainRecipesViewModel
+            MainRecipeView mainRecipesView = new MainRecipeView();
+            this.recipesWindow = mainRecipesView;
+            MainRecipesViewModel recipesMainView = new MainRecipesViewModel(EventAggregator);
+            mainRecipesView.DataContext = recipesMainView;
+            this.CurrentMainView = mainRecipesView;
         }
-        #endregion
-
     }
 }
-

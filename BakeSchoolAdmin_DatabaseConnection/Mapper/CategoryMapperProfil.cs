@@ -1,23 +1,23 @@
-﻿using AutoMapper;
-using BakeSchoolAdmin_DatabaseConnection.Models;
-using BakeSchoolAdmin_Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_DatabaseConnection.Mapper
+﻿namespace BakeSchoolAdmin_DatabaseConnection.Mapper
 {
+    using AutoMapper;
+    using BakeSchoolAdmin_DatabaseConnection.Models;
+    using BakeSchoolAdmin_Models;
+
+    /// <summary>
+    /// Defines the <see cref="CategoryMapperProfil" />.
+    /// </summary>
     public class CategoryMapperProfil : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryMapperProfil"/> class.
+        /// </summary>
         public CategoryMapperProfil()
         {
             CreateMap<Category, CategoryData>();
-          
+
 
             CreateMap<CategoryData, Category>();
-
         }
     }
 }

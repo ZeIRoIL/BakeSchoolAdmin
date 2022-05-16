@@ -1,52 +1,45 @@
-﻿using BakeSchoolAdmin_Commands.Commands;
-using BakeSchoolAdmin_DatabaseConnection.Models;
-using BakeSchoolAdmin_DatabaseConnection.Services;
-using BakeSchoolAdmin_Gui.Events;
-using BakeSchoolAdmin_Gui.Views.Category;
-using BakeSchoolAdmin_Models;
-using BakeSchoolAdmin_Models.Modals.Category;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-namespace BakeSchoolAdmin_Gui.ViewModels
+﻿namespace BakeSchoolAdmin_Gui.ViewModels
 {
-    class CategoryListViewModel : ViewModelBase
+    using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_DatabaseConnection.Services;
+    using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Views.Category;
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
+    /// <summary>
+    /// Defines the <see cref="CategoryListViewModel" />.
+    /// </summary>
+    internal class CategoryListViewModel : ViewModelBase
     {
-        #region ======================================== Fields ================================= 
         /// <summary>
-        /// The id of the category
+        /// The id of the category..
         /// </summary>
         private int id;
 
         /// <summary>
-        /// Create the selected Category form the current button click
+        /// Create the selected Category from the current button click..
         /// </summary>
         public Category selectedCategory;
-        #endregion
 
-        #region ======================================== Con-/Destructor, Dispose, Clone ================================= 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// Initializes a new instance of the <see cref="CategoryListViewModel"/> class.
         /// </summary>
-        /// <param name="eventAggregator"> Event aggregator to communicate with other views
-        /// via <see cref="Microsoft.Practices.Prism.Events"/> </param>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
         public CategoryListViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             // Gets the category to the list
             LoadCategories();
 
             // action command, if the button is clicked then set the value of the button into the parameter
-            this.CategoryViewCommand = new ActionCommand(this.CategroyViewCommandExecute,this.CategoryViewCommandCanExecute);
-     
-            // action command if the change button is clicked and the usercontrol (AddCategory)will open.
+            this.CategoryViewCommand = new ActionCommand(this.CategroyViewCommandExecute, this.CategoryViewCommandCanExecute);
+
+            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.CategoryAddCommand = new ActionCommand(this.CategroyEditViewCommandExecute, this.CategoryEditViewCommandCanExecute);
 
             // action command if the delete button is clicked.
@@ -54,11 +47,14 @@ namespace BakeSchoolAdmin_Gui.ViewModels
 
             //subscribe new event for the new data save
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Subscribe(this.AddCategory, ThreadOption.UIThread);
+
+            //subscribe new event for the new data save
+            this.EventAggregator.GetEvent<ReloadCategoryDataEvent>().Subscribe(this.EditCategoris, ThreadOption.UIThread);
         }
-        #endregion
 
-        #region ======================================== Properties/Indexer ================================= 
-
+        /// <summary>
+        /// Gets or sets the Id.
+        /// </summary>
         public int Id
         {
             get
@@ -67,7 +63,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             }
             set
             {
-                if(value != -1)
+                if (value != -1)
                 {
                     this.id = value;
                     this.OnPropertyChanged(nameof(this.id));
@@ -76,31 +72,30 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         }
 
         /// <summary>
-        /// Gets the Category  id (Only Test)
+        /// Gets the Category  id (Only Test)..
         /// </summary>
         public ICommand CategoryViewCommand { get; private set; }
 
         /// <summary>
-        /// Gets the Category  id (Only Test)
+        /// Gets the Category  id (Only Test)..
         /// </summary>
         public ICommand CategoryAddCommand { get; private set; }
 
         /// <summary>
-        /// it is the delete button for the selected category
+        /// Gets the CategoryDeleteViewCommand
+        /// it is the delete button for the selected category..
         /// </summary>
         public ICommand CategoryDeleteViewCommand { get; private set; }
 
         /// <summary>
-        /// Gets or sets the list with all categories
+        /// Gets or sets the list with all categories..
         /// </summary>
         public ObservableCollection<Category> Categories { get; set; }
-        #endregion
 
-        #region ======================================== Events =======================================================
         /// <summary>
-        /// Event handler to notice changes in the current categroy data
+        /// Event handler to notice changes in the current category data.
         /// </summary>
-        /// <param name="category">Reference to the sent student data</param>
+        /// <param name="category">Reference to the sent student data.</param>
         public void AddCategory(Category category)
         {
             CategoryService categoryService = new CategoryService();
@@ -109,97 +104,74 @@ namespace BakeSchoolAdmin_Gui.ViewModels
                 categoryService.WriteData(category);
             }
             LoadCategories();
-            
-            MessageBox.Show("Added new Category!");
- 
-             this.OnPropertyChanged(nameof(Categories));
-        }
-        #endregion
 
-        #region ======================================== Private Helper ================================= 
+            MessageBox.Show("Added new Category!");
+
+            this.OnPropertyChanged(nameof(Categories));
+        }
+
+        public void EditCategoris(bool IsEdit)
+        {
+            if(IsEdit)
+            {
+                LoadCategories();
+            }
+        }
+
         /// <summary>
-        /// Initialize the database connection and is loaded in the CatergoryData
+        /// Initialize the database connection and is loaded in the CatergoryData.
         /// </summary>
         private void LoadCategories()
         {
-            
             CategoryService categoryService = new CategoryService();
             if (categoryService.init())
             {
-                IList<Category> categorydata = new List<Category>();
-
+                IList<Category> categorydata;
                 categorydata = categoryService.ReadData();
                 this.Categories = categoryService.GetCategoryObserv(categorydata);
             }
-           
-            ////// init collection and add data
-            //this.Categories = new ObservableCollection<Category>();
-
-            //CategoryDetails details = new CategoryDetails();
-            //details.Name = "TestCate1";
-            //details.Image = "das ist ein Test";
-            //details.Text = "Das ist ein Text test";
-            //details.Level = 2;
-            //Category category = new Category(100, details);
-
-            //CategoryDetails details1 = new CategoryDetails();
-            //details1.Name = "TestCate2";
-            //details1.Image = "das ist ein Test";
-            //details1.Text = "Das ist ein Text Test 2";
-            //details1.Level = 2;
-
-            //Category category1 = new Category(200, details1);
-
-
-
-            //this.Categories.Add(category);
-            //this.Categories.Add(category1);
         }
-       
-        #endregion
-
-        #region ======================================== Commands ================================= 
 
         /// <summary>
-        /// Determines if the edti the category view loading command can be executed.
+        /// Determines if the edit the category view loading command can be executed.
         /// </summary>
-        /// <param name="parameter">Data used by the Command</param>
-        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool CategoryEditViewCommandCanExecute(object parameter)
         {
             return true;
         }
 
         /// <summary>
-        /// Gets executed when the user clicks the Category button
+        /// Gets executed when the user clicks the Category button.
         /// </summary>
-        /// <param name="parameter">Data used by the command</param>
+        /// <param name="parameter">Data used by the command.</param>
         private void CategroyEditViewCommandExecute(object parameter)
         {
-            UserControl userControl = new UserControl();
+            
             CategorySave categorySave = new CategorySave();
             CategoryAddViewModel categoryAddViewModel = new CategoryAddViewModel(EventAggregator);
             categorySave.DataContext = categoryAddViewModel;
-            userControl = categorySave;
-            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(userControl);
+            
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(categorySave);
             // Send the last id from the Categories
-            this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(Categories.Count +1 );
+            this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(Categories.Count + 1);
         }
 
         /// <summary>
         /// Determines if the delete the category view loading command can be executed.
         /// </summary>
-        /// <param name="parameter">Data used by the Command</param>
-        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool CategoryDeleteViewCommandCanExecute(object parameter)
         {
             return true;
         }
 
         /// <summary>
-        /// Gets executed when the user clicks the delete button
+        /// Gets executed when the user clicks the delete button.
         /// </summary>
-        /// <param name="parameter">Data used by the command</param>
+        /// <param name="parameter">Data used by the command.</param>
         private void CategroyDeleteViewCommandExecute(object parameter)
         {
             CategoryService categoryService = new CategoryService();
@@ -211,45 +183,38 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             }
         }
 
-
         /// <summary>
         /// Determines if the edti the category view loading command can be executed.
         /// </summary>
-        /// <param name="parameter">Data used by the Command</param>
-        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool CategoryViewCommandCanExecute(object parameter)
         {
             return true;
         }
 
         /// <summary>
-        /// Gets executed when the user clicks the Category button
+        /// Gets executed when the user clicks the Category button.
         /// </summary>
-        /// <param name="parameter">Data used by the command</param>
+        /// <param name="parameter">Data used by the command.</param>
         private void CategroyViewCommandExecute(object parameter)
         {
-            UserControl editControl = new UserControl();
             CategoryEdit edit = new CategoryEdit();
             CategoryEditViewModel categoryEditViewModel = new CategoryEditViewModel(EventAggregator);
             edit.DataContext = categoryEditViewModel;
-            editControl = edit;
-
+            
             // Change the current view Right, if the event is fired.
-            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(editControl);
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(edit);
 
             foreach (Category category in this.Categories)
             {
                 if (category.Id == (int)parameter)
                 {
-                    int i = category.Id;
-                    
                     this.selectedCategory = category;
 
                     this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Publish(this.selectedCategory);
                 }
             }
         }
-
-        #endregion
     }
 }

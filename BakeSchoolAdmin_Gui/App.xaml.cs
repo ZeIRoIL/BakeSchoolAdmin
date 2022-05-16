@@ -1,32 +1,26 @@
-﻿using Microsoft.Practices.Prism.Events;
-using BakeSchoolAdmin_Gui.ViewModels;
-using System.Diagnostics;
-using System.Windows;
-using BakeSchoolAdmin_Gui.Views;
-
-namespace BakeSchoolAdmin_Gui
-    
+﻿namespace BakeSchoolAdmin_Gui
 {
-    
+    using BakeSchoolAdmin_Gui.ViewModels;
+    using Microsoft.Practices.Prism.Events;
+    using System.Diagnostics;
+    using System.Windows;
 
     /// <summary>
-    /// Logik für "App.xaml"
+    /// Logik für "App.xaml".
     /// </summary>
     public partial class App : Application
     {
-
-
         /// <summary>
-        /// Raises Startup Event <see cref="System.Windows.Application.Startup"/> event
+        /// Raises Startup Event <see cref="System.Windows.Application.Startup"/> event.
         /// </summary>
-        /// Takes the  <param name="e"><see cref="System.Windows.StartupEventArgs"/>contains the event data</param> 
+        /// <param name="e">The e<see cref="StartupEventArgs"/>.</param>
         protected override void OnStartup(StartupEventArgs e)
         {
             // get references to the current process
             Process currentProcess = Process.GetCurrentProcess();
 
             // connection with the MongoDb
-            
+
 
             // Check if any other Process with same name is running
             if (Process.GetProcessesByName(currentProcess.ProcessName).Length > 1)
@@ -42,7 +36,7 @@ namespace BakeSchoolAdmin_Gui
 
             // init View and ViewModel
             MainWindow mainWindow = new MainWindow();
-            
+
             MainViewModel mainViewModel = new MainViewModel(eventAggregator);
 
             // connect the mainWindow to the mainViewModel

@@ -1,51 +1,47 @@
-﻿using BakeSchoolAdmin_Commands.NotfiyPropertyChanged;
-using BakeSchoolAdmin_Models.Modals.Category;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_Models
+﻿namespace BakeSchoolAdmin_Models
 {
+    using BakeSchoolAdmin_Commands.NotfiyPropertyChanged;
+    using BakeSchoolAdmin_Models.Modals.Category;
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
 
+    /// <summary>
+    /// Defines the <see cref="Category" />.
+    /// </summary>
     public class Category : NotifyPropertyChanged
     {
-        #region --------------------------------------------------------------------------Constructor---------------------------------------------------
         /// <summary>
-        /// Empty category constructor
+        /// Initializes a new instance of the <see cref="Category"/> class.
         /// </summary>
         public Category()
         {
-
         }
+
         /// <summary>
-        /// constructor build a category with id and categorydetails 
+        /// Initializes a new instance of the <see cref="Category"/> class.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="details"></param>
+        /// <param name="id">the id from the category</param>
+        /// <param name="details">the category details</param>
         public Category(int id, CategoryDetails details)
         {
             this.Id = id;
             this.Details = details;
         }
-        #endregion
 
-        #region --------------------------------------------------------------------------Fields---------------------------------------------------
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId ObjectId { get; set; }
-        [BsonElement("datasetId")]
-        public string String { get; set; }
+        /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
         [BsonElement("categoryId")]
         private int id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the details.
+        /// </summary>
         [BsonElement("details")]
         private CategoryDetails details { get; set; }
-        #endregion
-        #region --------------------------------------------------------------------------Properties---------------------------------------------------
+        
         /// <summary>
-        /// Gets or sets the Id
+        /// Gets or sets the Id.
         /// </summary>
         public int Id
         {
@@ -62,12 +58,13 @@ namespace BakeSchoolAdmin_Models
 
                     //// Notify the GUI when Firstname and Fullname changed
                     this.OnPropertyChanged("Text");
-                    
+
                 }
             }
         }
+
         /// <summary>
-        /// Gets or sets the Detail
+        /// Gets or sets the Details.
         /// </summary>
         public CategoryDetails Details
         {
@@ -83,11 +80,22 @@ namespace BakeSchoolAdmin_Models
                     this.details = value;
 
                     //// Notify the GUI when Firstname and Fullname changed
-                    this.OnPropertyChanged("Details");  
+                    this.OnPropertyChanged("Details");
                 }
             }
         }
-        #endregion
 
+        /// <summary>
+        /// Gets or sets the ObjectId.
+        /// </summary>
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId ObjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the String.
+        /// </summary>
+        [BsonElement("datasetId")]
+        public string String { get; set; }
     }
 }

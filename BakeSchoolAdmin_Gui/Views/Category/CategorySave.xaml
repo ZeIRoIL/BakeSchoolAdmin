@@ -26,18 +26,6 @@
                 Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52" Margin="41,20.5,79,0"
                 />
 
-        <Grid Grid.Row="5" Margin="28,0.5,36,0.5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"  Content="Min."/>
-            <TextBox Grid.Column="1" />
-            <Label Grid.Column="2" Content="Max." />
-            <TextBox Grid.Column="3" />
-        </Grid>
         <Image Grid.Row="6" Grid.RowSpan="2" Margin="0,0.5,0,0"/>
         <Button Grid.Row="7" Content="Save" Command="{Binding CategoryAddNewCommand}"/>
     </Grid>

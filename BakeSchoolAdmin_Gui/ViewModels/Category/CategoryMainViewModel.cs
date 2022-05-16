@@ -1,22 +1,20 @@
-﻿using BakeSchoolAdmin_Gui.Events;
-using BakeSchoolAdmin_Gui.View;
-using BakeSchoolAdmin_Gui.Views.Category;
-using BakeSchoolAdmin_Models;
-using BakeSchoolAdmin_Models.Modals.Category;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-
-namespace BakeSchoolAdmin_Gui.ViewModels
+﻿namespace BakeSchoolAdmin_Gui.ViewModels
 {
-    class CategoryMainViewModel : ViewModelBase
+    using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.View;
+    using Microsoft.Practices.Prism.Events;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+
+    /// <summary>
+    /// Defines the <see cref="CategoryMainViewModel" />.
+    /// </summary>
+    internal class CategoryMainViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryMainViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
         public CategoryMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             CategoryView cw = new CategoryView();
@@ -24,40 +22,34 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             cw.DataContext = cwm;
             this.CurrentViewLeft = cw;
 
-            
+
 
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
         }
 
-        #region ======================================== Events =======================================================
         /// <summary>
-        /// Event handler to notice changes in the current categroy data
+        /// Event handler to notice changes in the current categroy data.
         /// </summary>
-        /// <param name="category">Reference to the sent student data</param>
+        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
         public void ChangetheCurrentViewRight(UserControl userControl)
         {
             this.currentViewRight = userControl;
             this.OnPropertyChanged(nameof(this.currentViewRight));
         }
 
-        #endregion
-        #region ======================================== Fields, Constants, Delegates, Events =============================
         /// <summary>
-        /// View that is currently bound to the left ContentControl
+        /// View that is currently bound to the left ContentControl..
         /// </summary>
         private UserControl currentViewLeft;
 
         /// <summary>
-        /// View that is currently bound to the right ContentControl
+        /// View that is currently bound to the right ContentControl..
         /// </summary>
         private UserControl currentViewRight;
 
-        
-        #endregion
-        #region ======================================== Properties, Indexer ============================================
         /// <summary>
-        /// Gets or sets the view that is currently bound to the left ContentControl
+        /// Gets or sets the view that is currently bound to the left ContentControl..
         /// </summary>
         public UserControl CurrentViewLeft
         {
@@ -78,7 +70,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the view that is currently bound to the right ContentControl
+        /// Gets or sets the view that is currently bound to the right ContentControl..
         /// </summary>
         public UserControl CurrentViewRight
         {
@@ -98,8 +90,14 @@ namespace BakeSchoolAdmin_Gui.ViewModels
             }
         }
 
+        /// <summary>
+        /// Defines the changeColor.
+        /// </summary>
+        internal bool changeColor;
 
-        bool changeColor;
+        /// <summary>
+        /// Gets the BoxColor.
+        /// </summary>
         public Brush BoxColor
         {
             get
@@ -114,19 +112,22 @@ namespace BakeSchoolAdmin_Gui.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether ChangeColor.
+        /// </summary>
         public bool ChangeColor
         {
             get
             {
-                return changeColor;
+                return this.changeColor;
             }
+
             set
             {
-                changeColor = value;
+                this.changeColor = value;
                 this.OnPropertyChanged(nameof(this.BoxColor));
             }
         }
-
-        #endregion
     }
 }

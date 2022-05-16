@@ -1,14 +1,12 @@
-﻿using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-
-namespace BakeSchoolAdmin_Gui.Events
+﻿namespace BakeSchoolAdmin_Gui.Events
 {
-    class ChangeCurrentMainDataEvent : CompositePresentationEvent<UserControl>
+    using Microsoft.Practices.Prism.Events;
+    using System.Windows.Controls;
+
+    /// <summary>
+    /// Defines the <see cref="ChangeCurrentMainDataEvent" />.
+    /// </summary>
+    internal class ChangeCurrentMainDataEvent : CompositePresentationEvent<UserControl>
     {
     }
 }

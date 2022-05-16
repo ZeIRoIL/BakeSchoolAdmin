@@ -1,15 +1,11 @@
-﻿using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_Gui.Events
+﻿namespace BakeSchoolAdmin_Gui.Events
 {
-    class GetLastCategorieIdDataEvent : CompositePresentationEvent<int>
+    using Microsoft.Practices.Prism.Events;
+
+    /// <summary>
+    /// Defines the <see cref="GetLastCategorieIdDataEvent" />.
+    /// </summary>
+    internal class GetLastCategorieIdDataEvent : CompositePresentationEvent<int>
     {
     }
 }

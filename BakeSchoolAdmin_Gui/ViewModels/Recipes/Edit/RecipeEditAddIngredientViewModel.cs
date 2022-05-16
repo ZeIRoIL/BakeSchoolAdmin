@@ -1,61 +1,66 @@
-﻿using BakeSchoolAdmin_Commands.Commands;
-using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
+﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
-    class RecipeEditAddIngredientViewModel : MainViewModel
+    using System;
+    using System.Linq;
+    using System.Windows.Input;
+    using System.Collections.ObjectModel;
+    using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
+
+    /// <summary>
+    /// Defines the <see cref="RecipeEditAddIngredientViewModel" />.
+    /// </summary>
+    internal class RecipeEditAddIngredientViewModel : MainViewModel
     {
-        #region ======================================== Fields, Constants, Delegates, Events ============================================ 
         /// <summary>
-        /// the name of the ingredient
+        /// the name of the ingredient..
         /// </summary>
         private string name;
+
         /// <summary>
-        /// the amount of the ingredient
+        /// the amount of the ingredient..
         /// </summary>
         private double amount = -1;
+
         /// <summary>
-        /// the unit of the ingredient
+        /// the unit of the ingredient..
         /// </summary>
         private string unit;
+
         /// <summary>
-        /// check if recipes are edited or created.
+        /// Initializes a new instance of the <see cref="RecipeEditAddIngredientViewModel"/> class.
         /// </summary>
-        private bool isEdit = true;
-        #endregion
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
         public RecipeEditAddIngredientViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-            LoadIngredients();
+            this.LoadIngredients();
 
             this.SaveIngredient = new ActionCommand(this.AddIngredientCommandExecute, this.AddIngredientCommandCanExecute);
         }
-        #region ======================================== Properties, Indexer =====================================================
-        
+
+        /// <summary>
+        /// Gets or sets the Unit.
+        /// </summary>
         public string Unit
         {
             get
             {
                 return this.unit;
             }
+
             set
             {
-                if(value != string.Empty)
+                if (value != string.Empty)
                 {
                     this.unit = value;
                     this.OnPropertyChanged(nameof(this.unit));
                 }
             }
         }
+
         /// <summary>
-        /// Gets or sets the name of the ingredient
+        /// Gets or sets the name of the ingredient..
         /// </summary>
         public string Name
         {
@@ -63,6 +68,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
             {
                 return this.name;
             }
+
             set
             {
                 if (value != string.Empty)
@@ -72,8 +78,9 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
                 }
             }
         }
+
         /// <summary>
-        /// Gets or sets the amount of the ingredient
+        /// Gets or sets the amount of the ingredient..
         /// </summary>
         public double Amount
         {
@@ -81,6 +88,7 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
             {
                 return this.amount;
             }
+
             set
             {
                 if (-1 != value)
@@ -90,39 +98,44 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
                 }
             }
         }
+
         /// <summary>
-        /// The recipe which will tranfer into the endview if the user clicked on the button "Save"
+        /// Gets the Recipe
+        /// The recipe which will transfer into the end view if the user clicked on the button "Save"..
         /// </summary>
         public Recipe Recipe { get; private set; }
+
         /// <summary>
-        /// Get or set the list with all ingredient which user can select.
+        /// Gets or sets the Ingredients
+        /// Get or set the list with all ingredient which user can select...
         /// </summary>
         public ObservableCollection<Ingredient> Ingredients { get; set; }
+
         /// <summary>
-        /// execute the command and add the recent ingredient in the ObservableCollection 
+        /// Gets the SaveIngredient
+        /// execute the command and add the recent ingredient in the ObservableCollection..
         /// </summary>
         public ICommand SaveIngredient { get; private set; }
-        #endregion
-        #region ======================================== Command ====================================================
+
         /// <summary>
-        /// Determines if the data is correct then the ingredient is created
+        /// Determines if the data is correct then the ingredient is created.
         /// </summary>
-        /// <param name="parameter">Data used by the Command</param>
-        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c></returns>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool AddIngredientCommandCanExecute(object parameter)
         {
             return true;
         }
 
         /// <summary>
-        /// Gets executed when the user clicks the Save button
+        /// Gets executed when the user clicks the Save button.
         /// </summary>
-        /// <param name="parameter">Data used by the command</param>
+        /// <param name="parameter">Data used by the command.</param>
         private void AddIngredientCommandExecute(object parameter)
         {
-            if (this.name != string.Empty || this.amount != 0 || this.unit != String.Empty )
+            if (this.name != string.Empty || this.amount != 0 || this.unit != string.Empty)
             {
-                if (this.Ingredients.Count() == 0)
+                if (this.Ingredients.Count == 0)
                 {
                     this.Ingredients = new ObservableCollection<Ingredient>();
 
@@ -143,8 +156,10 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
                 }
             }
         }
-        #endregion
-        #region ======================================== Private Helper ================================= 
+
+        /// <summary>
+        /// The LoadIngredients.
+        /// </summary>
         private void LoadIngredients()
         {
             //// init collection and add data
@@ -158,6 +173,5 @@ namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
             this.Ingredients.Add(ingredient);
             this.Ingredients.Add(ingredient1);
         }
-        #endregion
     }
 }

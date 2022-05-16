@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace BakeSchoolAdmin_Gui.Views.Category
+﻿namespace BakeSchoolAdmin_Gui.Views.Category
 {
+    using System.Windows.Controls;
+
     /// <summary>
-    /// Interaktionslogik für CategoryEdit.xaml
+    /// Interaction logic for CategoryEdit.
     /// </summary>
     public partial class CategoryEdit : UserControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryEdit"/> class.
+        /// </summary>
         public CategoryEdit()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

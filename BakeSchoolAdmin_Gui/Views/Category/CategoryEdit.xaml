@@ -15,27 +15,19 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="1" Content="{Binding Name }" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+        <TextBox Grid.Row="1" Text="{Binding Name }" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
         <TextBox Grid.Row="2" Text="{Binding Text}"  />
         <Label Content="{Binding Amount}" Grid.Row="3"/>
-        <Slider Grid.Row="4" VerticalAlignment="Top" 
+        <Label Content="Level auswählen" Grid.Row="4"/>
+        <Slider Grid.Row="5" VerticalAlignment="Top" 
                 Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52"
                 />
-        <Grid Grid.Row="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" />
-            <TextBox Grid.Column="1" />
-            <TextBox Grid.Column="2" />
-            <TextBox Grid.Column="3" />
-        </Grid>
         <Image Grid.Row="5"/>
+        <Button Content="Ändern" Grid.Row="7" Command="{Binding EditCategoryCommand}"/>
     </Grid>
 </UserControl>

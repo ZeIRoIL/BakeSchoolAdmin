@@ -213,6 +213,7 @@
     <Compile Include="Events\ChangeCurrentRightDataEvent.cs" />
     <Compile Include="Events\ChangeRecipeCurrentMainViewEvent.cs" />
     <Compile Include="Events\GetLastCategorieIdDataEvent.cs" />
+    <Compile Include="Events\ReloadCategoryDataEvent.cs" />
     <Compile Include="Events\SelectedCategoryDataEvent.cs" />
     <Compile Include="Events\SelectedRecipeDataEvent.cs" />
     <Compile Include="ViewModels\Category\CategoryAddViewModel.cs" />

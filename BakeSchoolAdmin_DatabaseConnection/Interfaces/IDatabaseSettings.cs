@@ -1,44 +1,42 @@
-﻿using BakeSchoolAdmin_Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_DatabaseConnection.Interfaces
+﻿namespace BakeSchoolAdmin_DatabaseConnection.Interfaces
 {
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="IDatabaseSettings{T}" />.
+    /// </summary>
+    /// <typeparam name="T">Only the database interface</typeparam>
     public interface IDatabaseSettings<T> where T : class
     {
-        
         /// <summary>
-        /// check the initialize for the database
+        /// check the initialize for the database.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the value true/false</returns>
         bool init();
+
         /// <summary>
-        /// Read single dataset from service 
+        /// Read single dataset from service.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">.</param>
+        /// <returns>.</returns>
         T ReadData(int id);
 
         /// <summary>
-        /// Read all datasets form service
+        /// Read all datasets form service.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The IList of a generic class</returns>
         IList<T> ReadData();
 
         /// <summary>
-        /// Write single dataset to service
+        /// Write single dataset to service.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Context from the database</param>
         void WriteData(T data);
 
         /// <summary>
-        /// Write all datasets to service
+        /// Write all datasets to service.
         /// </summary>
-        /// <param name="data"></param>
+        /// <param name="data">Context from the database</param>
         void WriteData(IList<T> data);
-
     }
 }

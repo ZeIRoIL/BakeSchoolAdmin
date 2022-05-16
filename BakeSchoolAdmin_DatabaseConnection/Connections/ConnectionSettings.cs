@@ -1,19 +1,15 @@
-﻿using BakeSchoolAdmin_Models;
-using BakeSchoolAdmin_Models.Modals.Category;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_DatabaseConnection.Connections
+﻿namespace BakeSchoolAdmin_DatabaseConnection.Connections
 {
+    /// <summary>
+    /// Defines the <see cref="ConnectionSettings" />.
+    /// </summary>
     public class ConnectionSettings
     {
-        private string connection;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionSettings"/> class.
+        /// </summary>
         public ConnectionSettings()
         {
-            
         }
     }
 }

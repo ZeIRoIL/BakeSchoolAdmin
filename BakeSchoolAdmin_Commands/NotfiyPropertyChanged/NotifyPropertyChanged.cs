@@ -1,11 +1,10 @@
 ﻿namespace BakeSchoolAdmin_Commands.NotfiyPropertyChanged
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Defines the <see cref="NotifyPropertyChanged" />.
+    /// </summary>
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {
         /// <summary>
@@ -27,4 +26,3 @@
         }
     }
 }
-

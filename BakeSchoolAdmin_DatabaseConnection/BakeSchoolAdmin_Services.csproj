@@ -210,6 +210,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BakeSchoolAdmin_Commands\BakeSchoolAdmin_Commands.csproj">
+      <Project>{3D7ABEA8-E540-417A-AC73-5B46B69A617A}</Project>
+      <Name>BakeSchoolAdmin_Commands</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BakeSchoolAdmin_Models\BakeSchoolAdmin_Models.csproj">
       <Project>{2D7BCD85-C7D4-4F9F-A767-5DB6E29EFD4A}</Project>
       <Name>BakeSchoolAdmin_Models</Name>

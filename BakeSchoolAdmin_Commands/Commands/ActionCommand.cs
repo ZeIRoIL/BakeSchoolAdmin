@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace BakeSchoolAdmin_Commands.Commands
+﻿namespace BakeSchoolAdmin_Commands.Commands
 {
+    using System;
+    using System.Windows.Input;
+
     /// <summary>
     /// Class for the action commands
     /// Derives from <see cref="ICommand"/>
     /// </summary>
     public class ActionCommand : ICommand
     {
-        #region ========================================= Action Command implementation =========================================== 
         /// <summary>
         /// this method is called when Execute() is invoked
         /// </summary>
@@ -31,12 +26,9 @@ namespace BakeSchoolAdmin_Commands.Commands
         /// <param name="canExecute">the method called when CanExecute() is invoked</param>
         public ActionCommand(Action<object> execute, Func<object, bool> canExecute)
         {
-            this.handlerExecute = execute ?? throw new ArgumentNullException("Execute cannot be NULL ! :)");
+            this.handlerExecute = execute ?? throw new ArgumentNullException("Execute cannot be null");
             this.handlerCanExecute = canExecute;
         }
-        #endregion
-
-        #region ============================================= ICommand implementation ============================================= 
 
         /// <summary>
         /// Gets executed when changes happen which affect whether or not the command should execute
@@ -70,6 +62,5 @@ namespace BakeSchoolAdmin_Commands.Commands
         {
             this.handlerExecute(parameter);
         }
-        #endregion
     }
 }

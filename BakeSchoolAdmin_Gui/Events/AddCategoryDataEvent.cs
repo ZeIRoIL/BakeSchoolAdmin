@@ -1,14 +1,12 @@
-﻿using BakeSchoolAdmin_Models;
-using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_Gui.Events
+﻿namespace BakeSchoolAdmin_Gui.Events
 {
-    class AddCategoryDataEvent : CompositePresentationEvent<Category>
+    using BakeSchoolAdmin_Models;
+    using Microsoft.Practices.Prism.Events;
+
+    /// <summary>
+    /// Defines the <see cref="AddCategoryDataEvent" />.
+    /// </summary>
+    internal class AddCategoryDataEvent : CompositePresentationEvent<Category>
     {
     }
 }

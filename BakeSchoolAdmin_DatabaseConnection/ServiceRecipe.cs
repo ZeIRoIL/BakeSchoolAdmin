@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BakeSchoolAdmin_DatabaseConnection
+﻿namespace BakeSchoolAdmin_DatabaseConnection
 {
-    class ServiceRecipe
+    /// <summary>
+    /// Defines the <see cref="ServiceRecipe" />.
+    /// </summary>
+    internal class ServiceRecipe
     {
     }
 }
