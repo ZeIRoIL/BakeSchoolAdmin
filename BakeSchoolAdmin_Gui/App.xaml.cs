@@ -6,7 +6,7 @@
     using System.Windows;
 
     /// <summary>
-    /// Logik für "App.xaml".
+    /// Logic for "App.xaml".
     /// </summary>
     public partial class App : Application
     {
@@ -20,7 +20,6 @@
             Process currentProcess = Process.GetCurrentProcess();
 
             // connection with the MongoDb
-
 
             // Check if any other Process with same name is running
             if (Process.GetProcessesByName(currentProcess.ProcessName).Length > 1)

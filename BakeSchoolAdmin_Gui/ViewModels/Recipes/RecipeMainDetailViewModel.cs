@@ -31,7 +31,7 @@
         private int step;
 
         /// <summary>
-        /// the texthint for the hint
+        /// the text hint for the hint
         /// </summary>
         private string textHint;
 
@@ -62,8 +62,10 @@
         {
             // subscribe to event
             this.EventAggregator.GetEvent<SelectedRecipeDataEvent>().Subscribe(this.SelectedRecipe, ThreadOption.UIThread);
+            
             // the command for the ShowDescription
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
+            
             // the command for the ShowHint
             this.ShowHint = new ActionCommand(this.ShowHintCommandExecute, this.ShowHintCommandCanExecute);
         }
@@ -217,7 +219,6 @@
             }
         }
 
-
         /// <summary>
         /// Determines if the data is correct then the ingredient is created.
         /// </summary>
@@ -236,7 +237,6 @@
         {
             if ((int)parameter != 0)
             {
-                
                 int stepId = (int)parameter;
                 if (this.Descriptions.Any(d => d.Step == stepId))
                 {
@@ -252,7 +252,8 @@
                         this.TextHint = string.Empty;
                         this.OnPropertyChanged(nameof(this.TextHint));
                     }
-                    this.Hints = new ObservableCollection<Hint>(hints);                   
+
+                    this.Hints = new ObservableCollection<Hint>(this.hints);                   
                     this.OnPropertyChanged(nameof(this.Hints));
                 }
             }
@@ -283,7 +284,6 @@
                     this.textHint = this.Hints[this.stepHint - 1].Text;
                     this.OnPropertyChanged(nameof(this.TextHint));
                     this.OnPropertyChanged(nameof(this.stepHint));
-                    
                 }
             }
         }

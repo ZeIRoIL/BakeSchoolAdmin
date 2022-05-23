@@ -12,31 +12,9 @@
     internal class CategoryMainViewModel : ViewModelBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CategoryMainViewModel"/> class.
+        /// Defines the change color.
         /// </summary>
-        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
-        public CategoryMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
-        {
-            CategoryView cw = new CategoryView();
-            CategoryListViewModel cwm = new CategoryListViewModel(eventAggregator);
-            cw.DataContext = cwm;
-            this.CurrentViewLeft = cw;
-
-
-
-            // subscribe to event
-            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
-        }
-
-        /// <summary>
-        /// Event handler to notice changes in the current categroy data.
-        /// </summary>
-        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
-        public void ChangetheCurrentViewRight(UserControl userControl)
-        {
-            this.currentViewRight = userControl;
-            this.OnPropertyChanged(nameof(this.currentViewRight));
-        }
+        private bool Changecolor;
 
         /// <summary>
         /// View that is currently bound to the left ContentControl..
@@ -47,6 +25,21 @@
         /// View that is currently bound to the right ContentControl..
         /// </summary>
         private UserControl currentViewRight;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoryMainViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        public CategoryMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+            CategoryView cw = new CategoryView();
+            CategoryListViewModel cwm = new CategoryListViewModel(eventAggregator);
+            cw.DataContext = cwm;
+            this.CurrentViewLeft = cw;
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
+        }
 
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl..
@@ -91,18 +84,13 @@
         }
 
         /// <summary>
-        /// Defines the changeColor.
-        /// </summary>
-        internal bool changeColor;
-
-        /// <summary>
         /// Gets the BoxColor.
         /// </summary>
         public Brush BoxColor
         {
             get
             {
-                if (ChangeColor)
+                if (this.ChangeColor)
                 {
                     return new SolidColorBrush(Colors.Green);
                 }
@@ -120,14 +108,24 @@
         {
             get
             {
-                return this.changeColor;
+                return this.Changecolor;
             }
 
             set
             {
-                this.changeColor = value;
+                this.Changecolor = value;
                 this.OnPropertyChanged(nameof(this.BoxColor));
             }
+        }
+
+        /// <summary>
+        /// Event handler to notice changes in the current category data.
+        /// </summary>
+        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
+        public void ChangetheCurrentViewRight(UserControl userControl)
+        {
+            this.currentViewRight = userControl;
+            this.OnPropertyChanged(nameof(this.currentViewRight));
         }
     }
 }

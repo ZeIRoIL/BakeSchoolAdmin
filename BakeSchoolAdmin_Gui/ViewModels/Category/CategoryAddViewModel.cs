@@ -28,7 +28,6 @@
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
         public CategoryAddViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
-
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.CategoryAddNewCommand = new ActionCommand(this.CategroyAddCommandExecute, this.CategoryAddCommandCanExecute);
 
@@ -47,6 +46,7 @@
             }
             set
             {
+
                 if (this.amount != value)
                 {
                     this.amount = value;
@@ -74,7 +74,7 @@
         public ICommand CategoryAddNewCommand { get; private set; }
 
         /// <summary>
-        /// Event handler to notice changes in the current categroy data.
+        /// Event handler to notice changes in the current category data.
         /// </summary>
         /// <param name="idCat">The idCat<see cref="int"/>.</param>
         public void SetCollection(int idCat)
@@ -83,7 +83,7 @@
         }
 
         /// <summary>
-        /// Determines if the edti the category view loading command can be executed.
+        /// Determines if the edit the category view loading command can be executed.
         /// </summary>
         /// <param name="parameter">Data used by the Command.</param>
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
@@ -104,10 +104,7 @@
             details.Level = this.Amount;
             Category category = new Category(this.id, details);
 
-            //if (MessageBox.Show("do you want to save the new Categorie?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            //
             // add the new Category into the List
-
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Publish(category);
         }
     }

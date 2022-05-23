@@ -3,7 +3,7 @@
     using System.Windows;
 
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml.
+    /// logic for MainWindow.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -12,7 +12,7 @@
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

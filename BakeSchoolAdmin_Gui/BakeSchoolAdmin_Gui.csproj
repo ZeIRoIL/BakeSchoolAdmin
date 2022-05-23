@@ -208,23 +208,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Events\AddCategoryDataEvent.cs" />
+    <Compile Include="Events\CategoryEvents\AddCategoryDataEvent.cs" />
     <Compile Include="Events\ChangeCurrentMainDataEvent.cs" />
     <Compile Include="Events\ChangeCurrentRightDataEvent.cs" />
     <Compile Include="Events\ChangeRecipeCurrentMainViewEvent.cs" />
-    <Compile Include="Events\GetLastCategorieIdDataEvent.cs" />
-    <Compile Include="Events\ReloadCategoryDataEvent.cs" />
-    <Compile Include="Events\SelectedCategoryDataEvent.cs" />
+    <Compile Include="Events\CategoryEvents\GetLastCategorieIdDataEvent.cs" />
+    <Compile Include="Events\CategoryEvents\ReloadCategoryDataEvent.cs" />
+    <Compile Include="Events\CategoryEvents\SelectedCategoryDataEvent.cs" />
+    <Compile Include="Events\RecipeAddEvents\ReloadCurrentCheckRecipeEventData.cs" />
     <Compile Include="Events\SelectedRecipeDataEvent.cs" />
     <Compile Include="ViewModels\Category\CategoryAddViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryEditViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryMainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Recipes\Edit\RecipeEditAddDescriptionViewModel.cs" />
-    <Compile Include="ViewModels\Recipes\Edit\RecipeEditAddIngredientViewModel.cs" />
-    <Compile Include="ViewModels\Recipes\Edit\RecipeEditCheckRecipeViewModel.cs" />
-    <Compile Include="ViewModels\Recipes\Edit\RecipesAddMainViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\Add\RecipeEditAddDescriptionViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\Add\RecipeEditAddIngredientViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\Add\RecipeEditCheckRecipeViewModel.cs" />
+    <Compile Include="ViewModels\Recipes\Add\RecipesAddMainViewModel.cs" />
     <Compile Include="ViewModels\Recipes\MainRecipesViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainDetailViewModel.cs" />
     <Compile Include="ViewModels\Recipes\RecipeMainListViewModel.cs" />

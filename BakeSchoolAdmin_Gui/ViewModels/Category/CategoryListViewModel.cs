@@ -23,9 +23,9 @@
         private int id;
 
         /// <summary>
-        /// Create the selected Category from the current button click..
+        /// Gets or sets the selected Category from the current button click..
         /// </summary>
-        public Category selectedCategory;
+        public Category SelectedCategory { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryListViewModel"/> class.
@@ -34,7 +34,7 @@
         public CategoryListViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             // Gets the category to the list
-            LoadCategories();
+            this.LoadCategories();
 
             // action command, if the button is clicked then set the value of the button into the parameter
             this.CategoryViewCommand = new ActionCommand(this.CategroyViewCommandExecute, this.CategoryViewCommandCanExecute);
@@ -45,10 +45,10 @@
             // action command if the delete button is clicked.
             this.CategoryDeleteViewCommand = new ActionCommand(this.CategroyDeleteViewCommandExecute, this.CategoryDeleteViewCommandCanExecute);
 
-            //subscribe new event for the new data save
+            // subscribe new event for the new data save
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Subscribe(this.AddCategory, ThreadOption.UIThread);
 
-            //subscribe new event for the new data save
+            // subscribe new event for the new data save
             this.EventAggregator.GetEvent<ReloadCategoryDataEvent>().Subscribe(this.EditCategoris, ThreadOption.UIThread);
         }
 
@@ -61,6 +61,7 @@
             {
                 return this.id;
             }
+
             set
             {
                 if (value != -1)
@@ -103,23 +104,28 @@
             {
                 categoryService.WriteData(category);
             }
-            LoadCategories();
+
+            this.LoadCategories();
 
             MessageBox.Show("Added new Category!");
 
-            this.OnPropertyChanged(nameof(Categories));
+            this.OnPropertyChanged(nameof(this.Categories));
         }
 
-        public void EditCategoris(bool IsEdit)
+        /// <summary>
+        /// check whether the categories is edited
+        /// </summary>
+        /// <param name="isEdit">return the value</param>
+        public void EditCategoris(bool isEdit)
         {
-            if(IsEdit)
+            if (isEdit)
             {
-                LoadCategories();
+                this.LoadCategories();
             }
         }
 
         /// <summary>
-        /// Initialize the database connection and is loaded in the CatergoryData.
+        /// Initialize the database connection and is loaded in the Category data.
         /// </summary>
         private void LoadCategories()
         {
@@ -148,14 +154,14 @@
         /// <param name="parameter">Data used by the command.</param>
         private void CategroyEditViewCommandExecute(object parameter)
         {
-            
             CategorySave categorySave = new CategorySave();
             CategoryAddViewModel categoryAddViewModel = new CategoryAddViewModel(EventAggregator);
             categorySave.DataContext = categoryAddViewModel;
             
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Publish(categorySave);
+
             // Send the last id from the Categories
-            this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(Categories.Count + 1);
+            this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Publish(this.Categories.Count + 1);
         }
 
         /// <summary>
@@ -178,13 +184,13 @@
             if (categoryService.init())
             {
                 categoryService.DeleteData((int)parameter);
-                LoadCategories();
-                this.OnPropertyChanged(nameof(Categories));
+                this.LoadCategories();
+                this.OnPropertyChanged(nameof(this.Categories));
             }
         }
 
         /// <summary>
-        /// Determines if the edti the category view loading command can be executed.
+        /// Determines if the edit the category view loading command can be executed.
         /// </summary>
         /// <param name="parameter">Data used by the Command.</param>
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
@@ -210,9 +216,9 @@
             {
                 if (category.Id == (int)parameter)
                 {
-                    this.selectedCategory = category;
+                    this.SelectedCategory = category;
 
-                    this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Publish(this.selectedCategory);
+                    this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Publish(this.SelectedCategory);
                 }
             }
         }

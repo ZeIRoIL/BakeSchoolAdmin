@@ -37,7 +37,7 @@
         /// <summary>
         /// Defines the DatabaseName.
         /// </summary>
-        private readonly string DatabaseName = "test";
+        private readonly string DatabaseName = "LearnBakeDb";
 
         /// <summary>
         /// Defines the CategoryCollectionName.

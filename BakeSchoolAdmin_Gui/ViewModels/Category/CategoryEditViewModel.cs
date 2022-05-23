@@ -66,6 +66,7 @@
             {
                 return this.amount;
             }
+
             set
             {
                 if (this.amount != value)
@@ -81,7 +82,7 @@
         /// </summary>
         /// <param name="parameter">Data used by the Command.</param>
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
-        private bool EditCategoryCanExecute(object parameter)
+        public bool EditCategoryCanExecute(object parameter)
         {
             return true;
         }
@@ -90,7 +91,7 @@
         /// Gets executed and show user the text of the step.
         /// </summary>
         /// <param name="parameter">Data used by the command.</param>
-        private void EditCategoryExecute(object parameter)
+        public void EditCategoryExecute(object parameter)
         {
             CategoryDetails details = new CategoryDetails();
             details.Name = this.Name;
@@ -98,10 +99,8 @@
             details.Level = this.Amount;
             Category editCategory = new Category(this.id, details);
 
-            
             CategoryService categoryService = new CategoryService();
             
-
             if (categoryService.init())
             {
                 categoryService.UpdateData(editCategory);
@@ -110,7 +109,7 @@
         }
 
         /// <summary>
-        /// Event handler to notice changes in the current categroy data.
+        /// Event handler to notice changes in the current category data.
         /// </summary>
         /// <param name="category">Reference to the sent student data.</param>
         public void SelectedCategory(Category category)

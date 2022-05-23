@@ -15,28 +15,6 @@
     internal class MainRecipesViewModel : ViewModelBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainRecipesViewModel"/> class.
-        /// </summary>
-        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
-        public MainRecipesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
-        {
-            this.InitRecipe();
-
-            // subscribe to event
-            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
-
-            // open the view with all recipes and home View from recipes!
-            RecipeHomeViewModel recipeMainViewModel = new RecipeHomeViewModel(EventAggregator, recipes);
-            RecipeHomeView recipeHomeView = new RecipeHomeView();
-
-            recipeHomeView.DataContext = recipeMainViewModel;
-            this.CurrentMainRecipeView = recipeHomeView;
-
-            // subscribe to event
-            this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
-        }
-
-        /// <summary>
         /// View that is currently bound to the main ContentControl..
         /// </summary>
         private UserControl currentMainRecipeView;
@@ -50,6 +28,28 @@
         /// the current recipe which are  selected..
         /// </summary>
         private Recipe recipe;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainRecipesViewModel"/> class.
+        /// </summary>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        public MainRecipesViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        {
+            this.InitRecipe();
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeCurrentMainDataEvent>().Subscribe(this.ChangeCurrentMainView, ThreadOption.UIThread);
+
+            // open the view with all recipes and home View from recipes!
+            RecipeHomeViewModel recipeMainViewModel = new RecipeHomeViewModel(EventAggregator, this.recipes);
+            RecipeHomeView recipeHomeView = new RecipeHomeView();
+
+            recipeHomeView.DataContext = recipeMainViewModel;
+            this.CurrentMainRecipeView = recipeHomeView;
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
+        }
 
         /// <summary>
         /// Gets or sets the view that is currently bound to the main ContentControl..
@@ -95,82 +95,6 @@
         /// </summary>
         internal void InitRecipe()
         {
-            
-            //Recipe recipe = new Recipe();
-
-            //Description description = new Description();
-            //description.Step = 1;
-            //description.Text = "Das ist der erste Versuch";
-
-            //Description description1 = new Description();
-            //description1.Step = 2;
-            //description1.Text = "Das ist der zweite Versuch";
-
-            //Description description2 = new Description();
-            //description2.Step = 3;
-            //description2.Text = "Das ist der dritte Versuch";
-
-            //List<Description> descriptions = new List<Description>();
-            //descriptions.Add(description1);
-            //descriptions.Add(description2);
-
-
-            //List<Ingredient> ingredients = new List<Ingredient>();
-            //Ingredient ingredient = new Ingredient();
-            //ingredient.Data = "Käse";
-            //ingredient.Amount = 100;
-            //ingredient.Unit = "stk.";
-            //Ingredient ingredient1 = new Ingredient();
-            //ingredient1.Data = "Erdbeere";
-            //ingredient1.Amount = 100;
-            //ingredient1.Unit = "stk.";
-
-            //ingredients.Add(ingredient);
-            //ingredients.Add(ingredient1);
-
-            //recipe.Name = "Rezept1";
-            //recipe.Number = 1;
-            //recipe.Ingredients = ingredients;
-            //recipe.Descriptions = descriptions;
-
-            //Recipe recipe1 = new Recipe();
-
-            //Description descriptio1 = new Description();
-            //description.Step = 1;
-            //description.Text = "Das ist der erste ";
-
-            //Description descriptio2 = new Description();
-            //description1.Step = 2;
-            //description1.Text = "Das ist der zweite ";
-
-            //Description descriptio3 = new Description();
-            //description2.Step = 3;
-            //description2.Text = "Das ist der dritte ";
-
-            //List<Description> descriptions1 = new List<Description>();
-            //descriptions1.Add(descriptio1);
-            //descriptions1.Add(descriptio2);
-            //descriptions1.Add(descriptio3);
-
-
-            //List<Ingredient> ingredients1 = new List<Ingredient>();
-            //Ingredient ingredient11 = new Ingredient();
-            //ingredient.Data = "Käse";
-            //Ingredient ingredient12 = new Ingredient();
-            //ingredient1.Data = "Erdbeere";
-
-            //ingredients.Add(ingredient11);
-            //ingredients.Add(ingredient12);
-
-            //recipe1.Name = "Rezept2";
-            //recipe1.Number = 2;
-            //recipe1.Ingredients = ingredients1;
-            //recipe1.Descriptions = descriptions1;
-
-            //this.recipes.Add(recipe);
-            //this.recipes.Add(recipe1);
-
-#warning need the implementation
             RecipeService recipeService = new RecipeService();
             if (recipeService.init())
             {

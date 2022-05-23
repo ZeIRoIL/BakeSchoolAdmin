@@ -11,23 +11,31 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
         <!--Zutaten View-->
-        <DataGrid Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" ItemsSource="{Binding Path= Ingredients}" AutoGenerateColumns="False">
+        <DataGrid Grid.Column="0"  IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" ItemsSource="{Binding Path= Ingredients}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Data}"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <!--Name Rezept erstellen-->
+        <TextBox Grid.Column="2" Text="{Binding Name}"   Grid.Row="1" Background="Red" />
         <!--Zutat Erstellen-->
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="2">
             <Label  Content="Zutat"/>
-       
-            <TextBox Text="{Binding Name}"/>
+
+            <TextBox Text="{Binding Data}"/>
             <TextBox Text="{Binding Unit}"/>
             <TextBox Text="{Binding Amount}"/>
             <Button Content="Save" Command="{Binding SaveIngredient}"/>
         </StackPanel>
-       
+
     </Grid>
 </UserControl>

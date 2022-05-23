@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace BakeSchoolAdmin_Gui.Events
 {
-    class ReloadCategoryDataEvent : CompositePresentationEvent<bool>
+    /// <summary>
+    /// Reload the data of category on the main page
+    /// </summary>
+    public class ReloadCategoryDataEvent : CompositePresentationEvent<bool>
     {
     }
 }

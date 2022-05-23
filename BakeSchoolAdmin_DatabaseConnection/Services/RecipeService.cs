@@ -35,12 +35,12 @@
         /// <summary>
         /// Defines the DatabaseName.
         /// </summary>
-        private readonly string DatabaseName = "test";
+        private readonly string DatabaseName = "LearnBakeDb";
 
         /// <summary>
         /// Defines the RecipeCollectionName.
         /// </summary>
-        private readonly string RecipeCollectionName = "RecipesCollection";
+        private readonly string RecipeCollectionName = "RecipeCollection";
 
         /// <summary>
         /// Defines the Mongo Client..

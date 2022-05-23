@@ -1,9 +1,11 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
     using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_Gui.Events.RecipeAddEvents;
     using BakeSchoolAdmin_Gui.Views.Recipes;
     using BakeSchoolAdmin_Models;
     using Microsoft.Practices.Prism.Events;
+    using System.Collections.Generic;
     using System.Windows.Controls;
     using System.Windows.Input;
 
@@ -12,25 +14,6 @@
     /// </summary>
     internal class RecipesAddMainViewModel : ViewModelBase
     {
-        /// <summary>
-        /// View that is currently bound to the left ContentControl..
-        /// </summary>
-        private UserControl currentViewMain;
-
-        /// <summary>
-        /// gets and sets for the current description.
-        /// </summary>
-        private Description currentDes;
-
-        /// <summary>
-        /// gets and sets for the current Recipe.
-        /// </summary>
-        private Recipe currentRec;
-
-        /// <summary>
-        /// gets and sets for the current ingredient.
-        /// </summary>
-        private Ingredient currentingredient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipesAddMainViewModel"/> class.
@@ -39,17 +22,40 @@
         public RecipesAddMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
             RecipeEditAddIngredient view = new RecipeEditAddIngredient();
-            RecipeEditAddIngredientViewModel model = new RecipeEditAddIngredientViewModel(EventAggregator);
+            RecipeEditAddIngredientViewModel model = new RecipeEditAddIngredientViewModel(EventAggregator, this.CurrentRecipe);
             view.DataContext = model;
             this.currentViewMain = view;
 
-            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
+            /// action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
-            // action command if the change button is clicked and the usercontrol (AddCheck) will open.
+            /// action command if the change button is clicked and the usercontrol (AddCheck) will open.
             this.OpenCheck = new ActionCommand(this.ShowCheckViewCommandExecute, this.ShowCheckViewCommandCanExecute);
-            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
+            /// action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenIngredient = new ActionCommand(this.ShowIngredientsViewCommandExecute, this.ShowIngriedentsCommandCanExecute);
+
+            /// subscribe new event for the new data save
+            this.EventAggregator.GetEvent<ReloadCurrentCheckRecipeEventData>().Subscribe(this.LoadRecipe, ThreadOption.UIThread);
         }
+
+        /// <summary>
+        /// View that is currently bound to the left ContentControl..
+        /// </summary>
+        private UserControl currentViewMain;
+
+        /// <summary>
+        /// gets and sets for the current description.
+        /// </summary>
+        public List<Description> CurrentDescription;
+
+        /// <summary>
+        /// gets and sets for the current ingredient.
+        /// </summary>
+        public List<Ingredient> CurrentIngredient;
+
+        /// <summary>
+        /// gets and sets for the current Recipe.
+        /// </summary>
+        public Recipe CurrentRecipe { get; private set; }
 
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl.
@@ -90,6 +96,26 @@
         /// </summary>
         public ICommand OpenCheck { get; private set; }
 
+        #region ---------------------------------------------- Events Methods --------------------------
+        /// <summary>
+        /// load the recipe in the current recipe data and check whether it contains description and recipe
+        /// </summary>
+        /// <param name="currentrecipe"></param>
+        public void LoadRecipe(Recipe currentrecipe)
+        {
+            if (currentrecipe.Ingredients != null)
+            {
+                this.CurrentIngredient = currentrecipe.Ingredients;
+            }
+
+            if (currentrecipe.Descriptions != null)
+            {
+                this.CurrentDescription = currentrecipe.Descriptions;
+            }
+        }
+        #endregion
+
+        #region ---------------------------------------------- Command Methods --------------------------
         /// <summary>
         /// Determines if the view is correct and we can be executed.
         /// </summary>
@@ -107,7 +133,7 @@
         private void ShowDescriptionViewCommandExecute(object parameter)
         {
             RecipeEditAddDescription recipeEditAddDescription = new RecipeEditAddDescription();
-            RecipeEditAddDescriptionViewModel recipeEditAddDescriptionViewModel = new RecipeEditAddDescriptionViewModel(EventAggregator, currentDes);
+            RecipeEditAddDescriptionViewModel recipeEditAddDescriptionViewModel = new RecipeEditAddDescriptionViewModel(EventAggregator, this.CurrentRecipe);
             recipeEditAddDescription.DataContext = recipeEditAddDescriptionViewModel;
             this.currentViewMain = recipeEditAddDescription;
             this.OnPropertyChanged(nameof(this.CurrentViewMain));
@@ -120,7 +146,12 @@
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool ShowCheckViewCommandCanExecute(object parameter)
         {
-            return true;
+            if (this.CurrentIngredient != null && this.CurrentDescription != null)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -129,8 +160,15 @@
         /// <param name="parameter">Data used by the command.</param>
         private void ShowCheckViewCommandExecute(object parameter)
         {
+            Recipe recipe = new Recipe();
+
+            recipe.Descriptions = this.CurrentDescription;
+            recipe.Ingredients = this.CurrentIngredient;
+
+            this.CurrentRecipe = recipe;
+
             RecipeEditCheckRecipe recipeEditCheck = new RecipeEditCheckRecipe();
-            RecipeEditCheckRecipeViewModel recipeEditCheckModel = new RecipeEditCheckRecipeViewModel(EventAggregator);
+            RecipeEditCheckRecipeViewModel recipeEditCheckModel = new RecipeEditCheckRecipeViewModel(EventAggregator, this.CurrentRecipe);
             recipeEditCheck.DataContext = recipeEditCheckModel;
             this.currentViewMain = recipeEditCheck;
             this.OnPropertyChanged(nameof(this.CurrentViewMain));
@@ -153,10 +191,11 @@
         private void ShowIngredientsViewCommandExecute(object parameter)
         {
             RecipeEditAddIngredient recipeEditIngred = new RecipeEditAddIngredient();
-            RecipeEditAddIngredientViewModel recipeEditIngredCheckModel = new RecipeEditAddIngredientViewModel(EventAggregator);
+            RecipeEditAddIngredientViewModel recipeEditIngredCheckModel = new RecipeEditAddIngredientViewModel(EventAggregator, this.CurrentRecipe);
             recipeEditIngred.DataContext = recipeEditIngredCheckModel;
             this.currentViewMain = recipeEditIngred;
             this.OnPropertyChanged(nameof(this.CurrentViewMain));
         }
+        #endregion
     }
 }
