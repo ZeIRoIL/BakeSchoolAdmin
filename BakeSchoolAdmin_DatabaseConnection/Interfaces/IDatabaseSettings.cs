@@ -17,8 +17,8 @@
         /// <summary>
         /// Read single dataset from service.
         /// </summary>
-        /// <param name="id">.</param>
-        /// <returns>.</returns>
+        /// <param name="id">the data id from the database</param>
+        /// <returns>the id data</returns>
         T ReadData(int id);
 
         /// <summary>

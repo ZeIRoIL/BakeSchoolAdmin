@@ -14,10 +14,10 @@
         /// </summary>
         public CategoryMapperProfil()
         {
-            CreateMap<Category, CategoryData>();
+            this.CreateMap<Category, CategoryData>();
 
 
-            CreateMap<CategoryData, Category>();
+            this.CreateMap<CategoryData, Category>();
         }
     }
 }

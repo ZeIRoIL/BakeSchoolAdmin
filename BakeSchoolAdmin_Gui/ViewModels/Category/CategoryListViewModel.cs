@@ -23,11 +23,6 @@
         private int id;
 
         /// <summary>
-        /// Gets or sets the selected Category from the current button click..
-        /// </summary>
-        public Category SelectedCategory { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CategoryListViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
@@ -51,6 +46,11 @@
             // subscribe new event for the new data save
             this.EventAggregator.GetEvent<ReloadCategoryDataEvent>().Subscribe(this.EditCategoris, ThreadOption.UIThread);
         }
+
+        /// <summary>
+        /// Gets or sets the selected Category from the current button click..
+        /// </summary>
+        public Category SelectedCategory { get; set; }
 
         /// <summary>
         /// Gets or sets the Id.

@@ -6,17 +6,17 @@
     public class DatabaseSettings
     {
         /// <summary>
-        /// Gets or sets the DatabaseConnection.
+        /// Gets or sets the databaseConnection.
         /// </summary>
         public string DatabaseConnection { get; set; }
 
         /// <summary>
-        /// Gets or sets the DatabaseName.
+        /// Gets or sets the databaseName.
         /// </summary>
         public string DatabaseName { get; set; }
 
         /// <summary>
-        /// Gets or sets the CategoryCollectionName.
+        /// Gets or sets the categoryCollectionName.
         /// </summary>
         public string CategoryCollectionName { get; set; }
     }

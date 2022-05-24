@@ -220,15 +220,6 @@
 
         #region ------------------------------------------------ Methods Helpers-------------------
         /// <summary>
-        /// Gets the Recipe
-        /// The recipe which will transfer into the end view if the user clicked on the button "Save".
-        /// </summary>
-        public void ReloadData()
-        {
-            this.OnPropertyChanged(nameof(this.Ingredients));
-        }
-
-        /// <summary>
         /// The LoadIngredients.
         /// </summary>
         /// <param name="list">ingredient lists</param>
@@ -237,6 +228,14 @@
             //// init collection and add data
             this.Ingredients = new ObservableCollection<Ingredient>(list);
             this.IngredientList = list;
+        }
+        /// <summary>
+        /// Gets the Recipe
+        /// The recipe which will transfer into the end view if the user clicked on the button "Save".
+        /// </summary>
+        public void ReloadData()
+        {
+            this.OnPropertyChanged(nameof(this.Ingredients));
         }
         #endregion
     }

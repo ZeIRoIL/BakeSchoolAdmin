@@ -25,24 +25,19 @@
         private IMapper mapper;
 
         /// <summary>
-        /// Gets or sets the categoriesdata.
+        /// Defines the databaseConnection.
         /// </summary>
-        public IMongoCollection<CategoryData> categoriesdata { get; set; }
+        private readonly string databaseConnection = "mongodb://localhost:27017";
 
         /// <summary>
-        /// Defines the DatabaseConnection.
+        /// Defines the databaseName.
         /// </summary>
-        private readonly string DatabaseConnection = "mongodb://localhost:27017";
+        private readonly string databaseName = "LearnBakeDb";
 
         /// <summary>
-        /// Defines the DatabaseName.
+        /// Defines the categoryCollectionName.
         /// </summary>
-        private readonly string DatabaseName = "LearnBakeDb";
-
-        /// <summary>
-        /// Defines the CategoryCollectionName.
-        /// </summary>
-        private readonly string CategoryCollectionName = "CategoryCollection";
+        private readonly string categoryCollectionName = "CategoryCollection";
 
         /// <summary>
         /// Defines the client.
@@ -57,6 +52,12 @@
         }
 
         /// <summary>
+        /// Gets or sets the categories data.
+        /// </summary>
+        public IMongoCollection<CategoryData> categoriesdata { get; set; }
+
+
+        /// <summary>
         /// The initialize .
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
@@ -64,9 +65,9 @@
         {
             try
             {
-                this.client = new MongoClient(DatabaseConnection);
-                var database = client.GetDatabase(DatabaseName);
-                this.categoriesdata = database.GetCollection<CategoryData>(CategoryCollectionName);
+                this.client = new MongoClient(this.databaseConnection);
+                var database = this.client.GetDatabase(this.databaseName);
+                this.categoriesdata = database.GetCollection<CategoryData>(this.categoryCollectionName);
                 try
                 {
                     mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
@@ -110,10 +111,10 @@
         public IList<Category> ReadData()
         {
             // Get the data from mongodb into the list
-            IList<CategoryData> list = categoriesdata.Find<CategoryData>
+            IList<CategoryData> list = this.categoriesdata.Find<CategoryData>
             (p => true).ToList<CategoryData>();
 
-            IList<Category> categories = mapper.Map<IList<CategoryData>, IList<Category>>(list);
+            IList<Category> categories = this.mapper.Map<IList<CategoryData>, IList<Category>>(list);
 
             return categories;
         }
@@ -127,7 +128,7 @@
         {
             var deleteFilter = Builders<CategoryData>.Filter.Eq("categoryId", id);
 
-            categoriesdata.DeleteOne(deleteFilter);
+            this.categoriesdata.DeleteOne(deleteFilter);
             return true;
         }
 
@@ -136,10 +137,8 @@
         /// </summary>
         /// <param name="data">The data<see cref="Category"/>.</param>
         /// <returns>The <see cref="bool"/>.</returns>
-        public bool WriteData(Category data)
+        public  bool WriteData(Category data)
         {
-            
-
             string name = data.Details.Name;
             int id = data.Id;
             string text = data.Details.Text;
@@ -149,20 +148,20 @@
             {
                 var document = new BsonDocument
             {
-                    { "datasetId" , "category"},
-                    { "categoryId" , id},
+                    { "datasetId",  "category" },
+                    { "categoryId",  id },
                     { "details",
                         new BsonDocument
                         {
-                             { "name",name},
-                             { "img","ffgs"},
-                            {"text" ,text},
-                            {"difficultyLevel" , level }
+                             { "name", name },
+                             { "img", "ffgs" },
+                            { "text",  text },
+                            { "difficultyLevel",  level }
                         }
                      }
               };
-                var database = client.GetDatabase(DatabaseName);
-                var collection = database.GetCollection<BsonDocument>(CategoryCollectionName);
+                var database = this.client.GetDatabase(this.databaseName);
+                var collection =  database.GetCollection<BsonDocument>( this.categoryCollectionName );
                 collection.InsertOne(document);
             }
             catch (Exception ex)
@@ -184,32 +183,31 @@
             {
                 var document = new BsonDocument
             {
-                    { "datasetId" , "category"},
-                    { "categoryId" , data.Id + 1},
+                    { "datasetId", "category" },
+                    { "categoryId",  data.Id + 1 },
                     { "details",
                         new BsonDocument
                         {
-                             { "name",data.Details.Name},
-                             { "img","ffgs"},
-                            {"text" ,data.Details.Text},
-                            {"difficultyLevel" , data.Details.Level }
+                             { "name", data.Details.Name },
+                             { "img", "ffgs" },
+                            { "text", data.Details.Text },
+                            { "difficultyLevel",  data.Details.Level }
                         }
                      }
               };
                 
                 
-                var database = client.GetDatabase(DatabaseName);
-                var collection = database.GetCollection<BsonDocument>(CategoryCollectionName);
+                var database = this.client.GetDatabase(this.databaseName);
+                var collection = database.GetCollection<BsonDocument>(this.categoryCollectionName);
 
-                var filter = Builders<BsonDocument>.Filter.Eq("categoryId",data.Id + 1);
+                var filter = Builders<BsonDocument>.Filter.Eq("categoryId", data.Id + 1);
                 collection.ReplaceOne(filter, document);
 
                 return true;
             }
             catch (Exception)
             {
-                return false;
-                throw new Exception("Catagory cannot update");
+                return false;   
             }
         }
 
@@ -223,16 +221,16 @@
         }
 
         /// <summary>
-        /// The GetCategoryObserv.
+        /// The Category observableCollection.
         /// </summary>
         /// <param name="categoriesList">The categoriesList<see cref="IList{Category}"/>.</param>
         /// <returns>The <see cref="ObservableCollection{Category}"/>.</returns>
         public ObservableCollection<Category> GetCategoryObserv(IList<Category> categoriesList)
         {
-            //create an emtpy observable collection object
+            // create an emtpy observable collection object
             ObservableCollection<Category> categories = new ObservableCollection<Category>();
 
-            //loop through all the records and add to observable collection object
+            // loop through all the records and add to observable collection object
             foreach (var item in categoriesList)
                 categories.Add(item);
 

@@ -6,7 +6,7 @@
     using System.Windows;
 
     /// <summary>
-    /// Logic for "App.xaml".
+    /// Logic for "App".
     /// </summary>
     public partial class App : Application
     {

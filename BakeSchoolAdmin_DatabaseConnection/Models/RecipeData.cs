@@ -66,7 +66,7 @@
     }
 
     /// <summary>
-    /// the description for the repices step by step.
+    /// the description for the recipes step by step.
     /// </summary>
     public class Description
     {

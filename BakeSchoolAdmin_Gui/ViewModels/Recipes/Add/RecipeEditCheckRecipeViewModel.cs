@@ -1,8 +1,11 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
+    using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Models;
     using Microsoft.Practices.Prism.Events;
     using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Input;
 
     /// <summary>
     /// Defines the <see cref="RecipeEditCheckRecipeViewModel" />.
@@ -12,12 +15,27 @@
         /// <summary>
         /// Defines the recipe.
         /// </summary>
-        private readonly Recipe recipe;
+        private readonly Recipe editrecipe;
 
         /// <summary>
         /// Defines the description.
         /// </summary>
         private Description description;
+
+        /// <summary>
+        /// the description text for each step.
+        /// </summary>
+        private string text;
+
+        /// <summary>
+        /// the  step of description.
+        /// </summary>
+        private int step;
+
+        /// <summary>
+        /// the hint text for each step.
+        /// </summary>
+        private string texthint;
 
         /// <summary>
         /// the name of the ingredient....
@@ -41,18 +59,27 @@
         /// <param name="recipe">The recipe<see cref="Recipe"/>.</param>
         public RecipeEditCheckRecipeViewModel(IEventAggregator eventAggregator, Recipe recipe) : base(eventAggregator)
         {
-            this.recipe = recipe;
+            this.editrecipe = recipe;
             this.Name = recipe.Name;
-            this.setIngredients(this.recipe);
-            this.setDescriptions(this.recipe);
+            this.setIngredients(this.editrecipe);
+            this.setDescriptions(this.editrecipe);
             this.ReloadData();
+
+            // the command for the ShowDescription
+            this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
         }
+
+        /// <summary>
+        /// Gets the ShowDescription
+        /// execute the command and add the recent ingredient in the ObservableCollection..
+        /// </summary>
+        public ICommand ShowDescription { get; private set; }
 
         /// <summary>
         /// Gets or sets the Ingredient
         /// Defines the Ingredients..
         /// </summary>
-        public Ingredient Ingredient{ get; set; }
+        public Ingredient Ingredient { get; set; }
 
         /// <summary>
         /// Gets or sets the Ingredient
@@ -71,6 +98,66 @@
         /// Get or set the list with all ingredient which user can select.....
         /// </summary>
         public ObservableCollection<Description> DescriptionObs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                return this.text;
+            }
+
+            set
+            {
+                if (value != string.Empty)
+                {
+                    this.text = value;
+                    this.OnPropertyChanged(nameof(this.text));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the texthint.
+        /// </summary>
+        public string Texthint
+        {
+            get
+            {
+                return this.texthint;
+            }
+
+            set
+            {
+                if (value != string.Empty)
+                {
+                    this.texthint = value;
+                    this.OnPropertyChanged(nameof(this.texthint));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the steps.
+        /// </summary>
+        public int Step
+        {
+            get
+            {
+                return this.step;
+            }
+
+            set
+            {
+                if (value != 0)
+                {
+                    this.step = value;
+                    this.OnPropertyChanged(nameof(this.step));
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets the Unit.
@@ -134,7 +221,7 @@
 
         /// <summary>
         /// Gets the Recipe
-        ///// The recipe which will transfer into the end view if the user clicked on the button "Save".
+        ///  The recipe which will transfer into the end view if the user clicked on the button "Save".
         /// </summary>
         public void ReloadData()
         {
@@ -171,13 +258,50 @@
 
             foreach (var item in recipe.Descriptions)
             {
-                Description.Text = item.Text;
-                Description.Step = item.Step;
-                Description.Hints = item.Hints;
-                Description.Image = item.Image;
-
-                this.DescriptionObs.Add(this.Description);
+                this.DescriptionObs.Add(item);
             }
         }
+
+        /// <summary>
+        /// Determines if the data is correct then the ingredient is created.
+        /// </summary>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
+        private bool ShowDescriptionCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed and show user the text of the step.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.</param>
+        private void ShowDescriptionCommandExecute(object parameter)
+        {
+            if ((int)parameter != 0)
+            {
+                int stepId = (int)parameter;
+                if (this.DescriptionObs.Any(d => d.Step == stepId))
+                {
+                    this.step = stepId;
+                    this.text = this.DescriptionObs[this.step - 1].Text;
+                    this.OnPropertyChanged(nameof(this.text));
+                    //if (this.DescriptionObs[this.step - 1].Hints != null)
+                    //{
+                    //    this.hints = this.DescriptionObs[this.step - 1].Hints;
+                    //}
+                    //else
+                    //{
+                    //    this.TextHint = string.Empty;
+                    //    this.OnPropertyChanged(nameof(this.TextHint));
+                    //}
+
+                    //this.Hints = new ObservableCollection<Hint>(this.hints);
+                    //this.OnPropertyChanged(nameof(this.Hints));
+                }
+            }
+        }
+
+
     }
 }

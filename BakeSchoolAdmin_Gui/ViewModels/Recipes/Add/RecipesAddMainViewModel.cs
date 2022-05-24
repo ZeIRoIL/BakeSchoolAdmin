@@ -14,7 +14,14 @@
     /// </summary>
     internal class RecipesAddMainViewModel : ViewModelBase
     {
+        #region ------------------------------------------------------------------ private fields ----------------------------------------
+        /// <summary>
+        /// View that is currently bound to the left ContentControl..
+        /// </summary>
+        private UserControl currentViewMain;
+        #endregion
 
+        #region ------------------------------------------------------------------ Constructor ----------------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipesAddMainViewModel"/> class.
         /// </summary>
@@ -26,34 +33,30 @@
             view.DataContext = model;
             this.currentViewMain = view;
 
-            /// action command if the change button is clicked and the usercontrol (AddCategory) will open.
+            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
-            /// action command if the change button is clicked and the usercontrol (AddCheck) will open.
+            // action command if the change button is clicked and the usercontrol (AddCheck) will open.
             this.OpenCheck = new ActionCommand(this.ShowCheckViewCommandExecute, this.ShowCheckViewCommandCanExecute);
-            /// action command if the change button is clicked and the usercontrol (AddCategory) will open.
+            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenIngredient = new ActionCommand(this.ShowIngredientsViewCommandExecute, this.ShowIngriedentsCommandCanExecute);
 
-            /// subscribe new event for the new data save
+            // subscribe new event for the new data save
             this.EventAggregator.GetEvent<ReloadCurrentCheckRecipeEventData>().Subscribe(this.LoadRecipe, ThreadOption.UIThread);
         }
+        #endregion
 
         /// <summary>
-        /// View that is currently bound to the left ContentControl..
+        /// Gets or sets for the current description.
         /// </summary>
-        private UserControl currentViewMain;
+        public List<Description> CurrentDescription { get; set; }
 
         /// <summary>
-        /// gets and sets for the current description.
+        /// Gets or sets for the current ingredient.
         /// </summary>
-        public List<Description> CurrentDescription;
+        public List<Ingredient> CurrentIngredient { get; set; }
 
         /// <summary>
-        /// gets and sets for the current ingredient.
-        /// </summary>
-        public List<Ingredient> CurrentIngredient;
-
-        /// <summary>
-        /// gets and sets for the current Recipe.
+        /// Gets and sets for the current Recipe.
         /// </summary>
         public Recipe CurrentRecipe { get; private set; }
 

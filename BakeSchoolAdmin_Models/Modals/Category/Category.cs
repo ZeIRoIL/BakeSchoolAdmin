@@ -32,14 +32,27 @@
         /// Gets or sets the id.
         /// </summary>
         [BsonElement("categoryId")]
-        private int id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// Gets or sets the details.
         /// </summary>
         [BsonElement("details")]
-        private CategoryDetails details { get; set; }
-        
+        public CategoryDetails details { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ObjectId.
+        /// </summary>
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId ObjectId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the String.
+        /// </summary>
+        [BsonElement("datasetId")]
+        public string String { get; set; }
+
         /// <summary>
         /// Gets or sets the Id.
         /// </summary>
@@ -84,18 +97,5 @@
                 }
             }
         }
-
-        /// <summary>
-        /// Gets or sets the ObjectId.
-        /// </summary>
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId ObjectId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the String.
-        /// </summary>
-        [BsonElement("datasetId")]
-        public string String { get; set; }
     }
 }

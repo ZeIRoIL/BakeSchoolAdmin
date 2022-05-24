@@ -47,22 +47,7 @@
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
         }
 
-        /// <summary>
-        /// Event handler to notice changes in the current category data.
-        /// </summary>
-        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
-        public void ChangetheCurrentViewRight(UserControl userControl)
-        {
-            this.currentViewRight = userControl;
-            this.OnPropertyChanged(nameof(this.currentViewRight));
-        }
-
-        /// <summary>
-        /// The ChangeCurrentMainView.
-        /// </summary>
-        /// <param name="main">The main<see cref="UserControl"/>.</param>
-        public void ChangeCurrentMainView(UserControl main) => throw new Exception("change current MainView");
-        
+        #region --------------------------------------------------------------- Public Properties ---------------------------------------
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl..
         /// </summary>
@@ -104,5 +89,24 @@
                 }
             }
         }
+        #endregion
+
+        /// <summary>
+        /// Event handler to notice changes in the current category data.
+        /// </summary>
+        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
+        public void ChangetheCurrentViewRight(UserControl userControl)
+        {
+            this.currentViewRight = userControl;
+            this.OnPropertyChanged(nameof(this.currentViewRight));
+        }
+
+        /// <summary>
+        /// The ChangeCurrentMainView.
+        /// </summary>
+        /// <param name="main">The main<see cref="UserControl"/>.</param>
+        public void ChangeCurrentMainView(UserControl main) => throw new Exception("change current MainView");
+
+     
     }
 }

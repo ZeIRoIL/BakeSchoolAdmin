@@ -90,33 +90,9 @@
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the Hints.
-        /// </summary>
-        [BsonElement("hint")]
-        public List<Hint> Hints { get; set; }
-
-        /// <summary>
         /// Gets or sets the Image.
         /// </summary>
         [BsonElement("image")]
         public string Image { get; set; }
-    }
-
-    /// <summary>
-    /// If the Step has a hint then it will show a hints.
-    /// </summary>
-    public class Hint
-    {
-        /// <summary>
-        /// Gets or sets the Step.
-        /// </summary>
-        [BsonElement("step")]
-        public int Step { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Text.
-        /// </summary>
-        [BsonElement("text")]
-        public string Text { get; set; }
     }
 }

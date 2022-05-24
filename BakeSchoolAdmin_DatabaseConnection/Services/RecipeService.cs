@@ -18,29 +18,19 @@
     public class RecipeService : IDatabaseSettings<Recipe>
     {
         /// <summary>
-        /// Defines the mapper.
+        /// Defines the databaseConnection.
         /// </summary>
-        private IMapper mapper;
+        private readonly string databaseConnection = "mongodb://localhost:27017";
 
         /// <summary>
-        /// Gets or sets the recipesdata.
+        /// Defines the databaseName.
         /// </summary>
-        public IMongoCollection<RecipeData> recipesdata { get; set; }
+        private readonly string databaseName = "LearnBakeDb";
 
         /// <summary>
-        /// Defines the DatabaseConnection.
+        /// Defines the recipeCollectionName.
         /// </summary>
-        private readonly string DatabaseConnection = "mongodb://localhost:27017";
-
-        /// <summary>
-        /// Defines the DatabaseName.
-        /// </summary>
-        private readonly string DatabaseName = "LearnBakeDb";
-
-        /// <summary>
-        /// Defines the RecipeCollectionName.
-        /// </summary>
-        private readonly string RecipeCollectionName = "RecipeCollection";
+        private readonly string recipeCollectionName = "RecipeCollection";
 
         /// <summary>
         /// Defines the Mongo Client..
@@ -48,19 +38,24 @@
         private MongoClient Mongoclient;
 
         /// <summary>
-        /// The init.
+        /// Defines the mapper.
+        /// </summary>
+        private IMapper mapper;
+
+        /// <summary>
+        /// The initialize.
         /// </summary>
         /// <returns>The <see cref="bool"/>.</returns>
         public bool init()
         {
             try
             {
-                this.Mongoclient = new MongoClient(DatabaseConnection);
-                var database = Mongoclient.GetDatabase(DatabaseName);
-                this.recipesdata = database.GetCollection<RecipeData>(RecipeCollectionName);
+                this.Mongoclient = new MongoClient(this.databaseConnection);
+                var database = this.Mongoclient.GetDatabase(this.databaseName);
+                this.recipesdata = database.GetCollection<RecipeData>(this.recipeCollectionName);
                 try
                 {
-                    mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
+                    this.mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
                 }
                 catch (Exception ex)
                 {
@@ -74,6 +69,11 @@
             }
             return true;
         }
+
+        /// <summary>
+        /// Gets or sets the recipes data.
+        /// </summary>
+        public IMongoCollection<RecipeData> recipesdata { get; set; }
 
         /// <summary>
         /// The ReadData.
@@ -94,10 +94,10 @@
 #warning need the implemtation
 
             //// Get the data from mongodb into the list
-            IList<RecipeData> list = recipesdata.Find<RecipeData>
+            IList<RecipeData> list = this.recipesdata.Find<RecipeData>
            (p => true).ToList<RecipeData>();
 
-            IList<Recipe> recipes = mapper.Map<IList<RecipeData>, IList<Recipe>>(list);
+            IList<Recipe> recipes = this.mapper.Map<IList<RecipeData>, IList<Recipe>>(list);
 
 
             return recipes;
@@ -122,21 +122,18 @@
         }
 
         /// <summary>
-        /// The GetCategoryObserv.
+        /// The GetCategoryObservableCollection.
         /// </summary>
         /// <param name="recipesList">The recipesList<see cref="IList{Recipe}"/>.</param>
         /// <returns>The <see cref="ObservableCollection{Recipe}"/>.</returns>
         public ObservableCollection<Recipe> GetCategoryObserv(IList<Recipe> recipesList)
         {
-            //create an emtpy observable collection object
+            // create an emtpy observable collection object
             ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
 
-            //loop through all the records and add to observable collection object
+            // loop through all the records and add to observable collection object
             foreach (var item in recipesList)
                 recipes.Add(item);
-
-
-
             return recipes;
         }
     }
