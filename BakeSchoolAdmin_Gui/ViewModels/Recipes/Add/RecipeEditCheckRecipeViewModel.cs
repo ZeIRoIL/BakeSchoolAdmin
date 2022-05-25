@@ -1,11 +1,15 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit
 {
     using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_DatabaseConnection.Services;
     using BakeSchoolAdmin_Models;
     using Microsoft.Practices.Prism.Events;
+    using System;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Defines the <see cref="RecipeEditCheckRecipeViewModel" />.
@@ -38,6 +42,16 @@
         private string texthint;
 
         /// <summary>
+        /// the image of description.
+        /// </summary>
+        private Image image;
+
+        /// <summary>
+        /// the path to image 
+        /// </summary>
+        private string imagepath;
+
+        /// <summary>
         /// the name of the ingredient....
         /// </summary>
         private string name;
@@ -67,6 +81,7 @@
 
             // the command for the ShowDescription
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
+            this.SaveRecipe = new ActionCommand(this.SaveRecipeCommandExecute, this.SaveRecipeCommandCanExecute);
         }
 
         /// <summary>
@@ -74,6 +89,12 @@
         /// execute the command and add the recent ingredient in the ObservableCollection..
         /// </summary>
         public ICommand ShowDescription { get; private set; }
+
+        /// <summary>
+        /// Gets the ShowDescription
+        /// execute the command and save the whole recipe into the database.
+        /// </summary>
+        public ICommand SaveRecipe { get; private set; }
 
         /// <summary>
         /// Gets or sets the Ingredient
@@ -220,6 +241,46 @@
         }
 
         /// <summary>
+        /// Gets or sets the Text.
+        /// </summary>
+        public Image Image
+        {
+            get
+            {
+                return this.image;
+            }
+
+            set
+            {
+                if (null != value)
+                {
+                    this.image = value;
+                    this.OnPropertyChanged(nameof(this.image));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Text.
+        /// </summary>
+        public string ImagePath
+        {
+            get
+            {
+                return this.imagepath;
+            }
+
+            set
+            {
+                if (string.Empty != value)
+                {
+                    this.imagepath = value;
+                    this.OnPropertyChanged(nameof(this.imagepath));
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the Recipe
         ///  The recipe which will transfer into the end view if the user clicked on the button "Save".
         /// </summary>
@@ -285,7 +346,10 @@
                 {
                     this.step = stepId;
                     this.text = this.DescriptionObs[this.step - 1].Text;
+                    this.Image = new Image();
+                    Image.Source = new BitmapImage(new Uri(this.DescriptionObs[this.step - 1].Image, UriKind.RelativeOrAbsolute));
                     this.OnPropertyChanged(nameof(this.text));
+                    this.OnPropertyChanged(nameof(this.Image));
                     //if (this.DescriptionObs[this.step - 1].Hints != null)
                     //{
                     //    this.hints = this.DescriptionObs[this.step - 1].Hints;
@@ -299,6 +363,30 @@
                     //this.Hints = new ObservableCollection<Hint>(this.hints);
                     //this.OnPropertyChanged(nameof(this.Hints));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Determines if the data is correct then the ingredient is created.
+        /// </summary>
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
+        private bool SaveRecipeCommandCanExecute(object parameter)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets executed and show user the text of the step.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.</param>
+        private void SaveRecipeCommandExecute(object parameter)
+        {
+            
+            RecipeService recipeService = new RecipeService();
+            if (recipeService.init())
+            {
+                recipeService.WriteData(this.editrecipe);
             }
         }
 

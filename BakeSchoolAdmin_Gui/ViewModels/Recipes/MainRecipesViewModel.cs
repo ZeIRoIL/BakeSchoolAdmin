@@ -25,7 +25,7 @@
         private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
 
         /// <summary>
-        /// the current recipe which are  selected..
+        /// the current recipe which are  selected.
         /// </summary>
         private Recipe recipe;
 
@@ -98,10 +98,8 @@
             RecipeService recipeService = new RecipeService();
             if (recipeService.init())
             {
-                IList<Recipe> recipedata = new List<Recipe>();
-
-                recipedata = recipeService.ReadData();
-                this.recipes = recipeService.GetCategoryObserv(recipedata);
+                IList<Recipe> recipedata = recipeService.ReadData();
+                this.recipes = recipeService.GetRecipesObs(recipedata);
             }
         }
     }

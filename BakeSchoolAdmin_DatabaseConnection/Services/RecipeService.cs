@@ -10,7 +10,10 @@
     using BakeSchoolAdmin_DatabaseConnection.Mapper;
     using BakeSchoolAdmin_DatabaseConnection.Models;
     using BakeSchoolAdmin_Models;
+    using MongoDB.Bson;
     using MongoDB.Driver;
+    using Newtonsoft.Json;
+    using BakeSchoolAdmin_Models;
 
     /// <summary>
     /// Defines the <see cref="RecipeService" />.
@@ -91,14 +94,11 @@
         /// <returns>The <see cref="IList{Recipe}"/>.</returns>
         public IList<Recipe> ReadData()
         {
-#warning need the implemtation
-
             //// Get the data from mongodb into the list
             IList<RecipeData> list = this.recipesdata.Find<RecipeData>
            (p => true).ToList<RecipeData>();
 
             IList<Recipe> recipes = this.mapper.Map<IList<RecipeData>, IList<Recipe>>(list);
-
 
             return recipes;
         }
@@ -109,32 +109,71 @@
         /// <param name="data">The data<see cref="Recipe"/>.</param>
         public void WriteData(Recipe data)
         {
-            throw new NotImplementedException();
+            string name = data.Name;
+            int number = data.Number;
+            List<Ingredient> ingredients = new List<Ingredient>();
+            List<Description> descriptions = new List<Description>();
+            ingredients = data.Ingredients;
+            descriptions = data.Descriptions;
+
+            // Recipe to BsonObject
+            BsonArray bsonArray = new BsonArray();
+            foreach (var item in ingredients)
+            {
+                BsonDocument docu = new BsonDocument { { "data",item.Data }, { "amount", item.Amount }, { "unit", item.Unit } };
+
+                bsonArray.Add(docu);
+            }
+            // Description to BsonObjet
+            BsonArray bsonArrayDes = new BsonArray();
+            foreach (var item in descriptions)
+            {
+                BsonDocument docu = new BsonDocument { { "step", item.Step }, { "text", item.Text }, { "image", item.Image } };
+
+                bsonArrayDes.Add(docu);
+            }
+
+            try
+            {
+                var document = new BsonDocument
+            {
+                    { "name",  name },
+                    { "number",  number },
+                    { "ingredients",bsonArray },
+                    {"description", bsonArrayDes }
+              };
+                var database = this.Mongoclient.GetDatabase(this.databaseName);
+                var collection = database.GetCollection<BsonDocument>(this.recipeCollectionName);
+                collection.InsertOne(document);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                
+            }
         }
 
         /// <summary>
-        /// The WriteData.
+        /// The recipes observableCollection.
         /// </summary>
-        /// <param name="data">The data<see cref="IList{Recipe}"/>.</param>
-        public void WriteData(IList<Recipe> data)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The GetCategoryObservableCollection.
-        /// </summary>
-        /// <param name="recipesList">The recipesList<see cref="IList{Recipe}"/>.</param>
+        /// <param name="recipeList">The recipe list<see cref="IList{Recipe}"/>.</param>
         /// <returns>The <see cref="ObservableCollection{Recipe}"/>.</returns>
-        public ObservableCollection<Recipe> GetCategoryObserv(IList<Recipe> recipesList)
+        public ObservableCollection<Recipe> GetRecipesObs(IList<Recipe> recipeList)
         {
             // create an emtpy observable collection object
             ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
 
             // loop through all the records and add to observable collection object
-            foreach (var item in recipesList)
-                recipes.Add(item);
+            foreach (var item in recipeList)
+                  recipes.Add(item);
+
             return recipes;
+        }
+
+
+        public void WriteData(IList<Recipe> data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

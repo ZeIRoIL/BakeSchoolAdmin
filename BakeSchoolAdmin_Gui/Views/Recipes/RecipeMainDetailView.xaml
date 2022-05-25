@@ -64,10 +64,8 @@
             </Grid>
             <!--Descriptiontext-->
             <TextBox Grid.Row="3" Text="{Binding Text}"/>
-            <Image Grid.Column="1" Grid.Row="4" Source="{Binding ImagePath}" Stretch="Fill"/>
+            <Image Grid.Column="1" Grid.Row="4" Source="{Binding Imagepath.Source}"  Width="100" Height="100" />
         </Grid>
         
-        <!--Button to edit-->
-        <Button Grid.Row="3" Grid.ColumnSpan="2" Content="Edit" Margin="84,17,120,10"/>
     </Grid>
 </UserControl>

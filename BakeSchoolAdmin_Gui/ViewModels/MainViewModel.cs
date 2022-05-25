@@ -1,10 +1,13 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels
 {
+    using System.Collections.Generic;
     using System.Windows.Controls;
     using System.Windows.Input;
     using BakeSchoolAdmin_Commands.Commands;
+    using BakeSchoolAdmin_DatabaseConnection.Services;
     using BakeSchoolAdmin_Gui.ViewModels.Recipes;
     using BakeSchoolAdmin_Gui.Views;
+    using BakeSchoolAdmin_Models;
     using Microsoft.Practices.Prism.Events;
   
     /// <summary>
@@ -45,6 +48,9 @@
 
             //// Hookup command to be associated
             this.RecipesViewCommand = new ActionCommand(this.RecipesViewExecute, this.RecipesViewCanExecute);
+
+            ////// Hookup command to be associated
+            //this.TestRecipeCommand = new ActionCommand(this.RecipesTestViewExecute, this.RecipesTestViewCanExecute);
         }
 
         /// <summary>
@@ -82,6 +88,11 @@
         /// Gets the RecipesViewCommand.
         /// </summary>
         public ICommand RecipesViewCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the RecipesViewCommand.
+        /// </summary>
+        public ICommand TestRecipeCommand { get; private set; }
 
         /// <summary>
         /// Determines if the loading main view command can be execute.
@@ -150,5 +161,67 @@
             mainRecipesView.DataContext = recipesMainView;
             this.CurrentMainView = mainRecipesView;
         }
+
+        ///// <summary>
+        ///// Determines if the loading recipes view command can be execute.
+        ///// </summary>
+        ///// <param name="parameter">The parameter<see cref="object"/>.</param>
+        ///// <returns>The <see cref="bool"/>.</returns>
+        //private bool RecipesTestViewCanExecute(object parameter)
+        //{
+        //    return true;
+        //}
+
+        ///// <summary>
+        ///// Gets execute when the user clicks the recipes button.
+        ///// </summary>
+        ///// <param name="parameter">The parameter<see cref="object"/>.</param>
+        //private void RecipesTestViewExecute(object parameter)
+        //{
+        //    RecipeService recipeService = new RecipeService();
+        //    Ingredient ingredient = new Ingredient
+        //    {
+        //        Amount = 2,
+        //        Unit = "gramm",
+        //        Data = "Schoko"
+        //    };
+        //    Ingredient ingredient2 = new Ingredient
+        //    {
+        //        Amount = 3,
+        //        Unit = "gramm",
+        //        Data = "Banane"
+        //    };
+        //    List<Ingredient> list = new List<Ingredient>();
+        //    list.Add(ingredient);
+        //    list.Add(ingredient2);
+
+        //    Description description = new Description
+        //    {
+        //        Image = "sadfasdf",
+        //        Step = 1,
+        //        Text = "Das ist ein Text",
+        //    };
+        //    Description description1 = new Description
+        //    {
+        //        Image = "sadfasdf1",
+        //        Step = 2,
+        //        Text = "Das ist ein Text 1",
+        //    };
+        //    List<Description> listD= new List<Description>();
+        //    listD.Add(description);
+        //    listD.Add(description1);
+        //    Recipe recipe = new Recipe
+        //    {
+        //        Name = "Test",
+        //        Number = 1,
+        //        Ingredients = list,
+        //        Descriptions = listD
+        //    };
+
+        //    if(recipeService.init())
+        //    {
+        //        recipeService.WriteData(recipe);
+        //    }
+        //}
     }
 }

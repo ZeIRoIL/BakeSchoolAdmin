@@ -27,6 +27,17 @@
             this.Id = id;
             this.Details = details;
         }
+        public Category(int id, CategoryDetails details, bool wantFileDb)
+        {
+            this.Id = id;
+            this.Details = details;
+            this.WantFileDb = wantFileDb;
+        }
+
+        /// <summary>
+        /// Gets or sets the query, whether the user want to save the db into a file.
+        /// </summary>
+        public bool WantFileDb { get; set; }
 
         /// <summary>
         /// Gets or sets the id.

@@ -3,8 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.IO;
     using System.Linq;
+    using System.Windows.Controls;
+    using System.Windows.Forms;
     using System.Windows.Input;
+    using System.Windows.Media.Imaging;
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events.RecipeAddEvents;
     using BakeSchoolAdmin_Models;
@@ -22,9 +26,24 @@
         private string text;
 
         /// <summary>
+        /// if the button "save image" should obvious.
+        /// </summary>
+        private string visibiltySaveImage;
+
+        /// <summary>
         /// the text for one description..
         /// </summary>
         private string texthint;
+
+        /// <summary>
+        /// the image of description.
+        /// </summary>
+        private Image image;
+
+        /// <summary>
+        /// the path to image 
+        /// </summary>
+        private string imagepath;
 
         /// <summary>
         /// the step for one description..
@@ -50,6 +69,7 @@
         /// <param name="recipe">The recipeDes<see cref="Recipe"/>.</param>
         public RecipeEditAddDescriptionViewModel(IEventAggregator eventAggregator, Recipe recipe) : base(eventAggregator)
         {
+            this.VisibiltySaveImage = "Hidden";
             if (recipe != null)
             {
                 // If the Description is always created
@@ -68,7 +88,6 @@
             {
                 // If the Description will init!
                 this.Descriptions = new ObservableCollection<Description>();
-                //this.Hints = new ObservableCollection<Hint>();
             }
 
             #region -------------------------------------------------------------- Description Commands --------------------------------------------------
@@ -76,6 +95,7 @@
             this.AddDescription = new ActionCommand(this.AddDescriptionCommandExecute, this.AddDescriptionCommandCanExecute);
             this.SaveDescription = new ActionCommand(this.SaveDescriptionCommandExecute, this.SaveDescriptionCommandCanExecute);
             this.DeleteDescription = new ActionCommand(this.DeleteDescriptionCommandExecute, this.DeleteDescriptionCommandCanExecute);
+            this.AddImageDescription = new ActionCommand(this.AddImageDescriptionCommandExecute, this.AddImageDescriptionCommandCanExecute);
             #endregion
 
             #region -------------------------------------------------------------- Hint Commands --------------------------------------------------
@@ -83,7 +103,6 @@
             //this.AddHint = new ActionCommand(this.AddHintCommandExecute, this.AddHintCommandCanExecute);
             //this.DeleteHint = new ActionCommand(this.DeleteHintCommandExecute, this.DeleteHintCommandCanExecute);
             #endregion
-
         }
         #endregion
 
@@ -99,12 +118,6 @@
         /// save the description of the recipes..
         /// </summary>
         public List<Description> DescriptionsList { get; private set; }
-
-        ///// <summary>
-        ///// Gets the Hints
-        ///// save the description of the recipes..
-        ///// </summary>
-        //public ObservableCollection<Hint> Hints { get; private set; }
 
         /// <summary>
         /// Gets the Recipe
@@ -126,7 +139,7 @@
 
         /// <summary>
         /// Gets the SaveDescription
-        /// execute the command and save the recent data into description..
+        /// execute the command and save the recent data into description.
         /// </summary>
         public ICommand SaveDescription { get; private set; }
 
@@ -137,8 +150,14 @@
         public ICommand DeleteDescription { get; private set; }
 
         /// <summary>
+        /// Gets the delete description
+        /// execute the command and open the filedialogt to save a picture.
+        /// </summary>
+        public ICommand AddImageDescription { get; private set; }
+
+        /// <summary>
         /// Gets the show hint
-        /// execute the command and add the recent description in the ObservableCollection..
+        /// execute the command and add the recent description in the ObservableCollection.
         /// </summary>
         public ICommand ShowHint { get; private set; }
 
@@ -253,6 +272,64 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets the saveImage condition
+        /// </summary>
+        public string VisibiltySaveImage
+        {
+            get
+            {
+                return this.visibiltySaveImage;
+            }
+
+            set
+            {
+                    this.visibiltySaveImage = value;
+                    this.OnPropertyChanged(nameof(this.visibiltySaveImage));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Text.
+        /// </summary>
+        public Image Image
+        {
+            get
+            {
+                return this.image;
+            }
+
+            set
+            {
+                if (null != value)
+                {
+                    this.image = value;
+                    this.OnPropertyChanged(nameof(this.image));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Text.
+        /// </summary>
+        public string ImagePath
+        {
+            get
+            {
+                return this.imagepath;
+            }
+
+            set
+            {
+                if (string.Empty != value)
+                {
+                    this.imagepath = value;
+                    this.OnPropertyChanged(nameof(this.imagepath));
+                }
+            }
+        }
+
         #endregion
 
         #region ---------------------------------------------------------- Commands ------------------------------------------------------------------
@@ -283,7 +360,18 @@
                 {
                     this.Step = stepId;
                     this.Text = this.Descriptions[this.Step - 1].Text;
+                    this.ImagePath = this.Descriptions[this.Step - 1].Image;
+
+                    if (this.image != null)
+                    {
+                        if (this.Descriptions[this.Step - 1].Image != null)
+                        {
+                            Image.Source = new BitmapImage(new Uri(this.Descriptions[this.Step - 1].Image, UriKind.RelativeOrAbsolute));
+                        }
+                    }
+                    
                     this.OnPropertyChanged(nameof(this.Text));
+                    this.OnPropertyChanged(nameof(this.Image));
                 }
             }
         }
@@ -306,13 +394,19 @@
         /// <param name="parameter">Data used by the command.</param>
         private void AddDescriptionCommandExecute(object parameter)
         {
-            // If the descriptionbox always contains a text.
+            if (this.image != null)
+            {
+                // Delete the image source
+                this.Image.Source = null;
+            }
+            
+            // If the description box always contains a text.
             if (this.Text != null)
             {
                 int saveStep = this.Step;
                 this.Descriptions[saveStep - 1].Text = this.Text;
             }
-
+            
             Description descriptions = new Description();
             int count = this.Descriptions.Count() + 1;
             if (count != 0)
@@ -320,7 +414,9 @@
                 descriptions.Step = count;
                 this.Step = count;
                 this.Descriptions.Add(descriptions);
+                this.VisibiltySaveImage = "Visible";
                 this.OnPropertyChanged(nameof(this.Descriptions));
+                this.OnPropertyChanged(nameof(this.VisibiltySaveImage));
             }
         }
         #endregion
@@ -348,10 +444,8 @@
         private void SaveDescriptionCommandExecute(object parameter)
         {
             // Save Description Step befor the whole recipe will create
-            int saveStep = this.Step;
-          
-            this.Descriptions[saveStep - 1].Text = this.Text;
-
+            this.Descriptions[this.Step - 1].Text = this.Text;
+            this.Descriptions[this.Step - 1].Image = this.ImagePath;
             this.OnPropertyChanged(nameof(this.Descriptions));
 
             this.DescriptionsList = new List<Description>();
@@ -395,132 +489,84 @@
         }
         #endregion
 
-        #endregion
-
-        //#region --------------------------------------------------------- Hints ---------------------------------------------------------------------------
-
-        //#region -------------------------------------Show Hint ------------------------------------
-        ///// <summary>
-        ///// Determines if the data is correct then the ingredient is created.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the Command.</param>
-        ///// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
-        //private bool ShowHintCommandCanExecute(object parameter)
-        //{
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Gets executed and show user the text of the step.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the command.</param>
-        //private void ShowHintCommandExecute(object parameter)
-        //{
-        //    if ((int)parameter != 0)
-        //    {
-        //        int stepId = (int)parameter;
-        //        if (this.Hints.Any(d => d.Step == stepId))
-        //        {
-        //            this.stephint = stepId;
-        //            this.Texthint = this.Hints[this.stephint - 1].Text;
-
-        //            if (this.Descriptions[this.step - 1].Hints == null)
-        //            {
-        //                this.Texthint = string.Empty;
-        //            }
-
-        //            this.OnPropertyChanged(nameof(this.Texthint));
-        //        }
-        //    }
-        //}
-        //#endregion
-
-        //#region -------------------------------------Add Hint ------------------------------------
-        ///// <summary>
-        ///// Determines if the data is correct then the description step can be created.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the Command.</param>
-        ///// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
-        //private bool AddHintCommandCanExecute(object parameter)
-        //{
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Gets executed and add a new Step for the description.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the command.</param>
-        //private void AddHintCommandExecute(object parameter)
-        //{
-        //    // If the descriptionbox always contains a text.
-        //    if (this.Text != null)
-        //    {
-        //        if (this.Hints.Count == 0)
-        //        {
-        //            this.Hints[0].Text = this.Text;
-        //        }
-        //        else
-        //        {
-        //            int saveStep = this.Stephint;
-        //            this.Hints[saveStep - 1].Text = this.Text;
-        //        }
-        //    }
-
-        //    Hint hints = new Hint();
-        //    int count = this.Hints.Count() + 1;
-        //    if (count != 0)
-        //    {
-        //        hints.Step = count;
-        //        this.Stephint = count;
-        //        this.Hints.Add(hints);
-        //        this.OnPropertyChanged(nameof(this.Hints));
-        //    }
-        //}
-        //#endregion
-
-        //#region -------------------------------------Delete Hint ------------------------------------
-        ///// <summary>
-        ///// Determines if the data is correct then the description can be saved.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the Command.</param>
-        ///// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
-        //private bool DeleteHintCommandCanExecute(object parameter)
-        //{
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// Gets executed when the user clicks the Save button.
-        ///// </summary>
-        ///// <param name="parameter">Data used by the command.</param>
-        //private void DeleteHintCommandExecute(object parameter)
-        //{
-        //    if (this.Hints.Count != 0)
-        //    {
-        //        this.Hints.Remove(this.Hints.Last());
-        //        this.Stephint--;
-        //    }
-
-        //    this.OnPropertyChanged(nameof(this.Hints));
-        //    this.OnPropertyChanged(nameof(this.Stephint));
-        //}
-        //#endregion
-
-        //#endregion
-
-
-
-
-        #endregion
-
-        #region --------------------------------------------------------------------- mini helper -------------------------------------------
+        #region --------------------------------------------------------------- Add Image Description -----------------------------------------
         /// <summary>
-        /// load the current description data into the description field.
+        /// Determines if the data is correct then the description can be saved.
         /// </summary>
-        public void LoadDescription()
+        /// <param name="parameter">Data used by the Command.</param>
+        /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
+        private bool AddImageDescriptionCommandCanExecute(object parameter)
         {
-            throw new Exception("Das ist ein Test");
+            return true;
         }
-        #endregion
-    }
+
+        /// <summary>
+        /// Gets executed when the user clicks the Save button.
+        /// </summary>
+        /// <param name="parameter">Data used by the command.</param>
+        private void AddImageDescriptionCommandExecute(object parameter)
+        {
+            if (this.ImagePath != string.Empty)
+            {
+                string targetPathFolder = @".\img\" + this.Recipe.Name;
+                string targetPathFile = @".\img\" + this.Recipe.Name + @"\" + this.step + ".jpg";
+                string sourcePath;
+                try
+                {
+                    if (!Directory.Exists(targetPathFolder))
+                    {
+                        // Try to create the directory.
+                        DirectoryInfo di = Directory.CreateDirectory(targetPathFolder);
+                        Console.WriteLine("The directory was created successfully at {0}.{1}", Directory.GetCreationTime(targetPathFolder), targetPathFolder);
+                    }
+
+                    OpenFileDialog openFileDlg = new OpenFileDialog();
+
+                    openFileDlg.Filter = "Image Files | *.jpg; *.jpeg; *.png;";
+                    openFileDlg.ShowDialog();
+                    string selectedFile;
+
+                    if (!(openFileDlg.FileName is null || openFileDlg.FileName == string.Empty))
+                    {
+                        sourcePath = openFileDlg.FileName;
+                        System.IO.File.Copy(sourcePath, targetPathFile, true);
+                        FileInfo f = new FileInfo(targetPathFile);
+                        //Console.WriteLine(f.FullName);
+                        this.Descriptions[this.step - 1].Image = f.FullName;
+                        this.Image = new Image();
+                        this.ImagePath = f.FullName;
+                        Image.Source = new BitmapImage(new Uri(f.FullName, UriKind.RelativeOrAbsolute));
+                        this.OnPropertyChanged(nameof(this.ImagePath));
+                        this.OnPropertyChanged(nameof(this.Image));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+            else 
+            {
+                this.Image = new Image();
+                Image.Source = new BitmapImage(new Uri(this.ImagePath, UriKind.RelativeOrAbsolute));
+            }
+           
+           
+            #endregion
+        }
+
+            #endregion
+
+            #endregion
+
+            #region --------------------------------------------------------------------- mini helper -------------------------------------------
+            /// <summary>
+            /// load the current description data into the description field.
+            /// </summary>
+            public void LoadDescription()
+            {
+                throw new Exception("Das ist ein Test");
+            }
+            #endregion
+        }
 }

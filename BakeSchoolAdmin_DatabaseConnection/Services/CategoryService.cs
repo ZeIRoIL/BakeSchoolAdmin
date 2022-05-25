@@ -7,12 +7,15 @@
     using BakeSchoolAdmin_Models;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
 
     /// <summary>
     /// Defines the <see cref="CategoryService" />.
@@ -160,9 +163,28 @@
                         }
                      }
               };
-                var database = this.client.GetDatabase(this.databaseName);
-                var collection =  database.GetCollection<BsonDocument>( this.categoryCollectionName );
-                collection.InsertOne(document);
+                
+                if (data.WantFileDb)
+                {
+                    string targetPathFolder = @".\database\category";
+
+                    if (!Directory.Exists(targetPathFolder))
+                    {
+                        // Try to create the directory.
+                        DirectoryInfo di = Directory.CreateDirectory(targetPathFolder);
+                        Console.WriteLine("The directory was created successfully at {0}.{1}", Directory.GetCreationTime(targetPathFolder), targetPathFolder);
+                        if (PrettyWrite(document,targetPathFolder+@"\json.txt"))
+                        {
+                            MessageBox.Show("Save into the file! \n {0}", targetPathFolder);
+                        }
+                    }
+                }
+                else
+                {
+                    var database = this.client.GetDatabase(this.databaseName);
+                    var collection =  database.GetCollection<BsonDocument>( this.categoryCollectionName );
+                    collection.InsertOne(document);
+                }
             }
             catch (Exception ex)
             {
@@ -170,6 +192,25 @@
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Write the object into a file pretty
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
+        public bool PrettyWrite(object obj, string fileName)
+        {
+            try
+            {
+                var jsonString = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                File.WriteAllText(fileName, jsonString);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>

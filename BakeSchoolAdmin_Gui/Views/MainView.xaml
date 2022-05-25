@@ -19,11 +19,14 @@
             <RowDefinition Height="24*"/>
             <RowDefinition Height="12*"/>
             <RowDefinition Height="25*"/>
+            <RowDefinition Height="25*"/>
             <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
         <Label Content="BakeSchool Admin" Grid.Row="1" Grid.Column="1" FontSize="30" HorizontalAlignment="Center" Margin="52,0" Width="258" />
 
         <Button Content="Bereich Seite" Grid.Column="1" Grid.Row="3" Command="{Binding CategoryViewCommand}"/>
         <Button Content="Rezepte" Grid.Column="1" Grid.Row="5"  Command="{Binding RecipesViewCommand}"/>
+        <!--<Button Content="RezepteTest" Grid.Column="1" Grid.Row="6"  Command="{Binding TestRecipeCommand}"/>-->
+
     </Grid>
 </UserControl>

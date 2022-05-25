@@ -48,8 +48,9 @@
                 <Button  Content="-" Width="30" Margin="0,0,0,0" Background="red" Command="{Binding DeleteDescription}"/>
             </StackPanel>
         </Grid>
-        <Button  Grid.Column="1" Grid.Row="1" Content="Add Image"/>
-        <Image Grid.Column="1" Grid.Row="2" x:Name="_image" Stretch="Fill"/>
+        <Button  Grid.Column="1" Grid.Row="1" Content="Add Image" Command="{Binding AddImageDescription}" Visibility="{Binding VisibiltySaveImage}"/>
+        <Image Grid.Column="1" Grid.Row="2" Source="{Binding Image.Source}"  Width="180" Height="180" />
+
         <!--textbox for the steps-->
         <TextBox  Grid.Row="2" Grid.Column="0" Text="{Binding Text}"  />
         <!--save button-->

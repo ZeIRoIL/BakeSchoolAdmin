@@ -19,6 +19,11 @@
         /// View that is currently bound to the left ContentControl..
         /// </summary>
         private UserControl currentViewMain;
+
+        /// <summary>
+        /// Store the recipe id.
+        /// </summary>
+        private int recipeId;
         #endregion
 
         #region ------------------------------------------------------------------ Constructor ----------------------------------
@@ -26,12 +31,14 @@
         /// Initializes a new instance of the <see cref="RecipesAddMainViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
-        public RecipesAddMainViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public RecipesAddMainViewModel(IEventAggregator eventAggregator, int id) : base(eventAggregator)
         {
             RecipeEditAddIngredient view = new RecipeEditAddIngredient();
             RecipeEditAddIngredientViewModel model = new RecipeEditAddIngredientViewModel(EventAggregator, this.CurrentRecipe);
             view.DataContext = model;
             this.currentViewMain = view;
+
+            this.recipeId = id;
 
             // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
@@ -106,15 +113,24 @@
         /// <param name="currentrecipe"></param>
         public void LoadRecipe(Recipe currentrecipe)
         {
+            if (this.CurrentRecipe == null)
+            {
+                this.CurrentRecipe = currentrecipe;
+            }
+           
+
             if (currentrecipe.Ingredients != null)
             {
-                this.CurrentIngredient = currentrecipe.Ingredients;
+                this.CurrentIngredient = currentrecipe.Ingredients;            
+                this.CurrentRecipe.Number = recipeId;
+                this.CurrentRecipe.Name = currentrecipe.Name;
             }
 
             if (currentrecipe.Descriptions != null)
             {
                 this.CurrentDescription = currentrecipe.Descriptions;
             }
+            
         }
         #endregion
 
@@ -126,7 +142,14 @@
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool ShowDescriptionViewCommandCanExecute(object parameter)
         {
-            return true;
+            if (CurrentRecipe != null)
+            {
+                if (!string.IsNullOrEmpty(CurrentRecipe.Name))
+                {
+                    return true;
+                }
+            }
+                return false;
         }
 
         /// <summary>
@@ -164,9 +187,11 @@
         private void ShowCheckViewCommandExecute(object parameter)
         {
             Recipe recipe = new Recipe();
-
+            
             recipe.Descriptions = this.CurrentDescription;
             recipe.Ingredients = this.CurrentIngredient;
+            recipe.Number = this.recipeId;
+            recipe.Name = this.CurrentRecipe.Name;
 
             this.CurrentRecipe = recipe;
 

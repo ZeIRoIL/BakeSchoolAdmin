@@ -22,7 +22,7 @@
         public Recipe SelectedRecipe;
 
         /// <summary>
-        /// The id of the category..
+        /// The id of the recipe.
         /// </summary>
         private int id;
 
@@ -109,8 +109,9 @@
         /// <param name="parameter">Data used by the command.</param>
         private void RecipeAddCommandExecute(object parameter)
         {
+            this.Id = this.Recipes.Count + 1;
             MainAddRecipes mainAddRecipes = new MainAddRecipes();
-            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator);
+            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator, id);
             mainAddRecipes.DataContext = recipesAddMainViewModel;
 
             this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Publish(mainAddRecipes);

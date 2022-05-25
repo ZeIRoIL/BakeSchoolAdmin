@@ -32,19 +32,19 @@
         /// Gets or sets the Ingredients.
         /// </summary>
         [BsonElement("ingredients")]
-        public Ingredient[] Ingredients { get; set; }
+        public IngredientData[] Ingredients { get; set; }
 
         /// <summary>
         /// Gets or sets the Descriptions.
         /// </summary>
         [BsonElement("description")]
-        public Description[] Descriptions { get; set; }
+        public DescriptionData[] Descriptions { get; set; }
     }
 
     /// <summary>
     /// The class is dependency at the parent class! Contain the details of the Recipes.
     /// </summary>
-    public class Ingredient
+    public class IngredientData
     {
         /// <summary>
         /// Gets or sets the Data.
@@ -68,7 +68,7 @@
     /// <summary>
     /// the description for the recipes step by step.
     /// </summary>
-    public class Description
+    public class DescriptionData
     {
         /// <summary>
         /// Gets or sets the Step.

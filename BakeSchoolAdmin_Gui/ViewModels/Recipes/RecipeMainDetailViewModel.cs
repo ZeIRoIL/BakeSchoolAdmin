@@ -1,9 +1,12 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels.Recipes
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows.Controls;
     using System.Windows.Input;
+    using System.Windows.Media.Imaging;
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events;
     using BakeSchoolAdmin_Models;
@@ -23,7 +26,7 @@
         /// <summary>
         /// store the imagepath for each steps description
         /// </summary>
-        private string imagepath;
+        private Image imagepath;
 
         /// <summary>
         /// the text for one description..
@@ -39,16 +42,9 @@
         /// the step counter for the recipe..
         /// </summary>
         private int stepCount;
-
-        ///// <summary>
-        ///// Gets or sets the hints
-        ///// If the description has a hint than it would be there...
-        ///// </summary>
-        //private List<Hint> hints;
         #endregion
 
         #region ---------------------------------------- Constructor ------------------------------
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeMainDetailViewModel"/> class.
         /// </summary>
@@ -103,7 +99,7 @@
         /// <summary>
         /// Gets or sets the image path
         /// </summary>
-        public string Imagepath
+        public Image Imagepath
         {
             get
             {
@@ -183,10 +179,13 @@
                 {
                     this.step = stepId;
                     this.text = this.Descriptions[this.step - 1].Text;
-                    //this.Imagepath = this.Descriptions[this.step - 1].Image;
-                    this.Imagepath = "./assets/img/Haferkekse/image3.png";
+
+                   
+                    this.Imagepath = new Image();
+                    Imagepath.Source =  new BitmapImage(new Uri(this.Descriptions[this.step -1].Image));
+                   
                     this.OnPropertyChanged(nameof(this.text));
-                    this.OnPropertyChanged(nameof(this.imagepath));
+                    this.OnPropertyChanged(nameof(this.Imagepath));
                 }
             }
         }

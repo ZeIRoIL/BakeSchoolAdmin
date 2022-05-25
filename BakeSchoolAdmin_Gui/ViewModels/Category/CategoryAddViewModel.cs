@@ -23,6 +23,11 @@
         private int amount;
 
         /// <summary>
+        /// Whether user want to save the category in a file.
+        /// </summary>
+        private bool wantFileDb;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CategoryAddViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
@@ -33,6 +38,21 @@
 
             // subscribe to event
             this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Subscribe(this.SetCollection, ThreadOption.UIThread);
+        }
+
+        /// <summary>
+        /// Gets or sets the query, whether the user want to save the db into a file.
+        /// </summary>
+        public bool WantFileDb
+        {
+            get { return wantFileDb; }
+            set
+            {
+                if (wantFileDb == value) return;
+
+                wantFileDb = value;
+                this.OnPropertyChanged(nameof(this.WantFileDb));
+            }
         }
 
         /// <summary>
@@ -102,7 +122,7 @@
             details.Name = this.Name;
             details.Text = this.Text;
             details.Level = this.Amount;
-            Category category = new Category(this.id, details);
+            Category category = new Category(this.id, details,this.WantFileDb);
 
             // add the new Category into the List
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Publish(category);

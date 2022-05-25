@@ -67,7 +67,7 @@
                 if (value != -1)
                 {
                     this.id = value;
-                    this.OnPropertyChanged(nameof(this.id));
+                    this.OnPropertyChanged(nameof(this.Id));
                 }
             }
         }
