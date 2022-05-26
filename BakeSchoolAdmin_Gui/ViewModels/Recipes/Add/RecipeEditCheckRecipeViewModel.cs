@@ -340,7 +340,10 @@
                     this.step = stepId;
                     this.text = this.DescriptionObs[this.step - 1].Text;
                     this.Image = new Image();
-                    Image.Source = new BitmapImage(new Uri(this.DescriptionObs[this.step - 1].Image, UriKind.RelativeOrAbsolute));
+                    if (this.DescriptionObs[this.step - 1].Image != null)
+                    {
+                        Image.Source = new BitmapImage(new Uri(this.DescriptionObs[this.step - 1].Image, UriKind.RelativeOrAbsolute));
+                    }
                     this.OnPropertyChanged(nameof(this.text));
                     this.OnPropertyChanged(nameof(this.Image));
                 }
