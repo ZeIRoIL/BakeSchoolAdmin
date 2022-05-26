@@ -5,7 +5,9 @@ These are located in the documentation folder.
 
 ## Deploy
 To build the programme, you need to host Docker locally.
-The image is located in the repository. Load the image into your own Docker and run it.
+You sould push the official MongoDb Image.
+`docker pull mongo`
+Load the image into your own Docker and run it.
 
 In this image there must be a MongoDb with a database "LearnBakeDb" with two collections: 
 "CategoryCollection"
