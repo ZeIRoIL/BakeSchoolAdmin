@@ -27,7 +27,7 @@
         /// <summary>
         /// the amount of the ingredient...
         /// </summary>
-        private double amount = -1;
+        private double amount ;
 
         /// <summary>
         /// the unit of the ingredient...

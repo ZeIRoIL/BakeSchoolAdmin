@@ -121,7 +121,12 @@
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool CategoryAddCommandCanExecute(object parameter)
         {
-            return true;
+            if (this.Name != null && this.Text != null )
+            {
+                return true;
+            }
+
+                return false;
         }
 
         /// <summary>

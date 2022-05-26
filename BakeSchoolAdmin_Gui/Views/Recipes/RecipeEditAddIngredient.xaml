@@ -46,7 +46,7 @@
                 <Label Content="Anzahl:"/>
                 <TextBox Text="{Binding Amount}" FontSize="15px"/>
             </DockPanel>
-            <Button Content="Save" Command="{Binding SaveIngredient}" Background="Gray"  Margin="100 20 100 0"/>
+            <Button Content="Speichern" Command="{Binding SaveIngredient}" Background="Gray"  Margin="100 20 100 0"/>
         </StackPanel>
 
     </Grid>

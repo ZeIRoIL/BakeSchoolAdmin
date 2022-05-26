@@ -43,6 +43,6 @@
                 </ItemsControl>
             </StackPanel>
         </Grid>
-        <Button Grid.Row="3" Content="Create" VerticalAlignment="Center" Background="Gray" Command="{Binding CategoryAddCommand}"/>
+        <Button Grid.Row="3" Content="Erstellen" VerticalAlignment="Center" Background="Gray" Command="{Binding CategoryAddCommand}"/>
     </Grid>
 </UserControl>
