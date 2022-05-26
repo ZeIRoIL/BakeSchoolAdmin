@@ -9,7 +9,7 @@ You sould push the official MongoDb Image.
 `docker pull mongo`
 Load the image into your own Docker and run it.
 
-In this image there must be a MongoDb with a database "LearnBakeDb" with two collections: 
+First start of the programm, it will create a database "LearnBakeDb" with two collections: 
 "CategoryCollection"
 "RecipeCollectin"
 
