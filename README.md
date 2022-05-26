@@ -1,3 +1,4 @@
 # BakeSchoolAdmin
 
-There can you see what i did! :)
+## Anleitung und Doumentation
+Diese befinden sich in dem Dokumentation Ordner. 
