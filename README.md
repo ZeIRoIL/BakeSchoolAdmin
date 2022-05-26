@@ -18,5 +18,3 @@ If the error still occurs, please contact our support. We will send a new update
 #Email: 
 xyc@gmail.com
 
-Translated with www.DeepL.com/Translator (free version)
-
