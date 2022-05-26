@@ -248,11 +248,8 @@
 
             set
             {
-                if (null != value)
-                {
                     this.image = value;
                     this.OnPropertyChanged(nameof(this.image));
-                }
             }
         }
 

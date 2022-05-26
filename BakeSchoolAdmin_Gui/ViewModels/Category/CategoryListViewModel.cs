@@ -18,11 +18,14 @@
     /// </summary>
     internal class CategoryListViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
         /// The id of the category..
         /// </summary>
         private int id;
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryListViewModel"/> class.
         /// </summary>
@@ -47,7 +50,9 @@
             // subscribe new event for the new data save
             this.EventAggregator.GetEvent<ReloadCategoryDataEvent>().Subscribe(this.EditCategoris, ThreadOption.UIThread);
         }
+        #endregion
 
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
         /// Gets or sets the selected Category from the current button click..
         /// </summary>
@@ -93,7 +98,9 @@
         /// Gets or sets the list with all categories..
         /// </summary>
         public ObservableCollection<Category> Categories { get; set; }
+        #endregion
 
+        #region --------------------------------------------- Mini Helpers -----------------------------------------
         /// <summary>
         /// Event handler to notice changes in the current category data.
         /// </summary>
@@ -136,7 +143,9 @@
                 this.Categories = categoryService.GetCategoryObserv(categorydata);
             }
         }
+        #endregion
 
+        #region --------------------------------------------- Commands -----------------------------------------
         /// <summary>
         /// Determines if the edit the category view loading command can be executed.
         /// </summary>
@@ -220,6 +229,7 @@
                     this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Publish(this.SelectedCategory);
                 }
             }
+            #endregion
         }
     }
 }

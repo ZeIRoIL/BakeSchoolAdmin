@@ -50,8 +50,6 @@
             {
                 this.Name = recipe.Name;
                 this.OnPropertyChanged(nameof(this.Name));
-                
-                // convert List to Observable List
                 this.LoadIngredients(recipe.Ingredients);
             }
             

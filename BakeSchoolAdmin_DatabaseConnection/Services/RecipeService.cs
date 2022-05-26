@@ -116,8 +116,7 @@
         public IList<Recipe> ReadData()
         {
             //// Get the data from mongodb into the list
-            IList<RecipeData> list = this.recipesdata.Find<RecipeData>
-           (p => true).ToList<RecipeData>();
+            IList<RecipeData> list = this.recipesdata.Find<RecipeData>(p => true).ToList<RecipeData>();
 
             IList<Recipe> recipes = this.mapper.Map<IList<RecipeData>, IList<Recipe>>(list);
 
@@ -141,7 +140,7 @@
             BsonArray bsonArray = new BsonArray();
             foreach (var item in ingredients)
             {
-                BsonDocument docu = new BsonDocument { { "data",item.Data }, { "amount", item.Amount }, { "unit", item.Unit } };
+                BsonDocument docu = new BsonDocument { { "data", item.Data }, { "amount", item.Amount }, { "unit", item.Unit } };
 
                 bsonArray.Add(docu);
             }
@@ -158,10 +157,10 @@
             {
                 var document = new BsonDocument
             {
-                    { "name",  name },
-                    { "number",  number },
-                    { "ingredients",bsonArray },
-                    {"description", bsonArrayDes }
+                { "name",  name },
+                { "number",  number },
+                { "ingredients", bsonArray },
+                { "description", bsonArrayDes }
               };
                 var database = this.mongoclient.GetDatabase(this.databaseName);
                 var collection = database.GetCollection<BsonDocument>(this.recipeCollectionName);

@@ -35,6 +35,11 @@
         private string text;
 
         /// <summary>
+        /// the color of the selectedColor;
+        /// </summary>
+        private string isSelectedColor;
+
+        /// <summary>
         /// the step for one description..
         /// </summary>
         private int step;
@@ -137,6 +142,23 @@
         }
 
         /// <summary>
+        /// Gets or sets the color string.
+        /// </summary>
+        public string IsSelectedColor
+        {
+            get
+            {
+                return this.isSelectedColor;
+            }
+
+            set
+            {
+                    this.isSelectedColor = value;
+                    this.OnPropertyChanged(nameof(this.isSelectedColor));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the StepCount.
         /// </summary>
         public int StepCount
@@ -181,7 +203,7 @@
                     this.text = this.Descriptions[this.step - 1].Text;
 
                     this.Imagepath = new Image();
-                    Imagepath.Source =  new BitmapImage(new Uri(this.Descriptions[this.step -1].Image));
+                    this.Imagepath.Source = new BitmapImage(new Uri(this.Descriptions[this.step - 1].Image));
                    
                     this.OnPropertyChanged(nameof(this.text));
                     this.OnPropertyChanged(nameof(this.Imagepath));
@@ -196,6 +218,7 @@
         /// <param name="recipe">Reference to the sent student data.</param>
         private void SelectedRecipe(Recipe recipe)
         {
+            this.IsSelectedColor = "Black";
             this.Name = recipe.Name;
 
             // set the ingredients into the view

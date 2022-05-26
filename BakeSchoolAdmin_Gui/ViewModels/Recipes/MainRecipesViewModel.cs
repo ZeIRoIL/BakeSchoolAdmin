@@ -14,6 +14,7 @@
     /// </summary>
     internal class MainRecipesViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
         /// View that is currently bound to the main ContentControl..
         /// </summary>
@@ -23,7 +24,9 @@
         /// Observable Collection for the recipes..
         /// </summary>
         private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="MainRecipesViewModel"/> class.
         /// </summary>
@@ -45,7 +48,9 @@
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Subscribe(this.ChangeRecipeCurrentMainView, ThreadOption.UIThread);
         }
+        #endregion
 
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
         /// Gets or sets the view that is currently bound to the main ContentControl..
         /// </summary>
@@ -66,7 +71,9 @@
                 }
             }
         }
+        #endregion
 
+        #region --------------------------------------------- Mini Helpers -----------------------------------------
         /// <summary>
         /// Event handler to notice changes in the current category data.
         /// </summary>
@@ -98,5 +105,6 @@
                 this.recipes = recipeService.GetRecipesObs(recipedata);
             }
         }
+        #endregion
     }
 }

@@ -32,6 +32,7 @@
         /// Initializes a new instance of the <see cref="RecipesAddMainViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>Event aggregator</param>
+        /// <param name="id">recipe id</param>
         public RecipesAddMainViewModel(IEventAggregator eventAggregator, int id) : base(eventAggregator)
         {
             RecipeEditAddIngredient view = new RecipeEditAddIngredient();
@@ -118,7 +119,7 @@
             if (currentrecipe.Ingredients != null)
             {
                 this.CurrentIngredient = currentrecipe.Ingredients;            
-                this.CurrentRecipe.Number = recipeId;
+                this.CurrentRecipe.Number = this.recipeId;
                 this.CurrentRecipe.Name = currentrecipe.Name;
             }
 
@@ -137,14 +138,16 @@
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool ShowDescriptionViewCommandCanExecute(object parameter)
         {
-            if (CurrentRecipe != null)
+            if (this.CurrentRecipe != null)
             {
-                if (!string.IsNullOrEmpty(CurrentRecipe.Name))
+                if (!string.IsNullOrEmpty(this.CurrentRecipe.Name))
                 {
                     return true;
                 }
+
                 return false;
             }
+
             return false;
         }
 

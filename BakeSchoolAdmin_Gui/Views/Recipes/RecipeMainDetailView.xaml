@@ -93,7 +93,7 @@
             <!--Descriptiontext-->
             <TextBox Grid.Row="2" Text="{Binding Text}" FontSize="17px" Foreground="Black"/>
             <Image Grid.Row="3" Grid.Column="1"
-                Source="{Binding Imagepath.Source}" Stretch="Uniform" Margin="0 20 0 0">
+                Source="{Binding Imagepath.Source}" Margin="140 0 0 0">
                 <Image.RenderTransform>
                     <RotateTransform Angle="90" />
                 </Image.RenderTransform>

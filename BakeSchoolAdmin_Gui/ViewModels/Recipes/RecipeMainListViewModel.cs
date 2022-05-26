@@ -18,11 +18,6 @@
     internal class RecipeMainListViewModel : ViewModelBase
     {
         /// <summary>
-        /// Create the selected Recipe form the current button click..
-        /// </summary>
-        public Recipe SelectedRecipe { get; set; }
-
-        /// <summary>
         /// The id of the recipe.
         /// </summary>
         private int id;
@@ -50,6 +45,11 @@
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.RecipesAddCommand = new ActionCommand(this.RecipeAddCommandExecute, this.RecipeAddCommandCanExecute);
         }
+
+        /// <summary>
+        /// Gets or sets recipe form the current button click..
+        /// </summary>
+        public Recipe SelectedRecipe { get; set; }
 
         /// <summary>
         /// Gets or sets the Id.
@@ -119,7 +119,7 @@
         {
             this.Id = this.Recipes.Count + 1;
             MainAddRecipes mainAddRecipes = new MainAddRecipes();
-            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator, id);
+            RecipesAddMainViewModel recipesAddMainViewModel = new RecipesAddMainViewModel(EventAggregator, this.id);
             mainAddRecipes.DataContext = recipesAddMainViewModel;
 
             this.EventAggregator.GetEvent<ChangeRecipeCurrentMainViewEvent>().Publish(mainAddRecipes);

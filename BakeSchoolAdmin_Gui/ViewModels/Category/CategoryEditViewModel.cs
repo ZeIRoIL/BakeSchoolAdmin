@@ -15,11 +15,14 @@
     /// </summary>
     internal class CategoryEditViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
         /// the amount for the slider of difficult..
         /// </summary>
         private int amount;
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryEditViewModel"/> class.
         /// </summary>
@@ -32,9 +35,11 @@
             // subscribe to event
             this.EventAggregator.GetEvent<SelectedCategoryDataEvent>().Subscribe(this.SelectedCategory, ThreadOption.UIThread);
         }
+        #endregion
 
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
-        /// Gets or sets edit value of the category in the database
+        /// Gets and sets the command edit category
         /// </summary>
         public ICommand EditCategoryCommand { get; private set; }
 
@@ -72,7 +77,9 @@
                 }
             }
         }
+        #endregion
 
+        #region --------------------------------------------- Commands -----------------------------------------
         /// <summary>
         /// Determines if the data is correct then the ingredient is created.
         /// </summary>
@@ -124,5 +131,6 @@
             // call the condition of save data
             this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Publish("ungespeichert");
         }
+        #endregion
     }
 }

@@ -73,7 +73,7 @@
                 
                 try
                 {
-                    mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
+                    this.mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +99,7 @@
             var database = this.client.GetDatabase(this.databaseName);
             bool isMongoLive = database.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
 
-            if(isMongoLive)
+            if (isMongoLive)
             {
                 return true;
             }
@@ -135,8 +135,7 @@
         public IList<Category> ReadData()
         {
             // Get the data from mongodb into the list
-            IList<CategoryData> list = this.categoriesdata.Find<CategoryData>
-            (p => true).ToList<CategoryData>();
+            IList<CategoryData> list = this.categoriesdata.Find<CategoryData>(p => true).ToList<CategoryData>();
 
             IList<Category> categories = this.mapper.Map<IList<CategoryData>, IList<Category>>(list);
 
@@ -161,7 +160,7 @@
         /// </summary>
         /// <param name="data">The data<see cref="Category"/>.</param>
         /// <returns>The <see cref="bool"/>write data query</returns>
-        public  bool WriteData (Category data)
+        public bool WriteData(Category data)
         {
             string name = data.Details.Name;
             int id = data.Id;
@@ -194,7 +193,7 @@
                         // Try to create the directory.
                         DirectoryInfo di = Directory.CreateDirectory(targetPathFolder);
                         Console.WriteLine("The directory was created successfully at {0}.{1}", Directory.GetCreationTime(targetPathFolder), targetPathFolder);
-                        if (PrettyWrite(document,targetPathFolder+@"\json.txt"))
+                        if (this.PrettyWrite(document, targetPathFolder + @"\json.txt"))
                         {
                             MessageBox.Show("Save into the file! \n {0}", targetPathFolder);
                         }
@@ -203,7 +202,7 @@
                 else
                 {
                     var database = this.client.GetDatabase(this.databaseName);
-                    var collection =  database.GetCollection<BsonDocument>( this.categoryCollectionName );
+                    var collection = database.GetCollection<BsonDocument>(this.categoryCollectionName);
                     collection.InsertOne(document);
                 }
             }

@@ -29,7 +29,10 @@
        
         <Label Content="Level auswählen" Grid.Row="5" FontSize="15px" Foreground="Black" FontWeight="Bold"/>
         <Slider Grid.Row="6" VerticalAlignment="Top" 
-                Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52"
+                Value="{Binding Amount}" Name="DifficultLevelSlider" Interval="1" Height="52"
+                  Minimum="1"
+                  Maximum="3"
+                  Style="{StaticResource MaterialDesignDiscreteSlider}"
                 />
         <Button Content="Ändern" Grid.Row="7" Command="{Binding EditCategoryCommand}" Background="Gray" />
     </Grid>

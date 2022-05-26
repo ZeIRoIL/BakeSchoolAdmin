@@ -147,7 +147,6 @@
         /// <returns>The <see cref="bool"/>.</returns>
         private bool RecipesViewCanExecute(object parameter)
         {
-            RecipeService recipeService = new RecipeService();
             if (this.IsConnected())
             {
                 return true;

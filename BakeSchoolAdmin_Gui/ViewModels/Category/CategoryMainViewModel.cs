@@ -12,6 +12,7 @@
     /// </summary>
     internal class CategoryMainViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
         /// Defines the change color.
         /// </summary>
@@ -31,7 +32,9 @@
         /// View that is currently bound to the right ContentControl..
         /// </summary>
         private UserControl currentViewRight;
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryMainViewModel"/> class.
         /// </summary>
@@ -49,7 +52,9 @@
             // subscribe to event
             this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Subscribe(this.IsSavedCategory, ThreadOption.UIThread);
         }
+        #endregion
 
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl..
         /// </summary>
@@ -143,26 +148,16 @@
                 this.OnPropertyChanged(nameof(this.IsSaved));
             }
         }
+        #endregion
 
-        #region ----------------------------------------------------- Events Methods ---------------------------------------
-
-        /// <summary>
-        /// Event handler to notice changes in the current category data.
-        /// </summary>
-        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
-        public void ChangetheCurrentViewRight(UserControl userControl)
-        {
-            this.currentViewRight = userControl;
-            this.OnPropertyChanged(nameof(this.currentViewRight));
-        }
-
+        #region --------------------------------------------- Mini Helpers -----------------------------------------
         /// <summary>
         /// Event handler to notice save the category data
         /// </summary>
         /// <param name="isSaved">The userControl<see cref="bool"/>.</param>
         public void IsSavedCategory(string isSaved)
         {
-            if(isSaved == "gespeichert")
+            if (isSaved == "gespeichert")
             {
                 this.IsSaved = isSaved;
                 this.ChangeColor = true;
@@ -173,7 +168,18 @@
                 this.ChangeColor = false;
             }
         }
+        #endregion
 
+        #region --------------------------------------------- Commands -----------------------------------------
+        /// <summary>
+        /// Event handler to notice changes in the current category data.
+        /// </summary>
+        /// <param name="userControl">The userControl<see cref="UserControl"/>.</param>
+        public void ChangetheCurrentViewRight(UserControl userControl)
+        {
+            this.currentViewRight = userControl;
+            this.OnPropertyChanged(nameof(this.currentViewRight));
+        }
         #endregion
     }
 }

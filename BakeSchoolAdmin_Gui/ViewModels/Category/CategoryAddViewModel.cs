@@ -13,13 +13,14 @@
     /// </summary>
     internal class CategoryAddViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
-        /// save the id for the category..
+        /// save the id for the category.
         /// </summary>
         private int id;
 
         /// <summary>
-        /// the amount for the slider of difficult..
+        /// the amount for the slider of difficult.
         /// </summary>
         private int amount;
 
@@ -27,7 +28,9 @@
         /// Whether user want to save the category in a file.
         /// </summary>
         private bool wantFileDb;
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="CategoryAddViewModel"/> class.
         /// </summary>
@@ -40,7 +43,9 @@
             // subscribe to event
             this.EventAggregator.GetEvent<GetLastCategorieIdDataEvent>().Subscribe(this.SetCollection, ThreadOption.UIThread);
         }
+        #endregion
 
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
         /// Gets or sets a value indicating whether the user want to save the database into a file.
         /// </summary>
@@ -48,21 +53,21 @@
         {
             get 
             {
-                return wantFileDb; 
+                return this.wantFileDb; 
             }
 
             set
             {
-                if (wantFileDb == value)
+                if (this.wantFileDb == value)
                 {
-                    wantFileDb = value;
-                    this.OnPropertyChanged(nameof(this.WantFileDb));
+                    this.wantFileDb = value;
+                    this.OnPropertyChanged(nameof(this.wantFileDb));
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the amount of the slider..
+        /// Gets or sets the amount of the slider.
         /// </summary>
         public int Amount
         {
@@ -83,31 +88,35 @@
 
         /// <summary>
         /// Gets or sets the Name
-        /// get and set the Name of the category..
+        /// get and set the Name of the category.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the Text
-        /// get and set the Text of the category..
+        /// get and set the Text of the category.
         /// </summary>
         public string Text { get; set; }
 
         /// <summary>
         /// Gets the CategoryAddNewCommand
-        /// execute  the Command which add a new category into the list..
+        /// execute  the Command which add a new category into the list.
         /// </summary>
         public ICommand CategoryAddNewCommand { get; private set; }
+        #endregion
 
+        #region --------------------------------------------- Mini Helpers -----------------------------------------
         /// <summary>
         /// Event handler to notice changes in the current category data.
         /// </summary>
-        /// <param name="idCat">The idCat<see cref="int"/>.</param>
+        /// <param name="idCat">The idCat<see cref="int"/>id category</param>
         public void SetCollection(int idCat)
         {
             this.id = idCat;
         }
+        #endregion
 
+        #region --------------------------------------------- Commands -----------------------------------------
         /// <summary>
         /// Determines if the edit the category view loading command can be executed.
         /// </summary>
@@ -128,11 +137,12 @@
             details.Name = this.Name;
             details.Text = this.Text;
             details.Level = this.Amount;
-            Category category = new Category(this.id, details,this.WantFileDb);
+            Category category = new Category(this.id, details, this.WantFileDb);
 
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Publish(category);
 
             this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Publish("gespeichert");
         }
+        #endregion
     }
 }

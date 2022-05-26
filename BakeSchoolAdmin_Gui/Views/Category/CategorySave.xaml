@@ -35,7 +35,7 @@
         <Slider Grid.Row="6" VerticalAlignment="Top" 
                 Value="{Binding Amount}" Minimum="1" Maximum="3" Name="DifficultLevelSlider" Interval="1" Height="52"
                 />
-        <CheckBox Grid.Row="7" Content="File save:" IsChecked="{Binding WantFileDb}"/>
+        <CheckBox Grid.Row="7" Content="File save:" IsChecked="{Binding WantFileDb}" Margin="0,0,0,73" Grid.RowSpan="2"/>
         <Button Content="Speichern" Grid.Row="9" Command="{Binding CategoryAddNewCommand}" Background="Gray" />
         </Grid>
 </UserControl>

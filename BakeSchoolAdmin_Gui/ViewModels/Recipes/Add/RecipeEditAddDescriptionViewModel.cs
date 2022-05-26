@@ -92,13 +92,11 @@
                 this.Descriptions = new ObservableCollection<Description>();
             }
 
-            #region -------------------------------------------------------------- Description Commands --------------------------------------------------
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
             this.AddDescription = new ActionCommand(this.AddDescriptionCommandExecute, this.AddDescriptionCommandCanExecute);
             this.SaveDescription = new ActionCommand(this.SaveDescriptionCommandExecute, this.SaveDescriptionCommandCanExecute);
             this.DeleteDescription = new ActionCommand(this.DeleteDescriptionCommandExecute, this.DeleteDescriptionCommandCanExecute);
-            this.AddImageDescription = new ActionCommand(this.AddImageDescriptionCommandExecute, this.AddImageDescriptionCommandCanExecute);
-            #endregion
+            this.AddImageDescription = new ActionCommand(this.AddImageDescriptionCommandExecute, this.AddImageDescriptionCommandCanExecute);       
         }
         #endregion
 
@@ -298,11 +296,8 @@
 
             set
             {
-                if (null != value)
-                {
                     this.image = value;
                     this.OnPropertyChanged(nameof(this.image));
-                }
             }
         }
 
@@ -474,9 +469,9 @@
         /// <param name="parameter">Data used by the command.</param>
         private void DeleteDescriptionCommandExecute(object parameter)
         {
-            if (Descriptions.Count != 0)
+            if (this.Descriptions.Count != 0)
             {
-                Descriptions.Remove(Descriptions.Last());
+                this.Descriptions.Remove(this.Descriptions.Last());
                 this.Step--;
             }
 

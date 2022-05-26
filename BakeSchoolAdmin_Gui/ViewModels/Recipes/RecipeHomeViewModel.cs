@@ -13,6 +13,7 @@
     /// </summary>
     internal class RecipeHomeViewModel : ViewModelBase
     {
+        #region --------------------------------------------- Fields, Constants -----------------------------------------
         /// <summary>
         /// View that is currently bound to the left ContentControl..
         /// </summary>
@@ -22,7 +23,9 @@
         /// View that is currently bound to the right ContentControl..
         /// </summary>
         private UserControl currentViewRight;
+        #endregion
 
+        #region --------------------------------------------- Con-/Destructor, Dispose, Clone ----------------------------
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeHomeViewModel"/> class.
         /// </summary>
@@ -41,8 +44,9 @@
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
         }
+        #endregion
 
-        #region --------------------------------------------------------------- Public Properties ---------------------------------------
+        #region --------------------------------------------- Propterties, Indexer -----------------------------------------
         /// <summary>
         /// Gets or sets the view that is currently bound to the left ContentControl..
         /// </summary>
@@ -86,6 +90,8 @@
         }
         #endregion
 
+        #region --------------------------------------------- Mini Helpers -----------------------------------------
+
         /// <summary>
         /// Event handler to notice changes in the current category data.
         /// </summary>
@@ -101,5 +107,7 @@
         /// </summary>
         /// <param name="main">The main<see cref="UserControl"/>.</param>
         public void ChangeCurrentMainView(UserControl main) => throw new Exception("change current MainView");
+
+        #endregion
     }
 }
