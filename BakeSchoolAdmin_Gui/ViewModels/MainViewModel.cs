@@ -48,9 +48,6 @@
 
             //// Hookup command to be associated
             this.RecipesViewCommand = new ActionCommand(this.RecipesViewExecute, this.RecipesViewCanExecute);
-
-            ////// Hookup command to be associated
-            //this.TestRecipeCommand = new ActionCommand(this.RecipesTestViewExecute, this.RecipesTestViewCanExecute);
         }
 
         /// <summary>
@@ -121,7 +118,12 @@
         /// <returns>The <see cref="bool"/>.</returns>
         private bool CategoryViewCanExecute(object parameter)
         {
-            return true;
+           if (this.IsConnected())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -145,7 +147,13 @@
         /// <returns>The <see cref="bool"/>.</returns>
         private bool RecipesViewCanExecute(object parameter)
         {
-            return true;
+            RecipeService recipeService = new RecipeService();
+            if (this.IsConnected())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -162,66 +170,30 @@
             this.CurrentMainView = mainRecipesView;
         }
 
-        ///// <summary>
-        ///// Determines if the loading recipes view command can be execute.
-        ///// </summary>
-        ///// <param name="parameter">The parameter<see cref="object"/>.</param>
-        ///// <returns>The <see cref="bool"/>.</returns>
-        //private bool RecipesTestViewCanExecute(object parameter)
-        //{
-        //    return true;
-        //}
+        #region ------------------------------------------------Mini helper ---------------------------------
+        /// <summary>
+        /// Check whether the database is connected
+        /// </summary>
+        /// <returns>value of connected state </returns>
+        private bool IsConnected()
+        {
+            // check whether the database is connected
+            try
+            {
+                CategoryService categoryService = new CategoryService();
+                if (categoryService.IsConnection())
+                {
+                    return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
 
-        ///// <summary>
-        ///// Gets execute when the user clicks the recipes button.
-        ///// </summary>
-        ///// <param name="parameter">The parameter<see cref="object"/>.</param>
-        //private void RecipesTestViewExecute(object parameter)
-        //{
-        //    RecipeService recipeService = new RecipeService();
-        //    Ingredient ingredient = new Ingredient
-        //    {
-        //        Amount = 2,
-        //        Unit = "gramm",
-        //        Data = "Schoko"
-        //    };
-        //    Ingredient ingredient2 = new Ingredient
-        //    {
-        //        Amount = 3,
-        //        Unit = "gramm",
-        //        Data = "Banane"
-        //    };
-        //    List<Ingredient> list = new List<Ingredient>();
-        //    list.Add(ingredient);
-        //    list.Add(ingredient2);
+            return false;
+        }
 
-        //    Description description = new Description
-        //    {
-        //        Image = "sadfasdf",
-        //        Step = 1,
-        //        Text = "Das ist ein Text",
-        //    };
-        //    Description description1 = new Description
-        //    {
-        //        Image = "sadfasdf1",
-        //        Step = 2,
-        //        Text = "Das ist ein Text 1",
-        //    };
-        //    List<Description> listD= new List<Description>();
-        //    listD.Add(description);
-        //    listD.Add(description1);
-        //    Recipe recipe = new Recipe
-        //    {
-        //        Name = "Test",
-        //        Number = 1,
-        //        Ingredients = list,
-        //        Descriptions = listD
-        //    };
-
-        //    if(recipeService.init())
-        //    {
-        //        recipeService.WriteData(recipe);
-        //    }
-        //}
+        #endregion
     }
 }

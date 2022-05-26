@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using BakeSchoolAdmin_Commands.Commands;
@@ -19,7 +20,7 @@
         /// <summary>
         /// Create the selected Recipe form the current button click..
         /// </summary>
-        public Recipe SelectedRecipe;
+        public Recipe SelectedRecipe { get; set; }
 
         /// <summary>
         /// The id of the recipe.
@@ -33,8 +34,15 @@
         /// <param name="recipes">The recipes<see cref="ObservableCollection{Recipe}"/>.</param>
         public RecipeMainListViewModel(IEventAggregator eventAggregator, ObservableCollection<Recipe> recipes) : base(eventAggregator)
         {
-            // load the recipes 
-            this.LoadRecipes(recipes);
+            try
+            {
+                // load the recipes 
+                this.LoadRecipes(recipes);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Die Datenbank ist nicht verbunden mit dem Programm !");
+            }
 
             // action command if the change button is clicked and the usercontrol (AddCategory)will open.
             this.RecipeViewCommand = new ActionCommand(this.RecipeViewCommandExecute, this.RecipeViewCommandCanExecute);

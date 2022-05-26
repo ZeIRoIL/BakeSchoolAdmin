@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views"
+             xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views" xmlns:viewmodels="clr-namespace:BakeSchoolAdmin_Gui.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CategoryMainViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -12,7 +12,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1" Grid.Column="1">
@@ -21,9 +21,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label Content="Bereiche" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="46" Width="124"/>
+        <Label Content="Bereiche" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="39" FontWeight="Bold" Foreground="#ffc107"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <Label Content="Unsaved" Grid.Row="0" Grid.Column="1" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Right"   Height="46" Width="auto" Background="{Binding BoxColor}" RenderTransformOrigin="0.547,-2.715"/>
+        <Label Content="{Binding IsSaved}" Grid.Row="0" Grid.Column="1" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right"   Height="30" Width="auto" Background="{Binding BoxColor}" />
         <ContentControl Grid.Row="2" Content="{Binding CurrentViewLeft}"/>
         <ContentControl Grid.Row="2" Grid.Column="1" Content="{Binding CurrentViewRight}"/>
     </Grid>

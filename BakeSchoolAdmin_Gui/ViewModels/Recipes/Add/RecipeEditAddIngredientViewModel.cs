@@ -3,6 +3,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events.RecipeAddEvents;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using Microsoft.Practices.Prism.Events;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -40,9 +41,9 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeEditAddIngredientViewModel"/> class.
+        /// </summary>
         /// <param name="eventAggregator">Event aggregator</param>
         /// <param name="recipe">the current recipes</param>
-        /// </summary>
         public RecipeEditAddIngredientViewModel(IEventAggregator eventAggregator, Recipe recipe) : base(eventAggregator)
         {
             if (recipe != null)
@@ -154,7 +155,7 @@
         /// <summary>
         /// Gets or sets new List ingredient.
         /// </summary>
-        public List<Ingredient> IngredientList;
+        public List<Ingredient> IngredientList { get; set; }
 
         /// <summary>
         /// Gets the SaveIngredient
@@ -169,7 +170,6 @@
         /// <returns><c>true</c> if the command can be executed otherwise <c>false</c>.</returns>
         private bool AddIngredientCommandCanExecute(object parameter)
         {
-#warning check whether correct data
             return true;
         }
 
@@ -229,14 +229,16 @@
             this.Ingredients = new ObservableCollection<Ingredient>(list);
             this.IngredientList = list;
         }
+
         /// <summary>
         /// Gets the Recipe
         /// The recipe which will transfer into the end view if the user clicked on the button "Save".
         /// </summary>
-        public void ReloadData()
+        private void ReloadData()
         {
             this.OnPropertyChanged(nameof(this.Ingredients));
         }
+
         #endregion
     }
 }

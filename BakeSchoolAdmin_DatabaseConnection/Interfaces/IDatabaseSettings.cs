@@ -31,12 +31,12 @@
         /// Write single dataset to service.
         /// </summary>
         /// <param name="data">Context from the database</param>
-        void WriteData(T data);
+        void WriteDataRecipe(T data);
 
         /// <summary>
         /// Write all datasets to service.
         /// </summary>
         /// <param name="data">Context from the database</param>
-        void WriteData(IList<T> data);
+        void WriteDataRecipe(IList<T> data);
     }
 }

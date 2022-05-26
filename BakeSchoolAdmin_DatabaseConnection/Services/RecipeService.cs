@@ -10,10 +10,10 @@
     using BakeSchoolAdmin_DatabaseConnection.Mapper;
     using BakeSchoolAdmin_DatabaseConnection.Models;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using Newtonsoft.Json;
-    using BakeSchoolAdmin_Models;
 
     /// <summary>
     /// Defines the <see cref="RecipeService" />.
@@ -36,14 +36,19 @@
         private readonly string recipeCollectionName = "RecipeCollection";
 
         /// <summary>
-        /// Defines the Mongo Client..
+        /// Defines the mongo Client..
         /// </summary>
-        private MongoClient Mongoclient;
+        private MongoClient mongoclient;
 
         /// <summary>
         /// Defines the mapper.
         /// </summary>
         private IMapper mapper;
+
+        /// <summary>
+        /// Gets or sets the recipes data.
+        /// </summary>
+        public IMongoCollection<RecipeData> recipesdata { get; set; }
 
         /// <summary>
         /// The initialize.
@@ -53,8 +58,8 @@
         {
             try
             {
-                this.Mongoclient = new MongoClient(this.databaseConnection);
-                var database = this.Mongoclient.GetDatabase(this.databaseName);
+                this.mongoclient = new MongoClient(this.databaseConnection);
+                var database = this.mongoclient.GetDatabase(this.databaseName);
                 this.recipesdata = database.GetCollection<RecipeData>(this.recipeCollectionName);
                 try
                 {
@@ -70,13 +75,29 @@
             {
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// Gets or sets the recipes data.
+        /// Check whether database is connected.
         /// </summary>
-        public IMongoCollection<RecipeData> recipesdata { get; set; }
+        /// <returns>value of connection state</returns>
+        public bool IsConnection()
+        {
+            this.mongoclient = new MongoClient(this.databaseConnection);
+            var database = this.mongoclient.GetDatabase(this.databaseName);
+            bool isMongoLive = database.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+
+            if (isMongoLive)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// The ReadData.
@@ -104,10 +125,10 @@
         }
 
         /// <summary>
-        /// The WriteData.
+        /// The WriteDataRecipe.
         /// </summary>
         /// <param name="data">The data<see cref="Recipe"/>.</param>
-        public void WriteData(Recipe data)
+        public void WriteDataRecipe(Recipe data)
         {
             string name = data.Name;
             int number = data.Number;
@@ -124,7 +145,7 @@
 
                 bsonArray.Add(docu);
             }
-            // Description to BsonObjet
+            
             BsonArray bsonArrayDes = new BsonArray();
             foreach (var item in descriptions)
             {
@@ -142,14 +163,13 @@
                     { "ingredients",bsonArray },
                     {"description", bsonArrayDes }
               };
-                var database = this.Mongoclient.GetDatabase(this.databaseName);
+                var database = this.mongoclient.GetDatabase(this.databaseName);
                 var collection = database.GetCollection<BsonDocument>(this.recipeCollectionName);
                 collection.InsertOne(document);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                
             }
         }
 
@@ -165,13 +185,18 @@
 
             // loop through all the records and add to observable collection object
             foreach (var item in recipeList)
-                  recipes.Add(item);
+            {
+                recipes.Add(item);
+            }
 
             return recipes;
         }
 
-
-        public void WriteData(IList<Recipe> data)
+        /// <summary>
+        /// Write data into a list
+        /// </summary>
+        /// <param name="data">recipe list</param>
+        public void WriteDataRecipe(IList<Recipe> data)
         {
             throw new NotImplementedException();
         }

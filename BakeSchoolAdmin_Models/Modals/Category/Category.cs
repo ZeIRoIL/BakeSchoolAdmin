@@ -27,6 +27,14 @@
             this.Id = id;
             this.Details = details;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Category"/> class.
+        /// </summary>
+        /// <param name="id">category id.</param>
+        /// <param name="details">category details</param>
+        /// <param name="wantFileDb">check the desire of saving</param>
+        /// <see cref="Category"/>
         public Category(int id, CategoryDetails details, bool wantFileDb)
         {
             this.Id = id;
@@ -35,7 +43,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the query, whether the user want to save the db into a file.
+        /// Gets or sets a value indicating whether the user want to save the database into a file.
         /// </summary>
         public bool WantFileDb { get; set; }
 
@@ -82,7 +90,6 @@
 
                     //// Notify the GUI when Firstname and Fullname changed
                     this.OnPropertyChanged("Text");
-
                 }
             }
         }

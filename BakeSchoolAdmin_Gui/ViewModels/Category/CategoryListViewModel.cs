@@ -3,6 +3,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_DatabaseConnection.Services;
     using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Events.CategoryEvents;
     using BakeSchoolAdmin_Gui.Views.Category;
     using BakeSchoolAdmin_Models;
     using Microsoft.Practices.Prism.Events;
@@ -106,8 +107,6 @@
             }
 
             this.LoadCategories();
-
-            MessageBox.Show("Added new Category!");
 
             this.OnPropertyChanged(nameof(this.Categories));
         }

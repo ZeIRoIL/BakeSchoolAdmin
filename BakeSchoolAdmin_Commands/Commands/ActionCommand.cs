@@ -26,7 +26,8 @@
         /// <param name="canExecute">the method called when CanExecute() is invoked</param>
         public ActionCommand(Action<object> execute, Func<object, bool> canExecute)
         {
-            this.handlerExecute = execute ?? throw new ArgumentNullException("Execute cannot be null");
+            this.handlerExecute = execute
+                ?? throw new ArgumentNullException("Execute cannot be null");
             this.handlerCanExecute = canExecute;
         }
 

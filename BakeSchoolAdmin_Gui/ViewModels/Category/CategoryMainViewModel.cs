@@ -1,6 +1,7 @@
 ﻿namespace BakeSchoolAdmin_Gui.ViewModels
 {
     using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Events.CategoryEvents;
     using BakeSchoolAdmin_Gui.View;
     using Microsoft.Practices.Prism.Events;
     using System.Windows.Controls;
@@ -14,8 +15,13 @@
         /// <summary>
         /// Defines the change color.
         /// </summary>
-        private bool Changecolor;
+        private bool changecolor;
 
+        /// <summary>
+        /// Defines the condition from the save of data
+        /// </summary>
+        private string isSaved;
+      
         /// <summary>
         /// View that is currently bound to the left ContentControl..
         /// </summary>
@@ -39,6 +45,9 @@
 
             // subscribe to event
             this.EventAggregator.GetEvent<ChangeCurrentRightDataEvent>().Subscribe(this.ChangetheCurrentViewRight, ThreadOption.UIThread);
+
+            // subscribe to event
+            this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Subscribe(this.IsSavedCategory, ThreadOption.UIThread);
         }
 
         /// <summary>
@@ -108,15 +117,34 @@
         {
             get
             {
-                return this.Changecolor;
+                return this.changecolor;
             }
 
             set
             {
-                this.Changecolor = value;
+                this.changecolor = value;
                 this.OnPropertyChanged(nameof(this.BoxColor));
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value whether the data is saved..
+        /// </summary>
+        public string IsSaved
+        {
+            get
+            {
+                return this.isSaved;
+            }
+
+            set
+            {
+                this.isSaved = value;
+                this.OnPropertyChanged(nameof(this.IsSaved));
+            }
+        }
+
+        #region ----------------------------------------------------- Events Methods ---------------------------------------
 
         /// <summary>
         /// Event handler to notice changes in the current category data.
@@ -127,5 +155,25 @@
             this.currentViewRight = userControl;
             this.OnPropertyChanged(nameof(this.currentViewRight));
         }
+
+        /// <summary>
+        /// Event handler to notice save the category data
+        /// </summary>
+        /// <param name="isSaved">The userControl<see cref="bool"/>.</param>
+        public void IsSavedCategory(string isSaved)
+        {
+            if(isSaved == "gespeichert")
+            {
+                this.IsSaved = isSaved;
+                this.ChangeColor = true;
+            }
+            else
+            {
+                this.IsSaved = "ungespeichert";
+                this.ChangeColor = false;
+            }
+        }
+
+        #endregion
     }
 }

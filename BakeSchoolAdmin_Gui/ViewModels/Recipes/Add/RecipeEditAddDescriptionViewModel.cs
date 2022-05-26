@@ -12,6 +12,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events.RecipeAddEvents;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using Microsoft.Practices.Prism.Events;
 
     /// <summary>
@@ -82,6 +83,7 @@
                 {
                     this.Descriptions = new ObservableCollection<Description>();
                 }
+
                 this.OnPropertyChanged(nameof(this.Descriptions));
             }
             else
@@ -96,12 +98,6 @@
             this.SaveDescription = new ActionCommand(this.SaveDescriptionCommandExecute, this.SaveDescriptionCommandCanExecute);
             this.DeleteDescription = new ActionCommand(this.DeleteDescriptionCommandExecute, this.DeleteDescriptionCommandCanExecute);
             this.AddImageDescription = new ActionCommand(this.AddImageDescriptionCommandExecute, this.AddImageDescriptionCommandCanExecute);
-            #endregion
-
-            #region -------------------------------------------------------------- Hint Commands --------------------------------------------------
-            //this.ShowHint = new ActionCommand(this.ShowHintCommandExecute, this.ShowHintCommandCanExecute);
-            //this.AddHint = new ActionCommand(this.AddHintCommandExecute, this.AddHintCommandCanExecute);
-            //this.DeleteHint = new ActionCommand(this.DeleteHintCommandExecute, this.DeleteHintCommandCanExecute);
             #endregion
         }
         #endregion
@@ -151,7 +147,7 @@
 
         /// <summary>
         /// Gets the delete description
-        /// execute the command and open the filedialogt to save a picture.
+        /// execute the command and open the file dialog to save a picture.
         /// </summary>
         public ICommand AddImageDescription { get; private set; }
 
@@ -522,16 +518,14 @@
 
                     OpenFileDialog openFileDlg = new OpenFileDialog();
 
-                    openFileDlg.Filter = "Image Files | *.jpg; *.jpeg; *.png;";
+                    openFileDlg.Filter = "Image Files | *.jpg; ";
                     openFileDlg.ShowDialog();
-                    string selectedFile;
 
                     if (!(openFileDlg.FileName is null || openFileDlg.FileName == string.Empty))
                     {
                         sourcePath = openFileDlg.FileName;
                         System.IO.File.Copy(sourcePath, targetPathFile, true);
                         FileInfo f = new FileInfo(targetPathFile);
-                        //Console.WriteLine(f.FullName);
                         this.Descriptions[this.step - 1].Image = f.FullName;
                         this.Image = new Image();
                         this.ImagePath = f.FullName;
@@ -545,13 +539,11 @@
                     MessageBox.Show(ex.ToString());
                 }
             }
-            else 
+            else
             {
                 this.Image = new Image();
                 Image.Source = new BitmapImage(new Uri(this.ImagePath, UriKind.RelativeOrAbsolute));
             }
-           
-           
             #endregion
         }
 
@@ -560,13 +552,7 @@
             #endregion
 
             #region --------------------------------------------------------------------- mini helper -------------------------------------------
-            /// <summary>
-            /// load the current description data into the description field.
-            /// </summary>
-            public void LoadDescription()
-            {
-                throw new Exception("Das ist ein Test");
-            }
+            
             #endregion
         }
 }

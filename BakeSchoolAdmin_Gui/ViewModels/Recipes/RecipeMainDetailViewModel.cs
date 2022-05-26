@@ -10,6 +10,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using Microsoft.Practices.Prism.Events;
 
     /// <summary>
@@ -24,7 +25,7 @@
         private string name;
 
         /// <summary>
-        /// store the imagepath for each steps description
+        /// store the image path for each steps description
         /// </summary>
         private Image imagepath;
 
@@ -56,7 +57,6 @@
             
             // the command for the ShowDescription
             this.ShowDescription = new ActionCommand(this.ShowDescriptionCommandExecute, this.ShowDescriptionCommandCanExecute);
-            
         }
         #endregion
 
@@ -180,7 +180,6 @@
                     this.step = stepId;
                     this.text = this.Descriptions[this.step - 1].Text;
 
-                   
                     this.Imagepath = new Image();
                     Imagepath.Source =  new BitmapImage(new Uri(this.Descriptions[this.step -1].Image));
                    
@@ -195,7 +194,7 @@
         /// Event handler to notice changes in the current category data.
         /// </summary>
         /// <param name="recipe">Reference to the sent student data.</param>
-        public void SelectedRecipe(Recipe recipe)
+        private void SelectedRecipe(Recipe recipe)
         {
             this.Name = recipe.Name;
 

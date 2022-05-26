@@ -4,6 +4,7 @@
     using BakeSchoolAdmin_Gui.Events.RecipeAddEvents;
     using BakeSchoolAdmin_Gui.Views.Recipes;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using Microsoft.Practices.Prism.Events;
     using System.Collections.Generic;
     using System.Windows.Controls;
@@ -30,7 +31,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipesAddMainViewModel"/> class.
         /// </summary>
-        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
+        /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>Event aggregator</param>
         public RecipesAddMainViewModel(IEventAggregator eventAggregator, int id) : base(eventAggregator)
         {
             RecipeEditAddIngredient view = new RecipeEditAddIngredient();
@@ -40,14 +41,10 @@
 
             this.recipeId = id;
 
-            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenDescription = new ActionCommand(this.ShowDescriptionViewCommandExecute, this.ShowDescriptionViewCommandCanExecute);
-            // action command if the change button is clicked and the usercontrol (AddCheck) will open.
             this.OpenCheck = new ActionCommand(this.ShowCheckViewCommandExecute, this.ShowCheckViewCommandCanExecute);
-            // action command if the change button is clicked and the usercontrol (AddCategory) will open.
             this.OpenIngredient = new ActionCommand(this.ShowIngredientsViewCommandExecute, this.ShowIngriedentsCommandCanExecute);
 
-            // subscribe new event for the new data save
             this.EventAggregator.GetEvent<ReloadCurrentCheckRecipeEventData>().Subscribe(this.LoadRecipe, ThreadOption.UIThread);
         }
         #endregion
@@ -110,14 +107,13 @@
         /// <summary>
         /// load the recipe in the current recipe data and check whether it contains description and recipe
         /// </summary>
-        /// <param name="currentrecipe"></param>
+        /// <param name="currentrecipe"> current recipe</param>
         public void LoadRecipe(Recipe currentrecipe)
         {
             if (this.CurrentRecipe == null)
             {
                 this.CurrentRecipe = currentrecipe;
             }
-           
 
             if (currentrecipe.Ingredients != null)
             {
@@ -130,7 +126,6 @@
             {
                 this.CurrentDescription = currentrecipe.Descriptions;
             }
-            
         }
         #endregion
 
@@ -148,8 +143,9 @@
                 {
                     return true;
                 }
-            }
                 return false;
+            }
+            return false;
         }
 
         /// <summary>

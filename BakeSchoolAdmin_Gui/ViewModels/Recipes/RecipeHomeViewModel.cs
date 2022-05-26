@@ -14,11 +14,6 @@
     internal class RecipeHomeViewModel : ViewModelBase
     {
         /// <summary>
-        /// the current recipe which are  selected..
-        /// </summary>
-        private Recipe recipe;
-
-        /// <summary>
         /// View that is currently bound to the left ContentControl..
         /// </summary>
         private UserControl currentViewLeft;
@@ -106,7 +101,5 @@
         /// </summary>
         /// <param name="main">The main<see cref="UserControl"/>.</param>
         public void ChangeCurrentMainView(UserControl main) => throw new Exception("change current MainView");
-
-     
     }
 }

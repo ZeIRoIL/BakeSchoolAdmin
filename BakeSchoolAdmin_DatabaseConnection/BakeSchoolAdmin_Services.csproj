@@ -172,7 +172,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connections\ConnectionSettings.cs" />
-    <Compile Include="Converter\BoolToVisibiltyConverter.cs" />
     <Compile Include="Interfaces\IDatabaseSettings.cs" />
     <Compile Include="Mapper\CategoryMapperProfil.cs" />
     <Compile Include="Mapper\MappingProfil.cs" />

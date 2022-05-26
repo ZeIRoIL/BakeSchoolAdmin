@@ -5,36 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BakeSchoolAdmin_Gui.Views.Recipes" xmlns:edit="clr-namespace:BakeSchoolAdmin_Gui.ViewModels.Recipes.Edit" d:DataContext="{d:DesignInstance Type=edit:RecipeEditAddIngredientViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Margin="20"
+             >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <!--Zutaten View-->
+        <Label Content="Zutaten" HorizontalAlignment="Center" FontSize="30" FontWeight="Heavy"/>
         <DataGrid Grid.Column="0"  IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" ItemsSource="{Binding Path= Ingredients}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Data}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
+                <DataGridTextColumn Header="Anzahl" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Einheit" Binding="{Binding Unit}"/>
             </DataGrid.Columns>
         </DataGrid>
         <!--Name Rezept erstellen-->
-        <TextBox Grid.Column="2" Text="{Binding Name}"   Grid.Row="1" Background="Red" />
+        <Label Grid.Column="2" Grid.Row="0"  Content="Rezept Name" FontSize="17px" HorizontalAlignment="Center"  FontWeight="Heavy" Foreground="#dc5c49"/>
+        <TextBox Grid.Column="2" Text="{Binding Name}"   Grid.Row="1" Background="Gray" Foreground="White" FontSize="17px"/>
         <!--Zutat Erstellen-->
         <StackPanel Grid.Column="1" VerticalAlignment="Center" Grid.Row="2">
-            <Label  Content="Zutat"/>
-
-            <TextBox Text="{Binding Data}"/>
-            <TextBox Text="{Binding Unit}"/>
-            <TextBox Text="{Binding Amount}"/>
-            <Button Content="Save" Command="{Binding SaveIngredient}"/>
+            <Label  Content="Zutat" FontSize="17px" HorizontalAlignment="Center" FontWeight="Heavy" Foreground="#dc5c49"/>
+            <DockPanel>
+                <Label Content="Name:"/>
+                <TextBox Text="{Binding Data}" FontSize="15px"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Einheit:"/>
+                <TextBox Text="{Binding Unit}" FontSize="15px"/>
+            </DockPanel>
+            <DockPanel>
+                <Label Content="Anzahl:"/>
+                <TextBox Text="{Binding Amount}" FontSize="15px"/>
+            </DockPanel>
+            <Button Content="Save" Command="{Binding SaveIngredient}" Background="Gray"  Margin="100 20 100 0"/>
         </StackPanel>
 
     </Grid>

@@ -3,6 +3,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_DatabaseConnection.Services;
     using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Events.CategoryEvents;
     using BakeSchoolAdmin_Models;
     using BakeSchoolAdmin_Models.Modals.Category;
     using Microsoft.Practices.Prism.Events;
@@ -20,11 +21,6 @@
         private int amount;
 
         /// <summary>
-        /// category id.
-        /// </summary>
-        private int id;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CategoryEditViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
@@ -38,7 +34,7 @@
         }
 
         /// <summary>
-        /// Execute the command and which can edit the category in the database
+        /// Gets or sets edit value of the category in the database
         /// </summary>
         public ICommand EditCategoryCommand { get; private set; }
 
@@ -97,7 +93,7 @@
             details.Name = this.Name;
             details.Text = this.Text;
             details.Level = this.Amount;
-            Category editCategory = new Category(this.id, details);
+            Category editCategory = new Category(this.Id, details);
 
             CategoryService categoryService = new CategoryService();
             
@@ -105,6 +101,9 @@
             {
                 categoryService.UpdateData(editCategory);
                 this.EventAggregator.GetEvent<ReloadCategoryDataEvent>().Publish(true);
+
+                // call the condition of save data
+                this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Publish("gespeichert");
             }
         }
 
@@ -121,6 +120,9 @@
             this.OnPropertyChanged(nameof(this.Text));
             this.OnPropertyChanged(nameof(this.Name));
             this.OnPropertyChanged(nameof(this.amount));
+
+            // call the condition of save data
+            this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Publish("ungespeichert");
         }
     }
 }

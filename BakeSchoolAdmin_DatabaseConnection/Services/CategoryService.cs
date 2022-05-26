@@ -23,11 +23,6 @@
     public class CategoryService : IDatabaseSettings<Category>
     {
         /// <summary>
-        /// Defines the mapper.
-        /// </summary>
-        private IMapper mapper;
-
-        /// <summary>
         /// Defines the databaseConnection.
         /// </summary>
         private readonly string databaseConnection = "mongodb://localhost:27017";
@@ -41,6 +36,11 @@
         /// Defines the categoryCollectionName.
         /// </summary>
         private readonly string categoryCollectionName = "CategoryCollection";
+
+        /// <summary>
+        /// Defines the mapper.
+        /// </summary>
+        private IMapper mapper;
 
         /// <summary>
         /// Defines the client.
@@ -59,7 +59,6 @@
         /// </summary>
         public IMongoCollection<CategoryData> categoriesdata { get; set; }
 
-
         /// <summary>
         /// The initialize .
         /// </summary>
@@ -71,6 +70,7 @@
                 this.client = new MongoClient(this.databaseConnection);
                 var database = this.client.GetDatabase(this.databaseName);
                 this.categoriesdata = database.GetCollection<CategoryData>(this.categoryCollectionName);
+                
                 try
                 {
                     mapper = MappingProfil.InitializeAutoMapper().CreateMapper();
@@ -85,7 +85,28 @@
             {
                 return false;
             }
+
             return true;
+        }
+
+        /// <summary>
+        /// Check whether database is connected.
+        /// </summary>
+        /// <returns>the value of right to connection</returns>
+        public bool IsConnection()
+        {
+            this.client = new MongoClient(this.databaseConnection);
+            var database = this.client.GetDatabase(this.databaseName);
+            bool isMongoLive = database.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+
+            if(isMongoLive)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -136,11 +157,11 @@
         }
 
         /// <summary>
-        /// The WriteData.
+        /// The WriteDataRecipe.
         /// </summary>
         /// <param name="data">The data<see cref="Category"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public  bool WriteData(Category data)
+        /// <returns>The <see cref="bool"/>write data query</returns>
+        public  bool WriteData (Category data)
         {
             string name = data.Details.Name;
             int id = data.Id;
@@ -191,14 +212,16 @@
                 Debug.WriteLine(ex.Message);
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
         /// Write the object into a file pretty
         /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="fileName"></param>
+        /// <param name="obj">JSON object</param>
+        /// <param name="fileName">name of the file</param>
+        /// <returns>the value of update state</returns>
         public bool PrettyWrite(object obj, string fileName)
         {
             try
@@ -217,7 +240,7 @@
         /// Update the data in the database
         /// </summary>
         /// <param name="data">category data</param>
-        /// <returns></returns>
+        /// <returns>the value of update state</returns>
         public bool UpdateData(Category data)
         {
             try
@@ -236,8 +259,7 @@
                         }
                      }
               };
-                
-                
+
                 var database = this.client.GetDatabase(this.databaseName);
                 var collection = database.GetCollection<BsonDocument>(this.categoryCollectionName);
 
@@ -253,10 +275,10 @@
         }
 
         /// <summary>
-        /// The WriteData.
+        /// The WriteDataRecipe.
         /// </summary>
         /// <param name="data">The data<see cref="IList{Category}"/>.</param>
-        public void WriteData(IList<Category> data)
+        public void WriteDataRecipe(IList<Category> data)
         {
             throw new NotImplementedException();
         }
@@ -273,16 +295,18 @@
 
             // loop through all the records and add to observable collection object
             foreach (var item in categoriesList)
+            {
                 categories.Add(item);
+            }
 
             return categories;
         }
 
         /// <summary>
-        /// The WriteData.
+        /// The WriteDataRecipe.
         /// </summary>
         /// <param name="data">The data<see cref="Category"/>.</param>
-        void IDatabaseSettings<Category>.WriteData(Category data)
+        void IDatabaseSettings<Category>.WriteDataRecipe(Category data)
         {
             throw new NotImplementedException();
         }

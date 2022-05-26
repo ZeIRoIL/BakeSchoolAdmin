@@ -25,11 +25,6 @@
         private ObservableCollection<Recipe> recipes = new ObservableCollection<Recipe>();
 
         /// <summary>
-        /// the current recipe which are  selected.
-        /// </summary>
-        private Recipe recipe;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainRecipesViewModel"/> class.
         /// </summary>
         /// <param name="eventAggregator">The eventAggregator<see cref="IEventAggregator"/>.</param>
@@ -88,6 +83,7 @@
         /// <param name="main">The main<see cref="UserControl"/>.</param>
         public void ChangeCurrentMainView(UserControl main)
         {
+            throw new System.NotSupportedException();
         }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace BakeSchoolAdmin_Gui.Events.RecipeAddEvents
     /// <summary>
     /// Reload the recent recipe on the main page
     /// </summary>
-    class ReloadCurrentCheckRecipeEventData : CompositePresentationEvent<Recipe>
+    public class ReloadCurrentCheckRecipeEventData : CompositePresentationEvent<Recipe>
     {
     }
 }

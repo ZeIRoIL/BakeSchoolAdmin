@@ -2,6 +2,7 @@
 {
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_Gui.Events;
+    using BakeSchoolAdmin_Gui.Events.CategoryEvents;
     using BakeSchoolAdmin_Models;
     using BakeSchoolAdmin_Models.Modals.Category;
     using Microsoft.Practices.Prism.Events;
@@ -41,17 +42,22 @@
         }
 
         /// <summary>
-        /// Gets or sets the query, whether the user want to save the db into a file.
+        /// Gets or sets a value indicating whether the user want to save the database into a file.
         /// </summary>
         public bool WantFileDb
         {
-            get { return wantFileDb; }
+            get 
+            {
+                return wantFileDb; 
+            }
+
             set
             {
-                if (wantFileDb == value) return;
-
-                wantFileDb = value;
-                this.OnPropertyChanged(nameof(this.WantFileDb));
+                if (wantFileDb == value)
+                {
+                    wantFileDb = value;
+                    this.OnPropertyChanged(nameof(this.WantFileDb));
+                }
             }
         }
 
@@ -64,9 +70,9 @@
             {
                 return this.amount;
             }
+
             set
             {
-
                 if (this.amount != value)
                 {
                     this.amount = value;
@@ -124,8 +130,9 @@
             details.Level = this.Amount;
             Category category = new Category(this.id, details,this.WantFileDb);
 
-            // add the new Category into the List
             this.EventAggregator.GetEvent<AddCategoryDataEvent>().Publish(category);
+
+            this.EventAggregator.GetEvent<IsSavedCategoryEvent>().Publish("gespeichert");
         }
     }
 }

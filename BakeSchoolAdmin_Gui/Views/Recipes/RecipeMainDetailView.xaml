@@ -12,60 +12,93 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.4*"/>
             <RowDefinition Height="5*"/>
-            
+
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--Name of recipe-->
-        <Label Content="{Binding Name}" Grid.Row="0" Grid.ColumnSpan="2"  />
+        <Label Content="{Binding Name}" Grid.Row="0" Grid.ColumnSpan="2" FontSize="40" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#dc3545" VerticalAlignment="Center" />
         <!--Zutaten View-->
-        <DataGrid Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" 
+        <DataGrid Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Background="#dc5c49" 
                   ItemsSource="{Binding Path= Ingredients }" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Data}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
-                <DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Data}">
+                    <DataGridColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#dc5c49"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Anzahl" Binding="{Binding Amount}">
+                    <DataGridColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#dc5c49"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Einheit" Binding="{Binding Unit}">
+                    <DataGridColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#dc5c49"/>
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridColumn.HeaderStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <!--Descriptions View-->
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Margin="15 0 0 0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.3*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.8*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <!--Step Label-->
-            <Label Content="Schritte:" Grid.Row="0"/>
+            <Label Content="Schritte:" Grid.Row="0" FontSize="15px" Foreground="Black" FontWeight="Bold"/>
             <!--StepBox-->
-            <Grid Grid.Row="1" Grid.Column="0" Background="Black">
-                <ItemsControl
+            <Grid Grid.Row="1" Grid.Column="0" Background="#dc3545">
+                <ScrollViewer>
+                    <ItemsControl
                       ItemsSource="{Binding Path= Descriptions}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button  Content="{Binding Path=Step}"
-                             Width="20"
-                             Height="20"
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button  Content="{Binding Path=Step}"
+                             VerticalAlignment="Center"
+                             Width="40"
+                             Height="40"
                              Margin="5"
                              CommandParameter="{Binding Step}"
                              Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, 
                              Path=DataContext.ShowDescription}"
+                                     Foreground="White"
+                                     Background="Black"
                             />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
             </Grid>
             <!--Descriptiontext-->
-            <TextBox Grid.Row="3" Text="{Binding Text}"/>
-            <Image Grid.Column="1" Grid.Row="4" Source="{Binding Imagepath.Source}"  Width="100" Height="100" />
+            <TextBox Grid.Row="2" Text="{Binding Text}" FontSize="17px" Foreground="Black"/>
+            <Image Grid.Row="3" Grid.Column="1"
+                Source="{Binding Imagepath.Source}" Stretch="Uniform" Margin="0 20 0 0">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="90" />
+                </Image.RenderTransform>
+            </Image>
         </Grid>
-        
+
     </Grid>
 </UserControl>

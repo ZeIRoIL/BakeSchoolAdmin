@@ -5,14 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BakeSchoolAdmin_Gui" xmlns:viewmodels="clr-namespace:BakeSchoolAdmin_Gui.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" MinWidth="1100" MinHeight="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source=".\Ressource\Colors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" >
-            <Button Content="Home" Height="25" Width="50" Margin="10 10 10 0" Command="{Binding MainViewCommand}"/>
+            <Button Content="Home" Height="25" Width="70" Margin="10 10 10 0" Command="{Binding MainViewCommand}" Background="Black"/>
         </StackPanel>
         <ContentControl Grid.Row="1"  Content="{Binding CurrentMainView}"/>
     </Grid>

@@ -3,6 +3,7 @@
     using BakeSchoolAdmin_Commands.Commands;
     using BakeSchoolAdmin_DatabaseConnection.Services;
     using BakeSchoolAdmin_Models;
+    using BakeSchoolAdmin_Models.Modals.Recipe;
     using Microsoft.Practices.Prism.Events;
     using System;
     using System.Collections.ObjectModel;
@@ -20,11 +21,6 @@
         /// Defines the recipe.
         /// </summary>
         private readonly Recipe editrecipe;
-
-        /// <summary>
-        /// Defines the description.
-        /// </summary>
-        private Description description;
 
         /// <summary>
         /// the description text for each step.
@@ -141,7 +137,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the texthint.
+        /// Gets or sets the text hint.
         /// </summary>
         public string Texthint
         {
@@ -310,8 +306,8 @@
 
         /// <summary>
         /// The setDescriptions for the recent recipe
-        /// <param name="recipe">current recipe</param>
         /// </summary>
+        /// <param name="recipe">current recipe</param>
         public void setDescriptions(Recipe recipe)
         {
             this.DescriptionObs = new ObservableCollection<Description>();
@@ -350,18 +346,6 @@
                     Image.Source = new BitmapImage(new Uri(this.DescriptionObs[this.step - 1].Image, UriKind.RelativeOrAbsolute));
                     this.OnPropertyChanged(nameof(this.text));
                     this.OnPropertyChanged(nameof(this.Image));
-                    //if (this.DescriptionObs[this.step - 1].Hints != null)
-                    //{
-                    //    this.hints = this.DescriptionObs[this.step - 1].Hints;
-                    //}
-                    //else
-                    //{
-                    //    this.TextHint = string.Empty;
-                    //    this.OnPropertyChanged(nameof(this.TextHint));
-                    //}
-
-                    //this.Hints = new ObservableCollection<Hint>(this.hints);
-                    //this.OnPropertyChanged(nameof(this.Hints));
                 }
             }
         }
@@ -382,14 +366,11 @@
         /// <param name="parameter">Data used by the command.</param>
         private void SaveRecipeCommandExecute(object parameter)
         {
-            
             RecipeService recipeService = new RecipeService();
             if (recipeService.init())
             {
-                recipeService.WriteData(this.editrecipe);
+                recipeService.WriteDataRecipe(this.editrecipe);
             }
         }
-
-
     }
 }

@@ -16,7 +16,6 @@
         {
             this.CreateMap<Category, CategoryData>();
 
-
             this.CreateMap<CategoryData, Category>();
         }
     }

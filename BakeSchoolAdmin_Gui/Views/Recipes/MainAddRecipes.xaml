@@ -23,17 +23,18 @@
             </Grid.ColumnDefinitions>
         </Grid>
         
-        <Label Content="Rezepte" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontSize="30" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Height="46" Width="124"/>
+        <Label Content="Rezepte" HorizontalAlignment="Center" Grid.ColumnSpan="2" FontSize="35" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Height="60" Width="150"
+               Foreground="#dc5c49" FontWeight="Bold"
+               />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button Content="Zurück" Margin="5 0 5 0" Width="50px"
-                    Command=""/>
-            <Button Content="Rezepte" Margin="5 0 5 0" Width="50px"
-                    Command="{Binding OpenIngredient}"/>
-            <Button Content="Beschreibung" Margin="5 0 5 0"  Width="50px"
-                    Command="{Binding OpenDescription}" />
-            <Button Content="Check" Margin="5 0 5 0"  Width="50px"
-                    Command="{Binding OpenCheck}" />
+            
+            <Button Content="Rezepte" Margin="5 0 5 0" Width="100px"
+                    Command="{Binding OpenIngredient}" Background="Black"/>
+            <Button Content="Beschreibung" Margin="5 0 5 0"  Width="120px"
+                    Command="{Binding OpenDescription}" Background="Black" />
+            <Button Content="Check" Margin="5 0 5 0"  Width="100px"
+                    Command="{Binding OpenCheck}" Background="Black" />
         </StackPanel>
         <ContentControl Grid.Row="2" Grid.ColumnSpan="2" Content="{Binding CurrentViewMain}" />
     </Grid>
