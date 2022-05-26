@@ -193,10 +193,11 @@
                         // Try to create the directory.
                         DirectoryInfo di = Directory.CreateDirectory(targetPathFolder);
                         Console.WriteLine("The directory was created successfully at {0}.{1}", Directory.GetCreationTime(targetPathFolder), targetPathFolder);
-                        if (this.PrettyWrite(document, targetPathFolder + @"\json.txt"))
-                        {
-                            MessageBox.Show("Save into the file! \n {0}", targetPathFolder);
-                        }
+                    }
+
+                    if (this.PrettyWrite(document, targetPathFolder + @"\json.txt"))
+                    {
+                        MessageBox.Show("Save into the file!", targetPathFolder);
                     }
                 }
                 else

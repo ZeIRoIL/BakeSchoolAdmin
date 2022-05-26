@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label Content="Rezepte" HorizontalAlignment="Center" FontSize="30" FontWeight="ExtraBlack" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Height="46" Width="124"/>
+        <Label Content="Rezepte" HorizontalAlignment="Center" FontSize="30" FontWeight="ExtraBlack" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Height="50" Width="auto"/>
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewLeft}"/>
         <ContentControl Grid.Column="1" Grid.RowSpan="3" Content="{Binding CurrentViewRight}" Margin="0,38,0,0.5"/>
     </Grid>

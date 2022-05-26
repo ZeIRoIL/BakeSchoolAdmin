@@ -58,11 +58,8 @@
 
             set
             {
-                if (this.wantFileDb == value)
-                {
                     this.wantFileDb = value;
                     this.OnPropertyChanged(nameof(this.wantFileDb));
-                }
             }
         }
 

@@ -13,13 +13,12 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="32*"/>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="200*"/>
-            <RowDefinition Height="161*"/>
-            <RowDefinition Height="32*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="30*"/>
         </Grid.RowDefinitions>
         <!--label text-->
-        <Label Content="Schirtt:" Grid.Column="0" Grid.Row="0" FontSize="17px" HorizontalAlignment="Center"  FontWeight="Heavy" Foreground="#dc5c49"/>
+        <Label Content="Schritt:" Grid.Column="0" Grid.Row="0" FontSize="17px" HorizontalAlignment="Center"  FontWeight="Heavy" Foreground="#dc5c49"/>
         <Label Content="Bild:" Grid.Column="1" Grid.Row="0" FontSize="17px" HorizontalAlignment="Center"  FontWeight="Heavy" Foreground="#dc5c49"/>
         <!--Step amounts-->
         <Grid Grid.Row="1" Grid.Column="0">
@@ -50,9 +49,18 @@
                 <Button  Content="-" Width="40" Margin="0,0,0,0" Background="red" Command="{Binding DeleteDescription}"/>
             </StackPanel>
         </Grid>
-        <Button  Grid.Column="1" Grid.Row="1" Content="Add Image" Command="{Binding AddImageDescription}" Visibility="{Binding VisibiltySaveImage}"  Background="#dc5c49" Width="200"/>
-        <Image Grid.Column="1" Grid.Row="2" Source="{Binding Image.Source}"  Width="180" Height="180" />
-
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Button  Grid.Column="1" Grid.Row="0" Content="Add Image" Command="{Binding AddImageDescription}" Visibility="{Binding VisibiltySaveImage}"  Background="#dc5c49" Width="200"/>
+            <Image Grid.Row="1" Source="{Binding Image.Source}"  Width="270" Height="270" Stretch="Uniform" Margin="370 -100 -90 0">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="90" />
+                </Image.RenderTransform>
+            </Image>
+        </Grid>
         <!--textbox for the steps-->
         <TextBox  Grid.Row="2" Grid.Column="0" Text="{Binding Text}"  FontSize="20px"  />
         <!--save button-->
