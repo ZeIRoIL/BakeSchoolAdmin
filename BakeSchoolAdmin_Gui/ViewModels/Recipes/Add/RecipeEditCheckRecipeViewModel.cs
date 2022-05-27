@@ -344,6 +344,7 @@
                     {
                         Image.Source = new BitmapImage(new Uri(this.DescriptionObs[this.step - 1].Image, UriKind.RelativeOrAbsolute));
                     }
+
                     this.OnPropertyChanged(nameof(this.text));
                     this.OnPropertyChanged(nameof(this.Image));
                 }
