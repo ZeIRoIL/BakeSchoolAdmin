@@ -5,7 +5,7 @@ These are located in the documentation folder.
 
 ## Deploy
 To build the programme, you need to host Docker locally.
-You sould push the official MongoDb Image.
+You sould push the official MongoDb Image with port 27017.27017.
 `docker pull mongo`
 Load the image into your own Docker and run it. It can be possible that you need the package Prism Microsoft to load the event in the program.
 
