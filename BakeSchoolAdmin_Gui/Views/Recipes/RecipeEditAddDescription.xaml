@@ -54,7 +54,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
-            <Button  Grid.Column="1" Grid.Row="0" Content="Add Image" Command="{Binding AddImageDescription}" Visibility="{Binding VisibiltySaveImage}"  Background="#dc5c49" Width="200"/>
+            <Button   Grid.Column="1" Grid.Row="0" Content="Bild hinzufügen" Command="{Binding AddImageDescription}" Visibility="{Binding VisibiltySaveImage}"  Background="#dc5c49" Width="200"/>
             <Image Grid.Row="1" Source="{Binding Image.Source}"  Width="270" Height="270" Stretch="Uniform" Margin="370 -100 -90 0">
                 <Image.RenderTransform>
                     <RotateTransform Angle="90" />

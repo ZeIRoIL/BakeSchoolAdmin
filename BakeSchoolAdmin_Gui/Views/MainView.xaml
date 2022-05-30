@@ -28,8 +28,8 @@
         </Grid.RowDefinitions>
 
 
-        <Button Content="Bereich Seite" Grid.Column="1" Grid.Row="3" Command="{Binding CategoryViewCommand}" Background="Black"/>
-        <Button Content="Rezepte" Grid.Column="1" Grid.Row="4"  Command="{Binding RecipesViewCommand}"  Background="Black"/>
+        <Button ToolTip="Kategorie erstellen" Content="Bereich Seite" Grid.Column="1" Grid.Row="3" Command="{Binding CategoryViewCommand}" Background="Black"/>
+        <Button ToolTip="Rezept erstellen" Content="Rezepte" Grid.Column="1" Grid.Row="4"  Command="{Binding RecipesViewCommand}"  Background="Black"/>
         <!--<Button Content="RezepteTest" Grid.Column="1" Grid.Row="6"  Command="{Binding TestRecipeCommand}"/>-->
 
     </Grid>
