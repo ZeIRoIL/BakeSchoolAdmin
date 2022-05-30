@@ -5,9 +5,11 @@ These are located in the documentation folder.
 
 ## Deploy
 To build the programme, you need to host Docker locally.
-You sould push the official MongoDb Image.
+You sould push the official MongoDb Image with port 27017.27017.
 `docker pull mongo`
-Load the image into your own Docker and run it.
+Load the image into your own Docker and run it. It can be possible that you need the package Prism Microsoft to load the event in the program.
+
+Last, you build with your .sln file a project and can start with the applications.
 
 First start of the programm, it will create a database "LearnBakeDb" with two collections: 
 "CategoryCollection"
